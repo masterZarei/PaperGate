@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PaperGate.Core.Entities;
 
 namespace PaperGate.Infra.Data
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext(options)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-            
-        }
+        public DbSet<PaperInfo> Papers { get; set; }
+        public DbSet<CommentInfo> Comments { get; set; }
+
     }
 }

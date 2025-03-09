@@ -13,8 +13,8 @@ public class UserInfo : IdentityUser, IDatabaseModel<UserInfo>, ISoftDeleteDatab
     [MaxLength(500, ErrorMessage = "نام خانوادگی کاربر نمی تواند از 500 کاراکتر بیشتر باشد")]
     public string? LastName { get; set; }
 
-    [MaxLength(9, ErrorMessage = "شماره دانشجویی کاربر نمی تواند از 9 کاراکتر بیشتر باشد")]
-    public int StudentNumber { get; set; }
+    [MaxLength(10, ErrorMessage = "کد ملی کاربر نمی تواند از 10 کاراکتر بیشتر باشد")]
+    public string NationalCode { get; set; }
 
     public DateTime CreatedOn { get; set; }
     public DateTime LastUpdated { get; set; }

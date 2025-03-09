@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using PaperGate.Core.Config;
 using PaperGate.Infra.Config;
+using PaperGate.Web.Config;
 
 namespace PaperGate.Web;
 
@@ -11,8 +13,10 @@ public class Program
 
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("SqlServerConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
         builder.Services.AddInfraDbContext(connectionString!);
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        RegisterServices(builder.Services);
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
@@ -40,5 +44,11 @@ public class Program
            .WithStaticAssets();
 
         app.Run();
+    }
+    public static void RegisterServices(IServiceCollection services)
+    {
+        CoreServicesRegisteration.RegisterServices(services);
+        InfraServicesRegisteration.RegisterServices(services);
+        WebServicesRegisteration.RegisterServices(services);
     }
 }

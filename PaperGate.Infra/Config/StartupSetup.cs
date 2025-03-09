@@ -13,9 +13,6 @@ public static class StartupSetup
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
-        services.AddDefaultIdentity<IdentityUser>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
-            .AddEntityFrameworkStores<AppDbContext>();
-
         //services.AddDatabaseDeveloperPageExceptionFilter();
 
         #region Identity
@@ -23,7 +20,7 @@ public static class StartupSetup
         {
             r.Tokens = new TokenOptions()
             {
-                AuthenticatorIssuer = "AQR.Auth"
+                AuthenticatorIssuer = "PaperGate"
             };
             r.Password = new PasswordOptions()
             {
