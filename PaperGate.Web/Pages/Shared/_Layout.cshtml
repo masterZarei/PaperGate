@@ -1,53 +1,100 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PaperGate.Web</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PaperGate.Web.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - درگاه مقالات</title>
+    <partial name="_Styles" />
+    @await RenderSectionAsync("Styles", required: false)
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">PaperGate.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<body class="bg-gray-100">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PaperGate.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+
+    <header class="bg-white shadow-sm py-6">
+        <div class="container flex justify-between">
+            <div><a class="text-lg font-medium text-purple-800" href="/">خانه</a> </div>
+            <div><a class="text-xl font-semibold" href="/">درگاه مقالات</a> </div>
+
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole(Roles.AdminEndUser))
+                {
+                    <li class="relative h-full flex items-center gap-4">
+
+                        <a href="~/Account/Admin/Products" class="hover:hover:text-orange-400">پنل کاربری</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="relative h-full flex items-center gap-4">
+
+                        <a href="~/Account/User/Tickets" class="hover:hover:text-orange-400">پنل کاربری</a>
+                    </li>
+                }
+                <li class="relative h-full flex items-center gap-4">
+
+                    <a href="~/Account/User/Tickets" class="hover:hover:text-orange-400">خروج</a>
+                </li>
+            }
+            else
+            {
+                <li class="relative h-full flex items-center gap-4">
+
+                    <a class="text-lg font-medium text-purple-800" href="~/Identity/Account/Login">ورود</a>
+                    <a class="text-lg font-medium text-purple-800" href="~/Identity/Account/Register"> ثبت نام </a>
+                </li>
+            }
+
+
+
+
+
         </div>
+    </header>
+
+    @RenderBody()
+
+
+    <footer class="bg-white mt-8 py-6">
+        <h2 class="text-center text-lg font-semibold w-full">Copyright PaperGate 2025</h2>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <partial name="_Scripts" />
     @await RenderSectionAsync("Scripts", required: false)
+
+    @if (TempData["Msg"] != null && TempData["State"] != null)
+    {
+        string msg = TempData["Msg"].ToString();
+        string state = TempData["State"].ToString();
+        <script>
+            function showAlert(state, msg) {
+                switch (state) {
+                    case '@Notifs.Success':
+                        toastr.success(msg);
+                        break;
+                    case '@Notifs.Error':
+                        toastr.error(msg);
+                        break;
+                    case '@Notifs.Info':
+                        toastr.info(msg);
+                        break;
+                    case '@Notifs.Warning':
+                        toastr.warning(msg);
+                        break;
+                    default:
+                        toastr.warning('Error Happend');
+                        break;
+                }
+            }
+            showAlert('@TempData["State"].ToString()', '@Html.Raw(TempData["Msg"].ToString())')
+        </script>
+
+        TempData["State"] = null;
+        TempData["Msg"] = null;
+    }
+
 </body>
 </html>
+

@@ -1,0 +1,24 @@
+﻿@using PaperGate.Core.Libraries.StaticValues
+<div class="w-full tablet:w-3/12 px-3 mt-2">
+	<ul class="w-full rounded overflow-hidden mt-3 text-gray-800 border">
+		@if (User.IsInRole(Roles.AdminEndUser))
+		{
+
+			<li class="panelList">
+				<a href="/Account/Admin/Users">
+					مدیریت مقالات
+				</a>
+			</li>
+			<li class="panelList">
+				<a href="/Account/Admin/Categories">
+					مدیریت دسته بندی
+				</a>
+			</li>
+			<li class="panelList">
+				<a href="/Account/Admin/Keywords">
+					مدیریت کلمات کلیدی
+				</a>
+			</li>
+		}
+	</ul>
+</div>

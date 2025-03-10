@@ -21,8 +21,4 @@
     <ProjectReference Include="..\PaperGate.Infra\PaperGate.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Account\Admin\" />
-  </ItemGroup>
-
 </Project>

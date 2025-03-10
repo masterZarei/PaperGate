@@ -1,10 +1,47 @@
 ﻿@page
 @model AccessDeniedModel
 @{
-    ViewData["Title"] = "Access denied";
+    Layout = "";
+    ViewData["Title"] = "دسترسی نامعتبر";
 }
+<!DOCTYPE html>
+<html lang="en">
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="googlebot" content="index,follow">
+    <meta name="robots" content="noodp,noydir">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="~/Styles/lightslider.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Styles/output.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Styles/styles.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Styles/toastr.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" asp-append-version="true" />
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+
+    <title>دسترسی نامعتبر</title>
+</head>
+
+<body>
+    <div class="w-[100vw] h-[100vh] text-white flex items-center justify-center bg-black">
+        <div class="content w-full flex-col text-center h-full flex items-center justify-center" dir="rtl">
+            <h2 class="text-8xl text-center text-white"> 403 </h2>
+            <h4 class="text-3xl xs600:text-5xl font-bold text-center text-white mt-8"> دسترسی نامعتبر </h4>
+            <p class="text-base mt-8 text-white mb-14 text-center"> شما به این صفحه دسترسی ندارید. </p>
+            <a href="~/"
+               class="text-white border-0 rounded-lg py-4 px-8 text-center transition ease-in-out duration-500 outline-0 shadow-md shadow-[#8500ff] bg-[#8500ff]">
+                برگشت به خانه
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/toastr.js"></script>

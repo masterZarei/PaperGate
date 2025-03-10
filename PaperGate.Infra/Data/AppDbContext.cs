@@ -6,6 +6,8 @@ namespace PaperGate.Infra.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbContext(options)
     {
+
+        public DbSet<UserInfo> Users { get; set; }
         public DbSet<PaperInfo> Papers { get; set; }
         public DbSet<CommentInfo> Comments { get; set; }
 

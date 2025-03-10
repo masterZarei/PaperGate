@@ -23,6 +23,8 @@ public class LoginDto
     public string? Password { get; set; }
 
     public bool RememberMe { get; set; }
+    public string? ReturnUrl { get; set; }
+
 }
 public class RegisterDto : UserBaseDto
 {
@@ -32,6 +34,9 @@ public class RegisterDto : UserBaseDto
     [Required(ErrorMessage = "لطفا تکرار رمز عبور خود را وارد کنید")]
     [Compare(nameof(Password), ErrorMessage = "رمز عبور با تکرار آن همخوانی ندارد")]
     public string? ConfirmPassword { get; set; }
+
+    public string? ReturnUrl { get; set; }
+
 }
 public class PersonalInfoDto : UserBaseDto
 {
