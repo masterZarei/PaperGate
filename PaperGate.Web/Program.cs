@@ -67,15 +67,16 @@ public class Program
 
         builder.Services.AddRazorPages(options =>
         {
-            options.Conventions.AuthorizeFolder("/Account", Roles.StudentEndUser);
-            options.Conventions.AuthorizeFolder("/Account/Admin", Roles.AdminEndUser);
+          /*  options.Conventions.AuthorizeFolder("/Account", Roles.StudentEndUser);
+            //options.Conventions.AuthorizeFolder("/Account/Admin", Roles.AdminEndUser);
+            options.Conventions.AuthorizeFolder("/Account/Admin", Roles.StudentEndUser);*/
 
         }).AddJsonOptions(options =>
         {
-            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+         /*   options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
             options.JsonSerializerOptions.WriteIndented = true; // Optional for readability
             options.JsonSerializerOptions.MaxDepth = 128; // افزایش عمق به مقدار مورد نیاز
-
+*/
         });
         #endregion
         var app = builder.Build();

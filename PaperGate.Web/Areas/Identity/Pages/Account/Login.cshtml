@@ -5,48 +5,35 @@
     ViewData["Title"] = "ورود";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-12">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="LoginDto.NationalCode" class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="LoginDto.NationalCode" class="form-label">کد ملی</label>
-                    <span asp-validation-for="LoginDto.NationalCode" class="text-danger"></span>
+<section class="bg-no-repeat bg-cover bg-center h-[100vh] w-full overflow-hidden" style="background-image: url('../images/logo.png')">
+    <div class="login w-72 sm470:w-80 xs600:w-96 h-full mt-8 mx-auto flex justify-center items-center">
+        <form method="post" class="customForm w-full m-auto bg-white rounded-t-md rounded-b-md overflow-hidden">
+            <div class="text-red-600" asp-validation-summary="All"></div>
+            <div class="formHead h-24 bg-gray-800 w-100">
+                <h2 class="formTitle text-center text-xl font-bold text-white flex justify-center items-center h-full">ثبت نام در سایت </h2>
+            </div>
+            <div class="border px-6">
+                <!--                   کد ملی-->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-user text-gray-800"></i></span>
+                    </div>
+                    <input asp-for="LoginDto.NationalCode" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="text" placeholder="کد ملی">
                 </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="LoginDto.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="LoginDto.Password" class="form-label">Password</label>
-                    <span asp-validation-for="LoginDto.Password" class="text-danger"></span>
+                <!--               رمز عبور-->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-phone text-gray-800"></i></span>
+                    </div>
+                    <input asp-for="LoginDto.Password" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="password" placeholder="رمز عبور">
                 </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="LoginDto.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="LoginDto.RememberMe" />
-                        @Html.DisplayNameFor(m => m.LoginDto.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.LoginDto.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
-            </form>
-        </section>
+                <h6 class="mb-4">حساب کاربری دارید ؟ <a href="#" class="text-indigo-700"> ورود کنید </a> </h6>
+                <h6 class="mb-4 text-center"><a href="#" class="text-indigo-700">Remember me</a> </h6>
+                <button type="submit" class="formSubmit border-2 border-gray-800 text-base w-full py-4 text-white my-8 mx-auto block duration-200 bg-gray-800 text-center font-semibold transition-all ease-in-out rounded-sm hover:bg-white hover:text-gray-800">ورود</button>
+            </div>
+        </form>
     </div>
-</div>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
