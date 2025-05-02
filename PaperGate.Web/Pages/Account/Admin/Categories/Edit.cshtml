@@ -1,0 +1,54 @@
+﻿@page
+@model PaperGate.Web.Pages.Account.Admin.Categories.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CategoryInfo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="CategoryInfo.Title" class="control-label"></label>
+                <input asp-for="CategoryInfo.Title" class="form-control" />
+                <span asp-validation-for="CategoryInfo.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CategoryInfo.Description" class="control-label"></label>
+                <input asp-for="CategoryInfo.Description" class="form-control" />
+                <span asp-validation-for="CategoryInfo.Description" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="CategoryInfo.Id" />
+            <div class="form-group">
+                
+                <label asp-for="CategoryInfo.CreatedOn" class="control-label"></label>
+                <input asp-for="CategoryInfo.CreatedOn" class="form-control" />
+                <span asp-validation-for="CategoryInfo.CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CategoryInfo.ModifiedOn" class="control-label"></label>
+                <input asp-for="CategoryInfo.ModifiedOn" class="form-control" />
+                <span asp-validation-for="CategoryInfo.ModifiedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

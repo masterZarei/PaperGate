@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using PaperGate.Core.Entities.Categories;
+using PaperGate.Core.Entities.Ketwords;
 using PaperGate.Core.Interfaces;
 
-namespace PaperGate.Web.Pages.Account.Admin.Categories
+namespace PaperGate.Web.Pages.Account.Admin.Keywords
 {
     public class IndexModel : PageModel
     {
@@ -12,10 +12,10 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
         {
             _unitOfWork = unitOfWork;
         }
-        public IReadOnlyList<CategoryInfo> CategoryDTO { get; set; }
+        public IReadOnlyList<KeywordInfo> KeywordDTO { get; set; }
         public async Task OnGet()
         {
-            CategoryDTO = await _unitOfWork.Category.GetAllAsync();
+            KeywordDTO = await _unitOfWork.Keyword.GetAllAsync();
         }
     }
 }

@@ -1,0 +1,50 @@
+﻿@page
+@model PaperGate.Web.Pages.Account.Admin.Keywords.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>KeywordInfo</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="KeywordInfo.Title" class="control-label"></label>
+                <input asp-for="KeywordInfo.Title" class="form-control" />
+                <span asp-validation-for="KeywordInfo.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KeywordInfo.Description" class="control-label"></label>
+                <input asp-for="KeywordInfo.Description" class="form-control" />
+                <span asp-validation-for="KeywordInfo.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KeywordInfo.CreatedOn" class="control-label"></label>
+                <input asp-for="KeywordInfo.CreatedOn" class="form-control" />
+                <span asp-validation-for="KeywordInfo.CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KeywordInfo.ModifiedOn" class="control-label"></label>
+                <input asp-for="KeywordInfo.ModifiedOn" class="form-control" />
+                <span asp-validation-for="KeywordInfo.ModifiedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
