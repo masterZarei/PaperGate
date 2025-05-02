@@ -1,43 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Infra.Data;
+using PaperGate.Core.Interfaces;
+using PaperGate.Web.Utilities.Helpers;
 
 namespace PaperGate.Web.Pages.Account.Admin.Categories
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel : MyPageModel
     {
-        private readonly PaperGate.Infra.Data.AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DetailsModel(PaperGate.Infra.Data.AppDbContext context)
+        public DetailsModel(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
-        public CategoryInfo CategoryInfo { get; set; } = default!;
+        public CategoryInfo CategoryDTO { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
+            if (id  <= 0)
             {
-                return NotFound();
+                ShowError(ErrorMessages.IDINVALID);
+                return RedirectToPage("./Index");
             }
 
-            var categoryinfo = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            CategoryDTO = await _unitOfWork.Category.GetAsync(m => m.Id == id);
 
-            if (categoryinfo is not null)
+            if (CategoryDTO is null)
             {
-                CategoryInfo = categoryinfo;
-
-                return Page();
+                ShowError(ErrorMessages.NOTFOUND);
+                return RedirectToPage("./Index");
             }
 
-            return NotFound();
+            return Page();
         }
     }
 }

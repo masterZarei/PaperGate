@@ -93,6 +93,10 @@ public class MyPageModel : PageModel
     {
         return LocalRedirect(Url.Content("~/"));
     }
+    public IActionResult RedirectToLocalIndex()
+    {
+        return RedirectToPage("./Index");
+    }
     #endregion
     public enum StaticPages
     {

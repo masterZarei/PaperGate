@@ -1,46 +1,62 @@
 ﻿@page
 @model PaperGate.Web.Pages.Account.Admin.Keywords.DeleteModel
 
+
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "حذف کلمه کلیدی";
 }
 
-<h1>Delete</h1>
+<div class="space-x-normal py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin/Keywords">کلمات کلیدی</a><span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#"> حذف </a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">حذف کلمه کلیدی</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <form method="post">
+                        <input type="hidden" asp-for="KeywordDTO.Id" />
+                        <div class="block tablet:flex justify-between">
+                            <!--                            نام-->
+                            <div class="block tablet:w-1/2 px-2">
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">نام کلمه کلیدی</label>
+                                    <input asp-for="KeywordDTO.Title" type="text" id="name" disabled
+                                           class="customInput">
+                                </div>
+                            </div>
+                            <!--    توضیحات-->
+                            <div class="block tablet:w-1/2 px-2">
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">توضیحات کلمه کلیدی</label>
+                                    <textarea asp-for="KeywordDTO.Description" class="customInput" disabled></textarea>
+                                </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>KeywordInfo</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.CreatedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.CreatedOn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.ModifiedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.ModifiedOn)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="KeywordInfo.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+                            </div>
+                        </div>
+                        <div class="w-full flex px-2">
+                            <div class="w-1/2 py-3 pl-3">
+                                <button type="submit" class="subBtn btnDanger">
+                                    حذف
+                                </button>
+                            </div>
+                            <div class="w-1/2 py-3 pr-3">
+                                <a asp-page="Index" class="subBtn btnDark">
+                                    بازگشت
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

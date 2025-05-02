@@ -1,44 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Infra.Data;
+using PaperGate.Core.Interfaces;
+using PaperGate.Web.Utilities.Helpers;
+using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Categories
 {
-    public class CreateModel : PageModel
+    public class CreateModel : MyPageModel
     {
-        private readonly PaperGate.Infra.Data.AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public CreateModel(PaperGate.Infra.Data.AppDbContext context)
+        public CreateModel(IUnitOfWork unitOfWork, ILogger logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
-
         public IActionResult OnGet()
         {
             return Page();
         }
 
         [BindProperty]
-        public CategoryInfo CategoryInfo { get; set; } = default!;
+        public CategoryInfo CategoryDTO { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                ShowError(ErrorMessages.FILLREQUESTEDDATA);
+                return Page(CategoryDTO);
+            }
+            try
+            {
+                await _unitOfWork.Category.AddAsync(CategoryDTO);
+                await _unitOfWork.SaveChangesAsync();
+                ShowSuccess();
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error occured in Create Page of Category Management on OnPostAsync");
+                return RedirectToPage("./index");
             }
 
-            _context.Categories.Add(CategoryInfo);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
         }
     }
 }

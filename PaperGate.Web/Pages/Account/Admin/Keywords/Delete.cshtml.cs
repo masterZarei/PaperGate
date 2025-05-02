@@ -1,62 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities.Ketwords;
-using PaperGate.Infra.Data;
+using PaperGate.Core.Interfaces;
+using PaperGate.Web.Utilities.Helpers;
+using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Keywords
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : MyPageModel
     {
-        private readonly PaperGate.Infra.Data.AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public DeleteModel(PaperGate.Infra.Data.AppDbContext context)
+        public DeleteModel(IUnitOfWork unitOfWork, ILogger logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         [BindProperty]
-        public KeywordInfo KeywordInfo { get; set; } = default!;
+        public KeywordInfo KeywordDTO { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
+            if (id <= 0)
             {
-                return NotFound();
+                ShowError(ErrorMessages.IDINVALID);
+                return RedirectToPage("./Index");
             }
 
-            var keywordinfo = await _context.Keywords.FirstOrDefaultAsync(m => m.Id == id);
+            KeywordDTO = await _unitOfWork.Keyword.GetAsync(m => m.Id == id);
 
-            if (keywordinfo is not null)
+            if (KeywordDTO is null)
             {
-                KeywordInfo = keywordinfo;
-
-                return Page();
+                ShowError(ErrorMessages.NOTFOUND);
+                return RedirectToPage("./Index");
             }
 
-            return NotFound();
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
+            if (id <= 0)
             {
-                return NotFound();
+                ShowError(ErrorMessages.IDINVALID);
+                return RedirectToLocalIndex();
+            }
+            try
+            {
+                var KeywordDTO = await _unitOfWork.Keyword.GetAsync(c => c.Id == id);
+                if (KeywordDTO != null)
+                {
+                    await _unitOfWork.Keyword.RemoveAsync(KeywordDTO);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                ShowSuccess();
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+
+                _logger.Error(ex, "Error occured in Delete Page of Keyword Management on OnPostAsync");
+                return RedirectToLocalIndex();
             }
 
-            var keywordinfo = await _context.Keywords.FindAsync(id);
-            if (keywordinfo != null)
-            {
-                KeywordInfo = keywordinfo;
-                _context.Keywords.Remove(KeywordInfo);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

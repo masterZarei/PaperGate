@@ -1,50 +1,69 @@
 ﻿@page
 @model PaperGate.Web.Pages.Account.Admin.Categories.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-        
-        <h1>Create</h1>
-        
-    <h4>CategoryInfo</h4>
-    <hr />
-    <div class="row">
-    <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="CategoryInfo.Title" class="control-label"></label>
-                <input asp-for="CategoryInfo.Title" class="form-control" />
-                <span asp-validation-for="CategoryInfo.Title" class="text-danger"></span>
+@{
+    ViewData["Title"] = "ایجاد دسته بندی";
+}
+
+<div class="space-x-normal py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin/Categories">دسته بندی ها</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">ایجاد</a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">اضافه کردن دسته بندی</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <form method="post">
+                        <div class="text-center" asp-validation-summary="All"></div>
+                        <div class="block md:flex justify-between">
+                            <!--                            نام-->
+                            <div class="w-full md:w-1/2 px-2">
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">نام دسته بندی</label>
+                                    <input asp-for="CategoryDTO.Title" type="text" id="name" placeholder="نام دسته بندی را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-red-600 block" asp-validation-for="CategoryDTO.Title"></span>
+
+                                </div>
+                            </div>
+                            <!--    توضیحات-->
+                            <div class="w-full md:w-1/2 px-2">
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">توضیحات دسته بندی</label>
+                                    <textarea asp-for="CategoryDTO.Description" class="customInput"></textarea>
+                                    <span class="text-red-600 block" asp-validation-for="CategoryDTO.Description"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="w-full flex px-2">
+                            <div class="w-1/2 py-3 pl-3">
+                                <button type="submit" class="subBtn btnSuccess">
+                                    تایید
+                                </button>
+                            </div>
+                            <div class="w-1/2 py-3 pr-3">
+                                <a asp-page="Index" class="subBtn btnDark">
+                                    بازگشت
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CategoryInfo.Description" class="control-label"></label>
-                <input asp-for="CategoryInfo.Description" class="form-control" />
-                <span asp-validation-for="CategoryInfo.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryInfo.CreatedOn" class="control-label"></label>
-                <input asp-for="CategoryInfo.CreatedOn" class="form-control" />
-                <span asp-validation-for="CategoryInfo.CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryInfo.ModifiedOn" class="control-label"></label>
-                <input asp-for="CategoryInfo.ModifiedOn" class="form-control" />
-                <span asp-validation-for="CategoryInfo.ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

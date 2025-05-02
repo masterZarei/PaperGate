@@ -1,77 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Infra.Data;
+using PaperGate.Core.Interfaces;
+using PaperGate.Web.Utilities.Helpers;
+using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Categories
 {
-    public class EditModel : PageModel
+    public class EditModel : MyPageModel
     {
-        private readonly PaperGate.Infra.Data.AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public EditModel(PaperGate.Infra.Data.AppDbContext context)
+        public EditModel(IUnitOfWork unitOfWork, ILogger logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         [BindProperty]
-        public CategoryInfo CategoryInfo { get; set; } = default!;
+        public CategoryInfo CategoryDTO { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                ShowError(ErrorMessages.IDINVALID);
+                return RedirectToPage("./Index");
             }
 
-            var categoryinfo =  await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (categoryinfo == null)
+            CategoryDTO =  await _unitOfWork.Category.GetAsync(m => m.Id == id);
+            if (CategoryDTO is null)
             {
-                return NotFound();
+                ShowError(ErrorMessages.NOTFOUND);
+                return RedirectToPage("./Index");
             }
-            CategoryInfo = categoryinfo;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                ShowError(ErrorMessages.FILLREQUESTEDDATA);
+                return Page(CategoryDTO);
             }
-
-            _context.Attach(CategoryInfo).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _unitOfWork.Category.UpdateAsync(CategoryDTO);
+                await _unitOfWork.SaveChangesAsync();
+                ShowSuccess();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CategoryInfoExists(CategoryInfo.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                _logger.Error(ex,"Error occured in Edit Page of Category Management on OnPostAsync");
+                return RedirectToPage("./index");
             }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool CategoryInfoExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
+            
         }
     }
 }

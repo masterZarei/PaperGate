@@ -1,62 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Infra.Data;
+using PaperGate.Core.Interfaces;
+using PaperGate.Web.Utilities.Helpers;
+using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Categories
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : MyPageModel
     {
-        private readonly PaperGate.Infra.Data.AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
 
-        public DeleteModel(PaperGate.Infra.Data.AppDbContext context)
+        public DeleteModel(IUnitOfWork unitOfWork, ILogger logger)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         [BindProperty]
-        public CategoryInfo CategoryInfo { get; set; } = default!;
+        public CategoryInfo CategoryDTO { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
+            if (id <= 0)
             {
-                return NotFound();
+                ShowError(ErrorMessages.IDINVALID);
+                return RedirectToPage("./Index");
             }
 
-            var categoryinfo = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
+            CategoryDTO = await _unitOfWork.Category.GetAsync(m => m.Id == id);
 
-            if (categoryinfo is not null)
+            if (CategoryDTO is null)
             {
-                CategoryInfo = categoryinfo;
-
-                return Page();
+                ShowError(ErrorMessages.NOTFOUND);
+                return RedirectToPage("./Index");
             }
 
-            return NotFound();
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
+            if (id <= 0)
             {
-                return NotFound();
+                ShowError(ErrorMessages.IDINVALID);
+                return RedirectToLocalIndex();
             }
-
-            var categoryinfo = await _context.Categories.FindAsync(id);
-            if (categoryinfo != null)
+            try
             {
-                CategoryInfo = categoryinfo;
-                _context.Categories.Remove(CategoryInfo);
-                await _context.SaveChangesAsync();
+                var CategoryDTO = await _unitOfWork.Category.GetAsync(c=>c.Id == id);
+                if (CategoryDTO != null)
+                {
+                    await _unitOfWork.Category.RemoveAsync(CategoryDTO);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+                ShowSuccess();
+                return RedirectToPage("./Index");
             }
+            catch (Exception ex)
+            {
 
-            return RedirectToPage("./Index");
+                _logger.Error(ex, "Error occured in Delete Page of Category Management on OnPostAsync");
+                return RedirectToLocalIndex();
+            }
+            
         }
     }
 }

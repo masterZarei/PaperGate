@@ -2,42 +2,57 @@
 @model PaperGate.Web.Pages.Account.Admin.Keywords.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "جزئیات کلمه کلیدی";
 }
 
-<h1>Details</h1>
+<div class="space-x-normal py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin/Keywords">کلمات کلیدی</a><span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#"> جزئیات </a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل صفحه-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">توضیحات کلمه کلیدی</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <div class="block tablet:flex justify-between">
+                        <!--    نام-->
+                        <div class="w-full tablet:w-1/2 px-2">
+                            <div class="flex flex-col mt-3">
+                                <label for="name" class="customLabel">نام کلمه کلیدی</label>
+                                <input asp-for="KeywordDTO.Title" type="text" id="name" disabled
+                                       class="customInput">
+                            </div>
+                        </div>
+                        <!--    توضیحات-->
+                        <div class="w-full tablet:w-1/2 px-2">
+                            <div class="flex flex-col mt-3">
+                                <label for="name" class="customLabel">توضیحات کلمه کلیدی</label>
+                                <textarea asp-for="KeywordDTO.Description" class="customInput" disabled></textarea>
+                            </div>
 
-<div>
-    <h4>KeywordInfo</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.CreatedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.CreatedOn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.KeywordInfo.ModifiedOn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KeywordInfo.ModifiedOn)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.KeywordInfo.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+                        </div>
+                    </div>
+                    <div class="w-full flex px-2">
+                        <div class="w-1/2 py-3 pl-3">
+                            <a asp-page="Edit" asp-route-Id="@Model.KeywordDTO.Id" class="subBtn btnIndigo">
+                                ویرایش
+                            </a>
+                        </div>
+                        <div class="w-1/2 py-3 pr-3">
+                            <a asp-page="Index" class="subBtn btnDark">
+                                بازگشت
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

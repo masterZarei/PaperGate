@@ -5,50 +5,68 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="space-x-normal py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin/Keywords">کلمات کلیدی</a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                کارد هدر تایتل و دکمه ایجاد-->
+                <div class="PanelCard-header flex justify-between">
+                    <!--                    ایجاد-->
+                    <a asp-page="Create" class="btnSolid bg-indigo-400 text-white mr-3">
+                        <i class="fas fa-plus align-middle"></i>
+                        ایجاد
+                    </a>
+                    <!--    تایتل صفحه-->
+                    <h2 class="text-lg block mx-auto">مدیریت کلمات کلیدی </h2>
+                </div>
+                <div class="PanelCard-body pt-5 overflow-auto">
+                    @if (Model.KeywordDTO.Any())
+                    {
+                        <table class="table text-center">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="tableBorder p-3">نام</th>
+                                    <th class="tableBorder p-3">مدیریت</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gray-50">
+                                @foreach (var item in Model.KeywordDTO)
+                                {
+                                    <tr class="hover:bg-gray-100 transition">
+                                        <!--    نام -->
+                                        <td class="tableBorder p-3">@item.Title </td>
+                                        <!--    مدیریت-->
+                                        <td class="tableBorder p-3">
+                                            <div class="flex items-center justify-center">
+                                                <a asp-page="Details" asp-route-Id="@item.Id" class="btnGroup rounded-r bg-indigo-600 hover:bg-indigo-700 text-white">
+                                                    <i class="fas fa-list"></i>
+                                                </a>
+                                                <a asp-page="Edit" asp-route-Id="@item.Id" class="btnGroup bg-yellow-400 hover:bg-yellow-500">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a asp-page="Delete" asp-route-Id="@item.Id" class="btnGroup rounded-l bg-red-600 hover:bg-red-700 text-white">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.KeywordInfo[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KeywordInfo[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KeywordInfo[0].CreatedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KeywordInfo[0].ModifiedOn)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.KeywordInfo) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <h3 class="alertInfo text-center"> کلمه کلیدی ای موجود نیست </h3>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
