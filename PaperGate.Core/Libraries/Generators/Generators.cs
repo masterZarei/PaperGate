@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using PaperGate.Core.Entities;
+using System.Text.RegularExpressions;
 
 namespace PaperGate.Core.Libraries.Generators;
 public static class NameGenerator
@@ -13,9 +15,9 @@ public static class CodeGenerator
 {
     public static int GenerateUniqueCode => new Random().Next(10000000, 99999999);
 }
-/*public static class SlugGenerator
+public static class SlugGenerator
 {
-    public static string GenerateSlug(string input, List<PaperInfo>? paper)
+    public static string GenerateSlug(string input, List<PaperInfo>? papers)
     {
         if (string.IsNullOrWhiteSpace(input))
             return string.Empty;
@@ -30,10 +32,10 @@ public static class CodeGenerator
         slug = slug.Trim('-');
 
         // 4. unique کردن slug
-        if (paper.Any(b => b.Slug == slug))
+        if (papers.Any(b => b.Slug == slug))
         {
             int count = 2;
-            while (paper.Select(bp => bp.Slug).Contains($"{slug}-{count}"))
+            while (papers.Select(bp => bp.Slug).Contains($"{slug}-{count}"))
             {
                 count++;
             }
@@ -42,4 +44,4 @@ public static class CodeGenerator
 
         return slug.ToLowerInvariant();
     }
-}*/
+}

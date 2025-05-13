@@ -1,66 +1,243 @@
 ﻿@page
 @model PaperGate.Web.Pages.Account.Admin.Papers.EditModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "ویرایش مقاله";
 }
+<div class="space-x-normal py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin/Papers">مقاله</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">ویرایش</a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">ویرایش مقاله</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="text-center text-red-500" asp-validation-summary="All"></div>
+                        <input type="hidden" asp-for="PaperDto.Id" />
+                        <input type="hidden" asp-for="PaperDto.AuthorId" />
+                        <input type="hidden" asp-for="PaperDto.Picture" />
+                        <input type="hidden" asp-for="PaperDto.Slug" />
+                        <div class="block tablet:flex justify-between">
+                            <div class="w-full tablet:w-1/2 px-2">
+                                <!--                                موضوع-->
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">موضوع مقاله</label>
+                                    <input asp-for="PaperDto.Title" type="text" id="name" placeholder="موضوع مقاله را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-danger d-block" asp-validation-for="PaperDto.Title"></span>
+                                    <p class="text-gray-600">نکته: لطفا حداکثر 35 کاراکتر بنویسید</p>
 
-<h1>Edit</h1>
+                                </div>
+                                <div>
+                                    <!--کلید واژه ها-->
+                                    <div class="flex flex-col mt-3">
+                                        <label for="keywords" class="customLabel">کلمات کلیدی</label>
+                                        <div class="flex items-center">
+                                            <select id="CategoriesList" asp-for="PaperDto.SelectedKeyword" asp-items="@Model.PaperDto.KeywordList"
+                                                    class="customInput">
+                                            </select>
+                                            <button asp-page-handler="AddKeyword" type="submit" id="addKeyword" class="increaseBtn"> افزودن </button>
 
-<h4>PaperInfo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                
-                <label asp-for="PaperInfo.Title" class="control-label"></label>
-                <input asp-for="PaperInfo.Title" class="form-control" />
-                <span asp-validation-for="PaperInfo.Title" class="text-danger"></span>
+                                        </div>
+                                        <!--                                    کلید واژه ها های انتخاب شده-->
+                                        @if (Model.PaperDto.PaperKeywords is not null && Model.PaperDto.PaperKeywords.Any())
+                                        {
+                                            <div class="flex flex-wrap mt-4 gap-2">
+                                                @foreach (var item in Model.PaperDto.PaperKeywords)
+                                                {
+                                                    <button type="submit" asp-page-handler="RemoveKeyword" asp-route-Id="@item.Id" class="btnSolid">
+                                                        @item.Title <i class="fa fa-trash text-warning" aria-hidden="true"></i>
+                                                    </button>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                    <!--                                وضعیت-->
+                                    <div class="flex gap-4 items-center mt-6">
+                                        <label for="status" class="customLabel">وضعیت</label>
+                                        <input asp-for="PaperDto.IsActive" type="checkbox" class="w-10 h-10" id="status">
+                                    </div>
+                                </div>
+                                <!--image-->
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel"> عکس </label>
+                                    <label class="mt-3 text-white py-1 rounded-md pr-4 bg-indigo-600 cursor-pointer flex flex-row-reverse justify-between">
+                                        <input type="file" asp-for="PaperDto.FileUpload" id="imgUp" accept="image/*,.png,.jpg">
+                                        <span class="text-center">آپلود فایل</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="w-full tablet:w-1/2 px-2">
+                                <!--    دسته بندی-->
+                                <div class="flex flex-col mt-3">
+                                    <label for="category" class="customLabel">دسته بندی</label>
+                                    <div class="flex items-center">
+                                        <select id="KeywordsList" asp-for="PaperDto.SelectedCategory" asp-items="@Model.PaperDto.CategoryList"
+                                                class="customInput">
+                                        </select>
+                                        <button asp-page-handler="AddCategory" type="submit" id="addCategory" class="increaseBtn"> افزودن </button>
+
+                                    </div>
+                                    <!--                                    دسته بندی های انتخاب شده-->
+                                    @if (Model.PaperDto.PaperCategories is not null && Model.PaperDto.PaperCategories.Any())
+                                    {
+                                        <div class="flex flex-wrap mt-4 gap-2">
+                                            @foreach (var item in Model.PaperDto.PaperCategories)
+                                            {
+                                                <button type="submit" asp-page-handler="RemoveCategory" asp-route-Id="@item.Id" class="btnSolid">
+                                                    @item.Title <i class="fa fa-trash text-warning" aria-hidden="true"></i>
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                <!--    دمو عکس-->
+                                <div>
+                                    <img src="~/Assets/Pictures/Papers/@Model?.PaperDto?.Picture" id="imgPreview" class="border border-black w-72 h-52 mx-auto px-2 mt-8" alt="Paper">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <!--         خلاصه کوتاه-->
+                            <div class="w-full flex flex-col px-2 mt-3">
+                                <label for="demo" class="customLabel">خلاصه </label>
+                                <textarea asp-for="PaperDto.Summary" id="demo" cols="30" rows="10" class="customInput"></textarea>
+                                <span class="text-danger d-block" asp-validation-for="PaperDto.Summary"></span>
+                                <p class="text-gray-600">نکته: لطفا حداقل 15 کلمه بنویسید</p>
+
+                            </div>
+
+                        </div>
+                        <div class="w-full">
+                            <!--       متن مقاله-->
+                            <div class="w-full flex flex-col px-2 mt-3">
+                                <label for="Paper" class="customLabel">محتوا : </label>
+                                <textarea asp-for="PaperDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
+                                <span class="text-danger d-block" asp-validation-for="PaperDto.Content"></span>
+                                <p class="text-gray-600">نکته: لطفا حداقل 1000 کلمه بنویسید</p>
+
+                            </div>
+                        </div>
+                        <div class="w-full flex px-2">
+                            <div class="w-1/2 py-3 pl-3">
+                                <button type="submit" class="subBtn btnSuccess">
+                                    تایید
+                                </button>
+                            </div>
+                            <div class="w-1/2 py-3 pr-3">
+                                <a asp-page="Index" class="subBtn btnDark">
+                                    بازگشت
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                
-                <label asp-for="PaperInfo.Content" class="control-label"></label>
-                <input asp-for="PaperInfo.Content" class="form-control" />
-                <span asp-validation-for="PaperInfo.Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                
-                <label asp-for="PaperInfo.AuthorId" class="control-label"></label>
-                <select asp-for="PaperInfo.AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
-                <span asp-validation-for="PaperInfo.AuthorId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="PaperInfo.IsDeleted" /> @Html.DisplayNameFor(model => model.PaperInfo.IsDeleted)
-                </label>
-            </div>
-            <input type="hidden" asp-for="PaperInfo.Id" />
-            <div class="form-group">
-                
-                <label asp-for="PaperInfo.CreatedOn" class="control-label"></label>
-                <input asp-for="PaperInfo.CreatedOn" class="form-control" />
-                <span asp-validation-for="PaperInfo.CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                
-                <label asp-for="PaperInfo.ModifiedOn" class="control-label"></label>
-                <input asp-for="PaperInfo.ModifiedOn" class="form-control" />
-                <span asp-validation-for="PaperInfo.ModifiedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgPreview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        $("#imgUp").change(function () {
+            readURL(this);
+        });
+
+        document.getElementById('imgUp').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif','image/jpg'];
+                if (!validImageTypes.includes(file.type)) {
+                    alert('فقط فایل‌های تصویری مجاز هستند.');
+                    event.target.value = ''; // بازنشانی ورودی
+                }
+            }
+        });
+    </script>
+    <script src="https://cdn.tiny.cloud/1/cee6xecr4p6rcl06y0bfi2a24k8yedskjlphi9wiflw2pw1g/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+                const example_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.withCredentials = false;
+          xhr.open('POST', '@Url.Action("UploadPaperImage", "Api")');
+
+          xhr.upload.onprogress = (e) => {
+            progress(e.loaded / e.total * 100);
+          };
+
+          xhr.onload = () => {
+            if (xhr.status === 403) {
+              reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+              return;
+            }
+
+            if (xhr.status < 200 || xhr.status >= 300) {
+              reject('HTTP Error: ' + xhr.status);
+              return;
+            }
+
+            const json = JSON.parse(xhr.responseText);
+
+            if (!json || typeof json.location != 'string') {
+              reject('Invalid JSON: ' + xhr.responseText);
+              return;
+            }
+
+            resolve(json.location);
+          };
+
+          xhr.onerror = () => {
+            reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+          };
+
+          const formData = new FormData();
+          formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+          xhr.send(formData);
+        });
+
+                tinymce.init({
+          selector: 'textarea',
+          language_url: '/Scripts/tinymce/fa.js', // مسیر فایل زبان
+          language: 'fa',
+          plugins: [
+            'link', 'image', 'lists', 'table', 'autolink', 'visualblocks', 'searchreplace'
+          ],
+          toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | link image table | removeformat',
+          valid_elements: '*[*]', // اجازه به تمام تگ‌ها و ویژگی‌ها
+          extended_valid_elements: 'span[style|class],a[href|target],img[src|alt|title|width|height|style],strong/b,em/i,u,strike', // تگ‌ها و ویژگی‌های اضافی
+          content_style: 'body { font-family:Vazir,Arial,sans-serif;}', // استایل پیش‌فرض
+          image_title: true,
+          automatic_uploads: true,
+          file_picker_types: 'image',
+          images_upload_url: '@Url.Action("UploadPaperImage", "Api")', // مسیر برای آپلود تصاویر
+          images_upload_handler: example_image_upload_handler,
+          forced_root_block: 'p', // هر متن باید داخل یک پاراگراف باشد
+        });
+
+    </script>
 }

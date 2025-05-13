@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using PaperGate.Core.DTOs;
-using PaperGate.Core.Entities;
 using PaperGate.Infra.Data;
+using PaperGate.Web.ViewModels;
 
 namespace PaperGate.Web.Pages
 {
@@ -26,11 +25,6 @@ namespace PaperGate.Web.Pages
             {
                 return Redirect("/Identity/Login");
             }
-            if (PaperDto.Comment == null && string.IsNullOrWhiteSpace(PaperDto?.Comment?.Content))
-            {
-                ModelState.AddModelError(string.Empty, "لطفا محتویات کامنت را وارد کنید");
-                return RedirectToPage();
-            }
 
             var userId = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
 
@@ -39,13 +33,6 @@ namespace PaperGate.Web.Pages
                 return RedirectToPage("~/");
             }
 
-
-            _context.Comments.Add(new CommentInfo
-            {
-                Content = PaperDto.Comment.Content,
-                UserId = userId.Id,
-                IsVerified = true //فعلا
-            });
             return RedirectToPage();
 
         }

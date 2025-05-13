@@ -4,7 +4,7 @@ public static class StaticValues
 {
     #region File Paths
     //Images
-    public const string PreferencesImagesPath = "wwwroot/Assets/Pictures/Papers/";
+    public const string PaperImagesPath = "wwwroot/Assets/Pictures/Papers/";
 
 
     #endregion

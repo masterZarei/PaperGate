@@ -19,21 +19,18 @@
 
             @if (User.Identity.IsAuthenticated)
             {
+
+                    <li class="relative h-full flex items-center gap-4">
                 @if (User.IsInRole(Roles.AdminEndUser))
                 {
-                    <li class="relative h-full flex items-center gap-4">
 
                         <a href="~/Account/Admin/Products" class="hover:hover:text-orange-400">پنل کاربری</a>
-                    </li>
                 }
                 else
                 {
-                    <li class="relative h-full flex items-center gap-4">
 
                         <a href="~/Account/User/Tickets" class="hover:hover:text-orange-400">پنل کاربری</a>
-                    </li>
                 }
-                <li class="relative h-full flex items-center gap-4">
 
                     <a href="~/Account/User/Tickets" class="hover:hover:text-orange-400">خروج</a>
                 </li>

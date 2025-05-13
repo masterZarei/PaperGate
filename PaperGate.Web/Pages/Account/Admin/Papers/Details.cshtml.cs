@@ -1,43 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using PaperGate.Core.Entities;
+using PaperGate.Core.DTOs;
 using PaperGate.Infra.Data;
-
+using PaperGate.Web.Utilities.Helpers;
+using PaperGate.Web.ViewModels;
+using ILogger = Serilog.ILogger;
 namespace PaperGate.Web.Pages.Account.Admin.Papers
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel : MyPageModel
     {
-        private readonly PaperGate.Infra.Data.AppDbContext _context;
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public DetailsModel(PaperGate.Infra.Data.AppDbContext context)
+        public DetailsModel(AppDbContext context,
+            IMapper mapper,
+            ILogger logger)
         {
             _context = context;
+            _mapper = mapper;
+            _logger = logger;
         }
+        [BindProperty]
+        public PaperDetailsDto PaperDto { get; set; }
 
-        public PaperInfo PaperInfo { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGet(int Id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                string username = User.Identity.Name;
+                if (string.IsNullOrEmpty(username))
+                {
+                    return RedirectToSpecialPage(StaticPages.Login);
+                }
+                if (Id == 0)
+                {
+                    ShowError(ErrorMessages.IDINVALID);
+                    return RedirectToIndex();
+                }
+                var Paper = await _context.Papers
+                    .Include(c => c.Categories)
+                    .FirstOrDefaultAsync(p => p.Id == Id);
+                if (Paper is null)
+                {
+                    ShowError(ErrorMessages.NOTFOUND);
+                    return RedirectToIndex();
+                }
+                PaperDto = _mapper.Map<PaperDetailsDto>(Paper);
+                PaperDto.PaperCategories = await _context.PaperCategories
+                    .Include(c => c.Category)
+                    .Where(c => c.PaperId == Id).ToListAsync();
 
-            var paperinfo = await _context.Papers.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (paperinfo is not null)
-            {
-                PaperInfo = paperinfo;
+                PaperDto.PaperKeywords = await _context.PaperKeywords
+                    .Include(c => c.Keyword)
+                    .Where(c => c.PaperId == Id).ToListAsync();
 
                 return Page();
             }
+            catch (Exception ex)
+            {
+                ShowError(ErrorMessages.ERRORHAPPEDNED);
+                _logger.Fatal(ex.ToString(), $"Paper/Details/PaperViewModelJason:{PaperDto}");
+                return RedirectToIndex();
+            }
 
-            return NotFound();
         }
     }
 }

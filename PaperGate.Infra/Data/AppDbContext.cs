@@ -15,7 +15,6 @@ namespace PaperGate.Infra.Data
         public DbSet<PaperCategoryInfo> PaperCategories { get; set; }
         public DbSet<KeywordInfo> Keywords { get; set; }
         public DbSet<PaperKeywordInfo> PaperKeywords { get; set; }
-        public DbSet<CommentInfo> Comments { get; set; }
 
     }
 }

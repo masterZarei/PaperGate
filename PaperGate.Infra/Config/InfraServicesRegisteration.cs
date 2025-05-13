@@ -14,9 +14,9 @@ public static class InfraServicesRegisteration
         service.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         service.AddScoped<IUserService, UserService>();
         service.AddScoped<IUnitOfWork, UnitOfWork>();
+        service.AddScoped<IHTMLToolsService, HTMLToolsService>();
         // service.AddScoped<IPublicInfoService, PublicInfoService>();
         // service.AddScoped<IBlogRepository, BlogRepository>();
-        // service.AddScoped<IHTMLToolsService, HTMLToolsService>();
 
     }
 
