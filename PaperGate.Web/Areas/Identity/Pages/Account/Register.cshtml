@@ -3,44 +3,62 @@
 @{
     ViewData["Title"] = "ثبت نام";
 }
+<section class="bg-no-repeat bg-cover bg-center h-[100vh] w-full overflow-hidden" style="background-image: url('../images/logo.png')">
+    <div class="login w-72 sm470:w-80 xs600:w-96 h-full mt-8 mx-auto flex justify-center items-center">
+        <form method="post" class="customForm w-full m-auto bg-white rounded-t-md rounded-b-md overflow-hidden">
+            <div class="text-red-600" asp-validation-summary="All"></div>
 
-<h1>@ViewData["Title"]</h1>
+            <div class="formHead h-24 bg-gray-800 w-100">
+                <h2 class="formTitle text-center text-xl font-bold text-white flex justify-center items-center h-full">ورود به سایت </h2>
+            </div>
+            <div class="border px-6">
+                <!--                  نام -->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-user text-gray-800"></i></span>
+                    </div>
+                    <input asp-for="RegisterDto.Name" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="text" placeholder="نام و نام خانوادگی">
+                    <span asp-validation-for="RegisterDto.Name" class="text-red-600"></span>
+                </div>
+                <!--                   نام خانوادگی-->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-user text-gray-800"></i></span>
+                    </div>
+                    <input asp-for="RegisterDto.LastName" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="text" placeholder="نام و نام خانوادگی">
+                    <span asp-validation-for="RegisterDto.LastName" class="text-red-600"></span>
+                </div>
+                <!--                   کد ملی-->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-user text-gray-800"></i></span>
+                    </div>
+                    <input class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="text" placeholder="کد ملی">
+                </div>
+                <!--               رمز عبور-->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-phone text-gray-800"></i></span>
+                    </div>
+                    <input asp-for="RegisterDto.Password" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="password" placeholder="رمز عبور">
+                    <span asp-validation-for="RegisterDto.Password" class="text-red-600"></span>
 
-<div class="row">
-    <div class="col-md-12">
-        <form id="registerForm" asp-route-returnUrl="@Model.RegisterDto.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="RegisterDto.Name" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="RegisterDto.Name">نام</label>
-                <span asp-validation-for="RegisterDto.Name" class="text-danger"></span>
+                </div>
+                <!--             تکرار  رمز عبور-->
+                <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
+                    <div class="inputGroupPrepend mr-0 -ml-1 flex">
+                        <span class="pr-2 flex items-center justify-center"><i class="fas fa-phone text-gray-800"></i></span>
+                    </div>
+                    <input asp-for="RegisterDto.ConfirmPassword" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="password" placeholder="تکرار رمز عبور">
+                    <span asp-validation-for="RegisterDto.ConfirmPassword" class="text-red-600"></span>
+
+                </div>
+                <h6 class="mb-4">حساب کاربری دارید ؟ <a asp-page="Login" class="text-indigo-700"> وارد شوید </a> </h6>
+                <button type="submit" class="formSubmit border-2 border-gray-800 text-base w-full py-4 text-white my-8 mx-auto block duration-200 bg-gray-800 text-center font-semibold transition-all ease-in-out rounded-sm hover:bg-white hover:text-gray-800">ورود</button>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="RegisterDto.LastName" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="RegisterDto.LastName">نام خانوادگی</label>
-                <span asp-validation-for="RegisterDto.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="RegisterDto.NationalCode" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="RegisterDto.NationalCode">کد ملی</label>
-                <span asp-validation-for="RegisterDto.NationalCode" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="RegisterDto.Password" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="RegisterDto.Password">رمز عبور</label>
-                <span asp-validation-for="RegisterDto.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="RegisterDto.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="RegisterDto.ConfirmPassword">تکرار رمز عبور</label>
-                <span asp-validation-for="RegisterDto.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">ثبت نام</button>
         </form>
     </div>
-</div>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

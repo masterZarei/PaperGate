@@ -35,7 +35,7 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync();
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             LoginDto = new()
             {
@@ -49,8 +49,6 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(LoginDto.NationalCode, LoginDto.Password, LoginDto.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -60,11 +58,13 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
                         ShowError(ErrorMessages.CUSTOM, "حساب کاربری شما حذف شده است!");
                         HttpContext.Session.Clear(); // پاک‌سازی سشن
                         await _signInManager.SignOutAsync();
-                        return Redirect("/");
+                        return RedirectToIndex();
                     }
                     _logger.Information($"User {LoginDto.NationalCode} logged in.");
                     ShowSuccess("با موفقیت وارد شدید");
+
                     return LocalRedirect(returnUrl);
+                    //return Redirect(returnUrl);
                 }
                 if (result.IsLockedOut)
                 {

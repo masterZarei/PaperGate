@@ -1,1 +1,0 @@
-$(document).ready(function(){$("#lightSlider").lightSlider({rtl:!1,item:4,slideMargin:10,loop:!0,pager:!0,auto:!0,pause:3e3,enableTouch:!0,enableDrag:!0,responsive:[{breakpoint:992,settings:{item:3,slideMargin:7}},{breakpoint:768,settings:{item:2,slideMargin:7}},{breakpoint:400,settings:{item:1,slideMargin:7}}]})});
