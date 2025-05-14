@@ -1,17 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PaperGate.Core.Config;
+using PaperGate.Core.Entities;
+using PaperGate.Core.Libraries.StaticValues;
 using PaperGate.Infra.Config;
+using PaperGate.Infra.Data;
 using PaperGate.Web.Config;
+using PaperGate.Web.Utilities.Libraries;
+using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
-using Serilog;
-using PaperGate.Core.Libraries.StaticValues;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using PaperGate.Web.Utilities.Libraries;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using PaperGate.Core.Entities;
-using PaperGate.Infra.Data;
 
 namespace PaperGate.Web;
 
@@ -119,7 +119,7 @@ public class Program
         #endregion
 
         builder.Services.AddControllers();
-        
+
 
         var app = builder.Build();
 

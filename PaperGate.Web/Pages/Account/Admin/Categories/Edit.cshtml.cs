@@ -28,7 +28,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
                 return RedirectToPage("./Index");
             }
 
-            CategoryDTO =  await _unitOfWork.Category.GetAsync(m => m.Id == id);
+            CategoryDTO = await _unitOfWork.Category.GetAsync(m => m.Id == id);
             if (CategoryDTO is null)
             {
                 ShowError(ErrorMessages.NOTFOUND);
@@ -54,10 +54,10 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
             }
             catch (Exception ex)
             {
-                _logger.Error(ex,"Error occured in Edit Page of Category Management on OnPostAsync");
+                _logger.Error(ex, "Error occured in Edit Page of Category Management on OnPostAsync");
                 return RedirectToPage("./index");
             }
-            
+
         }
     }
 }

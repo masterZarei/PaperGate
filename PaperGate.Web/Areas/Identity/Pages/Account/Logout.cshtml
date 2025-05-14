@@ -1,21 +1,21 @@
 ﻿@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "خروج";
 }
+<section class="bgImageFull bg-no-repeat bg-cover bg-center h-[100vh] w-full overflow-hidden" style="background-image: url('/images/Cambridge-University.jpg')">
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
-        }
-    }
-</header>
+	<div class="login w-72 sm470:w-80 xs600:w-96 h-full mt-8 mx-auto flex justify-center items-center">
+		<form method="post" class="customForm w-full m-auto bg-white rounded-t-md rounded-b-md overflow-hidden">
+			<div class="formHead h-24 bg-gray-800 w-100">
+				<h2 class="formTitle text-center text-xl font-bold text-white flex justify-center items-center h-full">خروج </h2>
+			</div>
+			<div class="border pt-8 pb-3 px-6 flex justify-center items-center flex-col gap-4">
+				<p class="text-center text-gray-800 font-semibold text-lg"> می خواهید خارج شوید ؟ </p>
+				<button type="submit" class="px-6 py-2 rounded-3xl bg-crimson3 text-white flex gap-4 items-center"> <i class="fa fa-sign-out" aria-hidden="true"></i>  خروج </button>
+				<h6 class="mb-4 mx-auto block"> <a href="/" class="text-indigo-700 text-center block"> بازگشت به خانه </a> </h6>
+
+			</div>
+		</form>
+	</div>
+</section>

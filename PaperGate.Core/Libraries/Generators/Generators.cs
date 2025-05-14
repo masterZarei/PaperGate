@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using PaperGate.Core.Entities;
+﻿using PaperGate.Core.Entities;
 using System.Text.RegularExpressions;
 
 namespace PaperGate.Core.Libraries.Generators;

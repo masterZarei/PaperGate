@@ -77,14 +77,14 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
             #region Category
 
             PaperDto.PaperCategories = (from categories in _context.Categories.ToList()
-                                      join categoryToPapers in _context.PaperCategories.ToList()
-                                      on categories.Id equals categoryToPapers.CategoryId
-                                      where categoryToPapers.PaperId == PaperDto.Id
-                                      select categories).ToList();
+                                        join categoryToPapers in _context.PaperCategories.ToList()
+                                        on categories.Id equals categoryToPapers.CategoryId
+                                        where categoryToPapers.PaperId == PaperDto.Id
+                                        select categories).ToList();
 
             PaperDto.AvailableCategories = (from categories in _context.Categories.ToList()
-                                           where !PaperDto.PaperCategories.Contains(categories)
-                                           select categories).ToList();
+                                            where !PaperDto.PaperCategories.Contains(categories)
+                                            select categories).ToList();
             if (PaperDto.AvailableCategories is not null)
                 PaperDto.CategoryList = new SelectList(PaperDto.AvailableCategories, nameof(CategoryInfo.Id), nameof(CategoryInfo.Title));
             #endregion
@@ -92,14 +92,14 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
             #region Keyword
 
             PaperDto.PaperKeywords = (from keywords in _context.Keywords.ToList()
-                                    join keywordToPapers in _context.PaperKeywords.ToList()
-                                    on keywords.Id equals keywordToPapers.KeywordId
-                                    where keywordToPapers.PaperId == PaperDto.Id
-                                    select keywords).ToList();
+                                      join keywordToPapers in _context.PaperKeywords.ToList()
+                                      on keywords.Id equals keywordToPapers.KeywordId
+                                      where keywordToPapers.PaperId == PaperDto.Id
+                                      select keywords).ToList();
 
             PaperDto.AvailableKeywords = (from keyword in _context.Keywords.ToList()
-                                         where !PaperDto.PaperKeywords.Contains(keyword)
-                                         select keyword).ToList();
+                                          where !PaperDto.PaperKeywords.Contains(keyword)
+                                          select keyword).ToList();
             if (PaperDto.AvailableKeywords is not null)
                 PaperDto.KeywordList = new SelectList(PaperDto.AvailableKeywords, nameof(KeywordInfo.Id), nameof(KeywordInfo.Title));
             #endregion

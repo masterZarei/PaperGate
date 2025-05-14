@@ -9,7 +9,7 @@ public static class StartupSetup
 {
     public static void AddInfraDbContext(this IServiceCollection services, string connectionString)
     {
-    
+
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 

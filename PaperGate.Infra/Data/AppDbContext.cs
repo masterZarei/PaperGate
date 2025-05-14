@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Categories;
 using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Interfaces;
 
 namespace PaperGate.Infra.Data
 {
@@ -16,5 +17,43 @@ namespace PaperGate.Infra.Data
         public DbSet<KeywordInfo> Keywords { get; set; }
         public DbSet<PaperKeywordInfo> PaperKeywords { get; set; }
 
+
+
+
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            SaveConfig();
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+        public override int SaveChanges()
+        {
+            SaveConfig();
+            return base.SaveChanges();
+        }
+        internal async void SaveConfig()
+        {
+            var now = DateTime.Now;
+
+            foreach (var entry in ChangeTracker.Entries<IBaseEntity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedOn = now;
+                        entry.Entity.ModifiedOn = now;
+                        break;
+
+                    case EntityState.Modified:
+                        Entry(entry.Entity).Property(x => x.CreatedOn).IsModified = false;
+                        entry.Entity.ModifiedOn = now;
+                        break;
+                    case EntityState.Deleted:
+                        break;
+                }
+            }
+        }
     }
+
 }

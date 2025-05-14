@@ -33,7 +33,9 @@
                     <div class="inputGroupPrepend mr-0 -ml-1 flex">
                         <span class="pr-2 flex items-center justify-center"><i class="fas fa-user text-gray-800"></i></span>
                     </div>
-                    <input class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="text" placeholder="کد ملی">
+                    <input asp-for="RegisterDto.NationalCode" class="inputGroupInput mr-3 rounded-l block px-2 py-2 my-1 text-base font-normal leading-6 text-gray-600 bg-white bg-clip-padding transition-all ease-in-out" type="text" placeholder="کد ملی">
+                    <span asp-validation-for="RegisterDto.NationalCode" class="text-red-600"></span>
+
                 </div>
                 <!--               رمز عبور-->
                 <div class="inputGroup my-4 border-b-2 border-indigo-800 relative flex flex-wrap items-stretch w-full">
@@ -54,7 +56,7 @@
 
                 </div>
                 <h6 class="mb-4">حساب کاربری دارید ؟ <a asp-page="Login" class="text-indigo-700"> وارد شوید </a> </h6>
-                <button type="submit" class="formSubmit border-2 border-gray-800 text-base w-full py-4 text-white my-8 mx-auto block duration-200 bg-gray-800 text-center font-semibold transition-all ease-in-out rounded-sm hover:bg-white hover:text-gray-800">ورود</button>
+                <button type="submit" class="formSubmit border-2 border-gray-800 text-base w-full py-4 text-white my-8 mx-auto block duration-200 bg-gray-800 text-center font-semibold transition-all ease-in-out rounded-sm hover:bg-white hover:text-gray-800">ثبت نام</button>
             </div>
         </form>
     </div>

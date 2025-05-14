@@ -48,7 +48,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
             }
             try
             {
-                var CategoryDTO = await _unitOfWork.Category.GetAsync(c=>c.Id == id);
+                var CategoryDTO = await _unitOfWork.Category.GetAsync(c => c.Id == id);
                 if (CategoryDTO != null)
                 {
                     await _unitOfWork.Category.RemoveAsync(CategoryDTO);
@@ -63,7 +63,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
                 _logger.Error(ex, "Error occured in Delete Page of Category Management on OnPostAsync");
                 return RedirectToLocalIndex();
             }
-            
+
         }
     }
 }

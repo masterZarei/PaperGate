@@ -18,7 +18,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id  <= 0)
+            if (id <= 0)
             {
                 ShowError(ErrorMessages.IDINVALID);
                 return RedirectToPage("./Index");

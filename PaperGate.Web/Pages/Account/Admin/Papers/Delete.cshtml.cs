@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces.Repositories;
-using PaperGate.Web.Interfaces;
 using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.Utilities.Libraries;

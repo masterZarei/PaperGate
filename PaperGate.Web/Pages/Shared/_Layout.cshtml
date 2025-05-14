@@ -24,15 +24,15 @@
                 @if (User.IsInRole(Roles.AdminEndUser))
                 {
 
-                        <a href="~/Account/Admin/Products" class="hover:hover:text-orange-400">پنل کاربری</a>
+                        <a href="~/Account/Admin/Papers" class="hover:hover:text-orange-400">پنل کاربری</a>
                 }
                 else
                 {
 
-                        <a href="~/Account/User/Tickets" class="hover:hover:text-orange-400">پنل کاربری</a>
+                        <a href="~/Account/Student/Papers" class="hover:hover:text-orange-400">پنل کاربری</a>
                 }
 
-                    <a href="~/Account/User/Tickets" class="hover:hover:text-orange-400">خروج</a>
+                    <a href="~/Identity/Account/Logout" class="hover:hover:text-orange-400">خروج</a>
                 </li>
             }
             else
@@ -55,7 +55,7 @@
 
 
     <footer class="bg-white mt-8 py-6">
-        <h2 class="text-center text-lg font-semibold w-full">Copyright PaperGate 2025</h2>
+        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <partial name="_Scripts" />

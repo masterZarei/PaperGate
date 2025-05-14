@@ -83,7 +83,7 @@ public class MyPageModel : PageModel
         };*/
         return pages switch
         {
-            StaticPages.Login => Redirect($"{Url.Content("~")}{StaticValues.LoginPath}?returnUrl={ ReturnUrl}"),
+            StaticPages.Login => Redirect($"{Url.Content("~")}{StaticValues.LoginPath}?returnUrl={ReturnUrl}"),
             StaticPages.Register => Redirect($"{Url.Content("~")}{StaticValues.RegisterPath}?returnUrl={ReturnUrl}"),
             StaticPages.Index => Redirect(Url.Content("~/")),
             _ => Redirect(Url.Content("~/")),

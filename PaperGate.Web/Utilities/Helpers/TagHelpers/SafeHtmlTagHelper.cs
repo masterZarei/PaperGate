@@ -12,7 +12,7 @@ public class SafeHtmlTagHelper : TagHelper
     {
         var sanitizer = new HtmlSanitizer();
         var sanitizedContent = sanitizer.Sanitize(Content);
-        
+
         output.TagName = null; // حذف تگ والد
         output.Content.SetHtmlContent(sanitizedContent);
     }

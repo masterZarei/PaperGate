@@ -65,6 +65,7 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.NationalCode = RegisterDto.NationalCode;
+                user.UserName = RegisterDto.NationalCode;
                 user.Name = RegisterDto.Name;
                 user.LastName = RegisterDto.LastName;
 
