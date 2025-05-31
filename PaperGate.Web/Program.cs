@@ -88,6 +88,7 @@ public class Program
             options.JsonSerializerOptions.MaxDepth = 128; // افزایش عمق به مقدار مورد نیاز
 
         });
+        builder.Services.AddAntiforgery();
         #endregion
 
         builder.Services.AddHealthChecks()
@@ -143,6 +144,7 @@ public class Program
 
         app.UseRouting();
         app.UseAuthentication();
+        app.UseAntiforgery();
         app.UseAuthorization();
 
 
