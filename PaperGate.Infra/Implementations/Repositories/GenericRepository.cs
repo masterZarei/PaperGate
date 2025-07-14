@@ -9,16 +9,75 @@ namespace PaperGate.Infra.Implementations.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
     private readonly AppDbContext _db;
-    private readonly ILogger _myLogger;
+    private readonly ILogger _logger;
     internal DbSet<T> _dbSet;
-    readonly TaskResult _taskResult;
 
-    public GenericRepository(AppDbContext db, ILogger myLogger)
+    public GenericRepository(AppDbContext db, ILogger logger)
     {
         _db = db;
-        _myLogger = myLogger;
+        _logger = logger;
         _dbSet = _db.Set<T>();
-        _taskResult = new();
+    }
+
+    /*public async Task<IList<T>> GetAllAsync(
+        Expression<Func<T, bool>>? filter = null,
+        params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (includes != null && includes.Length != 0)
+        {
+            foreach (var include in includes)
+                query = query.Include(include);
+        }
+
+        if (filter != null)
+            query = query.Where(filter);
+
+        return await query.ToListAsync();
+    }*/
+    public async Task<IList<T>> GetAllAsync(
+    Expression<Func<T, bool>>? filter = null,
+    Func<IQueryable<T>, IQueryable<T>>? queryCustomizer = null)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (filter != null)
+            query = query.Where(filter);
+
+        if (queryCustomizer != null)
+            query = queryCustomizer(query);
+
+        return await query.ToListAsync();
+    }
+    public async Task<IReadOnlyList<T>> GetAllReadOnlyAsync(
+        Expression<Func<T, bool>>? filter = null,
+        Func<IQueryable<T>, IQueryable<T>>? queryCustomizer = null)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (filter != null)
+            query = query.Where(filter);
+
+        if (queryCustomizer != null)
+            query = queryCustomizer(query).AsNoTracking();
+
+        return await query.ToListAsync();
+    }
+
+    public async Task<T?> GetAsync(
+    Expression<Func<T, bool>>? filter = null,
+    Func<IQueryable<T>, IQueryable<T>>? queryCustomizer = null)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (filter != null)
+            query = query.Where(filter);
+
+        if (queryCustomizer != null)
+            query = queryCustomizer(query);
+
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<TaskResult> AddAsync(T entity)
@@ -26,123 +85,87 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         try
         {
             await _dbSet.AddAsync(entity);
-            _taskResult.Succeeded = true;
-            return _taskResult;
-
+            return new TaskResult
+            {
+                Succeeded = true,
+            };
         }
         catch (Exception ex)
         {
-            _myLogger.Fatal(ex, _dbSet.ToQueryString());
-            _taskResult.AddError("در فرآیند اضافه کردن این موجودیت خطایی رخ داد");
-            _taskResult.AddError("جهت مشاهده اطلاعات کامل تر به بخش گزارشات مراجعه کنید");
-            return _taskResult;
-        }
-
-    }
-
-    public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
-    {
-        if (_db.Set<T>() is null)
-            throw new NullReferenceException(nameof(T));
-
-        IQueryable<T>? query = _dbSet;
-        if (tracked is false)
-            query = query.AsNoTracking();
-
-        if (includeProperties != null)
-        {
-            foreach (var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+            _logger.Fatal(ex, "Error in AddAsync");
+            return new TaskResult
             {
-                query = query.Include(includeProp);
-            }
-        }
-
-        if (filter is not null)
-            query = query.Where(filter);
-
-
-        return await query.FirstOrDefaultAsync();
-    }
-    public async Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
-    {
-        IQueryable<T> query = _dbSet;
-
-        if (includeProperties != null)
-        {
-            foreach (var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProp);
-            }
-        }
-        if (filter != null)
-            query = query.Where(filter);
-
-        return await query.ToListAsync();
-    }
-
-    public async Task<TaskResult> RemoveAsync(T entity)
-    {
-        try
-        {
-            _dbSet.Remove(entity);
-            //Because The deleted entity will be logged at the DbContext Level
-            //  await _myLogger.Log("GenericRepository/RemoveAsync", $"Entity deleted : {JsonSerializer.Serialize(entity)}", LoggingLevel.Warning);
-            _taskResult.Succeeded = true;
-            return _taskResult;
-
-        }
-        catch (Exception ex)
-        {
-            _myLogger.Fatal(ex, _dbSet.ToQueryString());
-            _taskResult.AddError("در فرآیند حذف کردن این موجودیت خطایی رخ داد");
-            _taskResult.AddError("جهت مشاهده اطلاعات کامل تر به بخش گزارشات مراجعه کنید");
-            return _taskResult;
+                Errors = ["خطا در افزودن موجودیت"]
+            };
         }
     }
-    public async Task<TaskResult> UpdateAsync(T entity)
+
+    public Task<TaskResult> UpdateAsync(T entity)
     {
         try
         {
             _dbSet.Update(entity);
-            _taskResult.Succeeded = true;
-            return _taskResult;
-
+            return Task.FromResult(new TaskResult
+            {
+                Succeeded = true,
+            });
         }
         catch (Exception ex)
         {
-            _myLogger.Fatal(ex, _dbSet.ToQueryString());
-            _taskResult.AddError("در فرآیند به روزرسانی کردن این موجودیت خطایی رخ داد");
-            _taskResult.AddError("جهت مشاهده اطلاعات کامل تر به بخش گزارشات مراجعه کنید");
-            return _taskResult;
+            _logger.Fatal(ex, "Error in UpdateAsync");
+            return Task.FromResult(new TaskResult
+            {
+                Errors = ["خطا در ویرایش موجودیت"]
+            });
         }
     }
 
-    public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
+    public Task<TaskResult> RemoveAsync(T entity)
     {
-        if (filter is null) throw new Exception("Filter cannot be null");
-        IQueryable<T> query = _dbSet;
-        if (includeProperties != null)
+        try
         {
-            foreach (var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+            _dbSet.Remove(entity);
+
+            return Task.FromResult(new TaskResult
             {
-                query = query.Include(includeProp);
-            }
+                Succeeded = true,
+            });
         }
-        return await query.AnyAsync(filter);
+        catch (Exception ex)
+        {
+            _logger.Fatal(ex, "Error in RemoveAsync");
+            return Task.FromResult(new TaskResult
+            {
+                Errors = ["خطا در حذف موجودیت"]
+            });
+        }
     }
+
+    public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter)
+    {
+        if (filter is null)
+            throw new ArgumentNullException(nameof(filter));
+
+        return await _dbSet.AnyAsync(filter);
+    }
+
     public async Task<TaskResult> SaveChangesAsync()
     {
         try
         {
             await _db.SaveChangesAsync();
-            _taskResult.Succeeded = true;
-            return _taskResult;
+            return new TaskResult
+            {
+                Succeeded = true,
+            };
         }
         catch (Exception ex)
         {
-            _taskResult.AddError(ex.ToString());
-            _myLogger.Fatal(ex, "SaveChanges");
-            return _taskResult;
+            _logger.Fatal(ex, "Error in SaveChangesAsync");
+            return new TaskResult
+            {
+                Errors = ["خطا در ذخیره تغییرات"]
+            };
         }
     }
 }

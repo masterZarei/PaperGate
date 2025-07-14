@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using PaperGate.Core.Interfaces;
 using PaperGate.Infra.Data;
 using PaperGate.Web.ViewModels;
 
@@ -8,11 +9,11 @@ namespace PaperGate.Web.Pages
 {
     public class PaperModel : PageModel
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PaperModel(AppDbContext context)
+        public PaperModel(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
         [BindProperty]
         public PaperDetailsDto PaperDto { get; set; }
@@ -26,7 +27,7 @@ namespace PaperGate.Web.Pages
                 return Redirect("/Identity/Login");
             }
 
-            var userId = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            var userId = await _unitOfWork.Paper.GetAsync(u => u.Author.UserName == User.Identity.Name, q=>q.Include(u=>u.Author));
 
             if (userId is null)
             {
