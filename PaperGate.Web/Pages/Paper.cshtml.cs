@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.Interfaces;
-using PaperGate.Infra.Data;
 using PaperGate.Web.ViewModels;
 
 namespace PaperGate.Web.Pages
