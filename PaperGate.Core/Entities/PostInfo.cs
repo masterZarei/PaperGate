@@ -6,20 +6,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaperGate.Core.Entities;
 
-public class PaperInfo : BaseEntity, IDatabaseModel<PaperInfo>, ISoftDeleteDatabaseModel
+public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabaseModel
 {
-    [Required(ErrorMessage = "لطفا موضوع مقاله را وارد کنید")]
-    [MaxLength(150, ErrorMessage = "موضوع مقاله نمی تواند از 150 کاراکتر بیشتر باشد")]
+    [Required(ErrorMessage = "لطفا موضوع پست را وارد کنید")]
+    [MaxLength(150, ErrorMessage = "موضوع پست نمی تواند از 150 کاراکتر بیشتر باشد")]
     public required string Title { get; set; }
     public string? Slug { get; set; }
 
-    [Required(ErrorMessage = "لطفا محتوای مقاله را وارد کنید")]
+    [Required(ErrorMessage = "لطفا محتوای پست را وارد کنید")]
     public required string Content { get; set; }
     public bool IsActive { get; set; } = false;
 
     public string? Picture { get; set; }
-    [Required(ErrorMessage = "لطفا معرفی کوتاه مقاله را وارد کنید")]
+    [Required(ErrorMessage = "لطفا معرفی کوتاه پست را وارد کنید")]
     public string Summary { get; set; }
+
+    public bool ShowOnSlider { get; set; }
 
     #region Relations
     public string AuthorId { get; set; }
@@ -28,7 +30,7 @@ public class PaperInfo : BaseEntity, IDatabaseModel<PaperInfo>, ISoftDeleteDatab
     [ForeignKey(nameof(AuthorId))]
     public UserInfo Author { get; set; }
 
-    public ICollection<PaperCategoryInfo> Categories { get; } = [];
+    public CategoryInfo Category { get; } = default!;
     public ICollection<PaperKeywordInfo> Keywords { get; } = [];
     #endregion
 }

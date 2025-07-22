@@ -9,6 +9,6 @@ public class PaperKeywordInfo : BaseEntity, IDatabaseModel<PaperKeywordInfo>
     public int KeywordId { get; set; }
 
     [ForeignKey(nameof(PaperId))]
-    public PaperInfo Paper { get; set; }
+    public PostInfo Paper { get; set; }
     public int PaperId { get; set; }
 }

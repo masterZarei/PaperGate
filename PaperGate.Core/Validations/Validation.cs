@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace PaperGate.Core.Validations;
 public static partial class Validation
 {
-    public static bool IsValidRole(string roleName) => roleName == Roles.AdminEndUser || roleName == Roles.StudentEndUser;
+    public static bool IsValidRole(string roleName) => roleName == Roles.AdminEndUser;
     public static bool IsDigit(string input) => input.All(char.IsDigit);
     public static bool IsValidEmail(string email) => ValidEmaillRegex().IsMatch(email);
     public static bool IsValidPostalCode(string postalCode)

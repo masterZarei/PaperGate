@@ -100,7 +100,6 @@ public class PaperDetailsDto
     public string? Picture { get; set; }
 
     public DateTime CreatedOn { get; set; }
-    public IReadOnlyList<PaperCategoryInfo>? PaperCategories { get; set; }
     public IReadOnlyList<PaperKeywordInfo>? PaperKeywords { get; set; }
 }
 public class PublicPaperDetailsDto
@@ -110,9 +109,8 @@ public class PublicPaperDetailsDto
     public string Content { get; set; }
     public string Summary { get; set; }
     public string? Picture { get; set; }
-    public IReadOnlyList<PaperCategoryInfo>? PaperCategories { get; set; }
     public IReadOnlyList<PaperKeywordInfo>? PaperKeywords { get; set; }
-    public IReadOnlyList<PaperInfo>? LatestPapers { get; set; }
+    public IReadOnlyList<PostInfo>? LatestPapers { get; set; }
     public UserInfo? Author { get; set; }
     public string? Slug { get; set; }
     public DateTime CreatedOn { get; set; }
@@ -129,7 +127,7 @@ public class PaperCardDto
 }
 public class AllPapersDto
 {
-    public IReadOnlyList<PaperInfo>? Papers { get; set; }
+    public IReadOnlyList<PostInfo>? Papers { get; set; }
     public string? PaperTitle { get; set; } = string.Empty;
     public UserInfo? Author { get; set; }
 

@@ -20,12 +20,12 @@ namespace PaperGate.Web.Config
             #endregion
 
             #region Paper_DTOs
-            CreateMap<PaperInfo, PaperCreateDto>().ReverseMap();
-            CreateMap<PaperInfo, PaperListDto>().ReverseMap();
-            CreateMap<PaperInfo, PaperDeleteDto>().ReverseMap();
-            CreateMap<PaperInfo, PaperEditDto>().ReverseMap();
-            CreateMap<PaperInfo, PaperDetailsDto>().ReverseMap();
-            CreateMap<PaperInfo, PublicPaperDetailsDto>().ReverseMap();
+            CreateMap<PostInfo, PaperCreateDto>().ReverseMap();
+            CreateMap<PostInfo, PaperListDto>().ReverseMap();
+            CreateMap<PostInfo, PaperDeleteDto>().ReverseMap();
+            CreateMap<PostInfo, PaperEditDto>().ReverseMap();
+            CreateMap<PostInfo, PaperDetailsDto>().ReverseMap();
+            CreateMap<PostInfo, PublicPaperDetailsDto>().ReverseMap();
             #endregion
         }
     }

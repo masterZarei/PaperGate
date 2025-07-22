@@ -11,12 +11,12 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
 {
     public class DeleteModel : MyPageModel
     {
-        private readonly IGenericRepository<PaperInfo> _context;
+        private readonly IGenericRepository<PostInfo> _context;
         private readonly IMapper _mapper;
         private readonly IFileManagementService _fileManagementService;
         private readonly ILogger _logger;
 
-        public DeleteModel(IGenericRepository<PaperInfo> context, IMapper mapper, IFileManagementService fileManagementService, ILogger logger)
+        public DeleteModel(IGenericRepository<PostInfo> context, IMapper mapper, IFileManagementService fileManagementService, ILogger logger)
         {
             _context = context;
             _mapper = mapper;

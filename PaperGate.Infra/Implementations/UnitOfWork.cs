@@ -21,15 +21,13 @@ public class UnitOfWork : IUnitOfWork
         _myLogger = myLogger;
         _taskResult = new();
 
-        Paper = new GenericRepository<PaperInfo>(_db, myLogger);
+        Paper = new GenericRepository<PostInfo>(_db, myLogger);
         Category = new GenericRepository<CategoryInfo>(_db, myLogger);
-        PaperCategory = new GenericRepository<PaperCategoryInfo>(_db, myLogger);
         Keyword = new GenericRepository<KeywordInfo>(_db, myLogger);
         PaperKeyword = new GenericRepository<PaperKeywordInfo>(_db, myLogger);
     }
-    public IGenericRepository<PaperInfo> Paper { get; set; }
+    public IGenericRepository<PostInfo> Paper { get; set; }
     public IGenericRepository<CategoryInfo> Category { get; set; }
-    public IGenericRepository<PaperCategoryInfo> PaperCategory { get; set; }
     public IGenericRepository<KeywordInfo> Keyword { get; set; }
     public IGenericRepository<PaperKeywordInfo> PaperKeyword { get; set; }
 

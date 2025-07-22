@@ -39,7 +39,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
                     return RedirectToIndex();
                 }
                 var Paper = await _context.Papers
-                    .Include(c => c.Categories)
+                    /*.Include(c => c.Categories)*/
                     .FirstOrDefaultAsync(p => p.Id == Id);
                 if (Paper is null)
                 {
@@ -47,9 +47,9 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
                     return RedirectToIndex();
                 }
                 PaperDto = _mapper.Map<PaperDetailsDto>(Paper);
-                PaperDto.PaperCategories = await _context.PaperCategories
+                /*PaperDto.PaperCategories = await _context.PaperCategories
                     .Include(c => c.Category)
-                    .Where(c => c.PaperId == Id).ToListAsync();
+                    .Where(c => c.PaperId == Id).ToListAsync();*/
 
                 PaperDto.PaperKeywords = await _context.PaperKeywords
                     .Include(c => c.Keyword)

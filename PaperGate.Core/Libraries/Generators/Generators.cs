@@ -16,7 +16,7 @@ public static class CodeGenerator
 }
 public static class SlugGenerator
 {
-    public static string GenerateSlug(string input, List<PaperInfo>? papers)
+    public static string GenerateSlug(string input, List<PostInfo>? papers)
     {
         if (string.IsNullOrWhiteSpace(input))
             return string.Empty;

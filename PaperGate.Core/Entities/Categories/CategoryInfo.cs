@@ -10,4 +10,6 @@ public class CategoryInfo : BaseEntity, IDatabaseModel<CategoryInfo>
 
     [MaxLength(2000, ErrorMessage = "نام دسته بندی نمی تواند از 2000 کاراکتر بیشتر باشد")]
     public string? Description { get; set; }
+
+    public ICollection<PostInfo> Posts { get; set; }
 }

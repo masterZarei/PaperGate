@@ -113,7 +113,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
                     ShowError(ErrorMessages.CUSTOM, "دسترسی نامعتبر");
                     return RedirectToIndex();
                 }
-                PaperInfo paper = _mapper.Map<PaperInfo>(PaperDto);
+                PostInfo paper = _mapper.Map<PostInfo>(PaperDto);
                 paper.AuthorId = user.Id;
                 paper.Slug = SlugGenerator.GenerateSlug(paper.Title, [.. _context.Papers.AsNoTracking()]);
                 paper.Summary = _hTMLToolsService.SanitizeContent(paper.Summary);

@@ -76,11 +76,11 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
 
             #region Category
 
-            PaperDto.PaperCategories = (from categories in _context.Categories.ToList()
+          /*  PaperDto.PaperCategories = (from categories in _context.Categories.ToList()
                                         join categoryToPapers in _context.PaperCategories.ToList()
                                         on categories.Id equals categoryToPapers.CategoryId
                                         where categoryToPapers.PaperId == PaperDto.Id
-                                        select categories).ToList();
+                                        select categories).ToList();*/
 
             PaperDto.AvailableCategories = (from categories in _context.Categories.ToList()
                                             where !PaperDto.PaperCategories.Contains(categories)
@@ -150,7 +150,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
 
 
 
-                PaperInfo Paper = _mapper.Map<PaperInfo>(PaperDto);
+                PostInfo Paper = _mapper.Map<PostInfo>(PaperDto);
                 Paper.Summary = _hTMLToolsService.SanitizeContent(Paper.Summary);
                 Paper.Content = _hTMLToolsService.SanitizeContent(Paper.Content);
                 _context.Papers.Update(Paper);
@@ -169,7 +169,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
 
         }
         #region Category PageHandlers
-        public async Task<IActionResult> OnPostAddCategory()
+     /*   public async Task<IActionResult> OnPostAddCategory()
         {
             #region Validation
             if (string.IsNullOrEmpty(PaperDto.SelectedCategory))
@@ -245,7 +245,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Papers
             ShowSuccess();
             InitLists();
             return RedirectToPage("Edit", new { PaperDto?.Id });
-        }
+        }*/
         #endregion
 
 

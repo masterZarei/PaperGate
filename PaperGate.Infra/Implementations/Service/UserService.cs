@@ -239,14 +239,14 @@ public class UserService : GenericRepository<UserInfo>, IUserService
         if (!await _roleManager.RoleExistsAsync(Roles.AdminEndUser))
             await _roleManager.CreateAsync(new IdentityRole(Roles.AdminEndUser));
 
-        if (!await _roleManager.RoleExistsAsync(Roles.StudentEndUser))
-            await _roleManager.CreateAsync(new IdentityRole(Roles.StudentEndUser));
+       /* if (!await _roleManager.RoleExistsAsync(Roles.StudentEndUser))
+            await _roleManager.CreateAsync(new IdentityRole(Roles.StudentEndUser));*/
 
         if (_db.Users.ToList().Count == 1)
             await _userManager.AddToRoleAsync(user, Roles.AdminEndUser);
 
-        else
-            await _userManager.AddToRoleAsync(user, Roles.StudentEndUser);
+       /* else
+            await _userManager.AddToRoleAsync(user, Roles.StudentEndUser);*/
     }
     public async Task<TaskResult> SoftRemoveUser(UserDeleteDto deleteDto)
     {
@@ -419,7 +419,7 @@ public class UserService : GenericRepository<UserInfo>, IUserService
     {
         try
         {
-            return await GetAllAsync(a => !a.IsDeleted);
+            return await GetAllReadOnlyAsync(a => !a.IsDeleted);
         }
         catch (Exception ex)
         {

@@ -130,14 +130,11 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
             if (!await _roleManager.RoleExistsAsync(Roles.AdminEndUser))
                 await _roleManager.CreateAsync(new IdentityRole(Roles.AdminEndUser));
 
-            if (!await _roleManager.RoleExistsAsync(Roles.StudentEndUser))
-                await _roleManager.CreateAsync(new IdentityRole(Roles.StudentEndUser));
-
             if (_context.Users.ToList().Count == 1)
                 await _userManager.AddToRoleAsync(user, Roles.AdminEndUser);
 
-            else
-                await _userManager.AddToRoleAsync(user, Roles.StudentEndUser);
+          /*  else
+                await _userManager.AddToRoleAsync(user, Roles.StudentEndUser);*/
         }
         /*private IUserEmailStore<UserInfo> GetEmailStore()
         {
