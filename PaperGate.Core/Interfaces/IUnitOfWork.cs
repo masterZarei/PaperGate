@@ -11,6 +11,7 @@ public interface IUnitOfWork
     IGenericRepository<CategoryInfo> Category { get; }
     IGenericRepository<KeywordInfo> Keyword { get; }
     IGenericRepository<PaperKeywordInfo> PaperKeyword { get; }
+    IGenericRepository<MessageInfo> Message { get; }
 
     Task<TaskResult> SaveChangesAsync();
 }

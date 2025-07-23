@@ -25,11 +25,13 @@ public class UnitOfWork : IUnitOfWork
         Category = new GenericRepository<CategoryInfo>(_db, myLogger);
         Keyword = new GenericRepository<KeywordInfo>(_db, myLogger);
         PaperKeyword = new GenericRepository<PaperKeywordInfo>(_db, myLogger);
+        Message = new GenericRepository<MessageInfo>(_db, myLogger);
     }
     public IGenericRepository<PostInfo> Paper { get; set; }
     public IGenericRepository<CategoryInfo> Category { get; set; }
     public IGenericRepository<KeywordInfo> Keyword { get; set; }
     public IGenericRepository<PaperKeywordInfo> PaperKeyword { get; set; }
+    public IGenericRepository<MessageInfo> Message { get; set; }
 
     public async Task<TaskResult> SaveChangesAsync()
     {
