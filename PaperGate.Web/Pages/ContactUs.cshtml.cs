@@ -36,7 +36,7 @@ namespace PaperGate.Web.Pages
                     await _unitOfWork.Message.AddAsync(MessageDto);
                     await _unitOfWork.SaveChangesAsync();
 
-                    string message = $"New Message has been sent {JsonSerializer.Serialize(MessageDto)}";
+                    string message = $"New Message has been received {JsonSerializer.Serialize(MessageDto)}";
                     await _myLogger.Log("ContactUs", message, LoggingLevel.Information);
                     ShowSuccess("پیام شما با موفقیت ارسال شد");
                 }
