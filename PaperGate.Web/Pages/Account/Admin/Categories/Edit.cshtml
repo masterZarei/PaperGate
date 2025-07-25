@@ -13,7 +13,7 @@
         <li><a class="hover:text-blue-600 transition" href="#">ویرایش</a></li>
     </ul>
     <div class="block tablet:flex justify-between">
-        <partial name="_Panel" />
+        @await Component.InvokeAsync("SidePanelComponent")
         <div class="w-full tablet:w-9/12 px-3 mt-5">
             <div class="PanelCard border rounded p-3">
                 <!--                تایتل صفحه-->

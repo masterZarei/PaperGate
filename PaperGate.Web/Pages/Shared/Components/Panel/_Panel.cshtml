@@ -1,4 +1,5 @@
-﻿@using PaperGate.Core.Libraries.StaticValues
+﻿@model PaperGate.Web.ViewModels.SidePanelViewModel
+@using PaperGate.Core.Libraries.StaticValues
 <div class="w-full tablet:w-3/12 px-3 mt-2">
 	<ul class="w-full rounded overflow-hidden mt-3 text-gray-800 border">
 		@if (User.Identity.IsAuthenticated)
@@ -9,7 +10,7 @@
 				</a>
 			</li>
 			<li class="panelList">
-				<a href="/Account/Admin/Papers">
+				<a href="/Account/Admin/Posts">
 					مدیریت پست ها
 				</a>
 			</li>
@@ -18,6 +19,17 @@
 					مدیریت کلمات کلیدی
 				</a>
 			</li>
+			@if(Model != null && Model.Categories != null && Model.Categories.Count > 0)
+			{
+				@foreach (var item in Model.Categories)
+				{
+					<li class="panelList">
+						<a href="/Account/Admin/Posts?sub=@item.Id">
+							مدیریت @item.Title
+						</a>
+					</li>
+				}
+			}
 		}
 	</ul>
 </div>

@@ -167,7 +167,7 @@ public class Program
         #endregion
         app.UseHealthChecks("/health");
         #region NotFound
-        app.UseExceptionHandler("/NotFound");
+        /*app.UseExceptionHandler("/NotFound");
         app.Use(async (context, next) =>
         {
             await next();
@@ -176,7 +176,7 @@ public class Program
             {
                 context.Response.Redirect("/NotFound");
             }
-        });
+        });*/
         #endregion
         app.Run();
     }
