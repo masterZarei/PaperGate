@@ -7,7 +7,7 @@ using PaperGate.Shared.ReturnTypes;
 namespace PaperGate.Core.Interfaces;
 public interface IUnitOfWork
 {
-    IGenericRepository<PostInfo> Paper { get; }
+    IGenericRepository<PostInfo> Post { get; }
     IGenericRepository<CategoryInfo> Category { get; }
     IGenericRepository<KeywordInfo> Keyword { get; }
     IGenericRepository<PaperKeywordInfo> PaperKeyword { get; }

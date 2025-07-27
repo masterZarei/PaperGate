@@ -5,7 +5,7 @@ using PaperGate.Infra.Data;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
-namespace PaperGate.Web.Pages.Account.Admin.Papers
+namespace PaperGate.Web.Pages.Account.Admin.Posts
 {
     public class DetailsModel : MyPageModel
     {

@@ -26,7 +26,7 @@ namespace PaperGate.Web.Pages
                 return Redirect("/Identity/Login");
             }
 
-            var userId = await _unitOfWork.Paper.GetAsync(u => u.Author.UserName == User.Identity.Name, q=>q.Include(u=>u.Author));
+            var userId = await _unitOfWork.Post.GetAsync(u => u.Author.UserName == User.Identity.Name, q=>q.Include(u=>u.Author));
 
             if (userId is null)
             {

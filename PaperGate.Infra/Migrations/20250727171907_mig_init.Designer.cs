@@ -12,15 +12,15 @@ using PaperGate.Infra.Data;
 namespace PaperGate.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250502114241_mig_AddedCategoryAndKeyword")]
-    partial class mig_AddedCategoryAndKeyword
+    [Migration("20250727171907_mig_init")]
+    partial class mig_init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.2")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -260,77 +260,6 @@ namespace PaperGate.Infra.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("PaperGate.Core.Entities.Categories.PaperCategoryInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PaperId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("PaperId");
-
-                    b.ToTable("PaperCategories");
-                });
-
-            modelBuilder.Entity("PaperGate.Core.Entities.CommentInfo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Answer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("PaperId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaperId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comments");
-                });
-
             modelBuilder.Entity("PaperGate.Core.Entities.Ketwords.KeywordInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -388,7 +317,43 @@ namespace PaperGate.Infra.Migrations
                     b.ToTable("PaperKeywords");
                 });
 
-            modelBuilder.Entity("PaperGate.Core.Entities.PaperInfo", b =>
+            modelBuilder.Entity("PaperGate.Core.Entities.MessageInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(100000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Read")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SendersEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SendersName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("PaperGate.Core.Entities.PostInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -400,6 +365,12 @@ namespace PaperGate.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryInfoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -407,19 +378,38 @@ namespace PaperGate.Infra.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Picture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShowOnSlider")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Summary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("CategoryInfoId");
 
                     b.ToTable("Papers");
                 });
@@ -507,40 +497,6 @@ namespace PaperGate.Infra.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PaperGate.Core.Entities.Categories.PaperCategoryInfo", b =>
-                {
-                    b.HasOne("PaperGate.Core.Entities.Categories.CategoryInfo", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PaperGate.Core.Entities.PaperInfo", "Paper")
-                        .WithMany()
-                        .HasForeignKey("PaperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Paper");
-                });
-
-            modelBuilder.Entity("PaperGate.Core.Entities.CommentInfo", b =>
-                {
-                    b.HasOne("PaperGate.Core.Entities.PaperInfo", "Paper")
-                        .WithMany("Comments")
-                        .HasForeignKey("PaperId");
-
-                    b.HasOne("PaperGate.Core.Entities.UserInfo", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Paper");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PaperGate.Core.Entities.Ketwords.PaperKeywordInfo", b =>
                 {
                     b.HasOne("PaperGate.Core.Entities.Ketwords.KeywordInfo", "Keyword")
@@ -549,8 +505,8 @@ namespace PaperGate.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PaperGate.Core.Entities.PaperInfo", "Paper")
-                        .WithMany()
+                    b.HasOne("PaperGate.Core.Entities.PostInfo", "Paper")
+                        .WithMany("Keywords")
                         .HasForeignKey("PaperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -560,7 +516,7 @@ namespace PaperGate.Infra.Migrations
                     b.Navigation("Paper");
                 });
 
-            modelBuilder.Entity("PaperGate.Core.Entities.PaperInfo", b =>
+            modelBuilder.Entity("PaperGate.Core.Entities.PostInfo", b =>
                 {
                     b.HasOne("PaperGate.Core.Entities.UserInfo", "Author")
                         .WithMany()
@@ -568,12 +524,21 @@ namespace PaperGate.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PaperGate.Core.Entities.Categories.CategoryInfo", null)
+                        .WithMany("Posts")
+                        .HasForeignKey("CategoryInfoId");
+
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("PaperGate.Core.Entities.PaperInfo", b =>
+            modelBuilder.Entity("PaperGate.Core.Entities.Categories.CategoryInfo", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("PaperGate.Core.Entities.PostInfo", b =>
+                {
+                    b.Navigation("Keywords");
                 });
 #pragma warning restore 612, 618
         }

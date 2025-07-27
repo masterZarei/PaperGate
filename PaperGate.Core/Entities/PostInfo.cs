@@ -21,6 +21,8 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
     [Required(ErrorMessage = "لطفا معرفی کوتاه پست را وارد کنید")]
     public string Summary { get; set; }
 
+    public int CategoryId { get; set; }
+
     public bool ShowOnSlider { get; set; }
 
     #region Relations
@@ -30,6 +32,7 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
     [ForeignKey(nameof(AuthorId))]
     public UserInfo Author { get; set; }
 
+    [ForeignKey(nameof(CategoryId))]
     public CategoryInfo Category { get; } = default!;
     public ICollection<PaperKeywordInfo> Keywords { get; } = [];
     #endregion
