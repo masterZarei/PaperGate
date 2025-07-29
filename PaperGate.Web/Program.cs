@@ -177,6 +177,20 @@ public class Program
                 context.Response.Redirect("/NotFound");
             }
         });*/
+
+        #endregion
+
+        #region NotFound
+        app.UseExceptionHandler("/NotFound");
+        app.Use(async (context, next) =>
+        {
+            await next();
+
+            if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+            {
+                context.Response.Redirect("/NotFound");
+            }
+        });
         #endregion
         app.Run();
     }
