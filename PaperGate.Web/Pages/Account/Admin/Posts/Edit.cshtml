@@ -25,6 +25,7 @@
                         <input type="hidden" asp-for="PaperDto.AuthorId" />
                         <input type="hidden" asp-for="PaperDto.Picture" />
                         <input type="hidden" asp-for="PaperDto.Slug" />
+                        <input type="hidden" asp-for="PaperDto.CategoryId" />
                         <div class="block tablet:flex justify-between">
                             <div class="w-full tablet:w-1/2 px-2">
                                 <!--                                موضوع-->
@@ -78,7 +79,7 @@
                             </div>
                             <div class="w-full tablet:w-1/2 px-2">
                                 <!--    دسته بندی-->
-                                <div class="flex flex-col mt-3">
+                               @*  <div class="flex flex-col mt-3">
                                     <label for="category" class="customLabel">دسته بندی</label>
                                     <div class="flex items-center">
                                         <select id="KeywordsList" asp-for="PaperDto.SelectedCategory" asp-items="@Model.PaperDto.CategoryList"
@@ -99,7 +100,7 @@
                                             }
                                         </div>
                                     }
-                                </div>
+                                </div> *@
                                 <!--    دمو عکس-->
                                 <div>
                                     <img src="~/Assets/Pictures/Papers/@Model?.PaperDto?.Picture" id="imgPreview" class="border border-black w-72 h-52 mx-auto px-2 mt-8" alt="Paper">

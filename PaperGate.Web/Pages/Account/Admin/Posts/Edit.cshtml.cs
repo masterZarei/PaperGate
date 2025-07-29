@@ -76,17 +76,17 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 
             #region Category
 
-          /*  PaperDto.PaperCategories = (from categories in _context.Categories.ToList()
-                                        join categoryToPapers in _context.PaperCategories.ToList()
-                                        on categories.Id equals categoryToPapers.CategoryId
-                                        where categoryToPapers.PaperId == PaperDto.Id
-                                        select categories).ToList();*/
+            /*  PaperDto.PaperCategories = (from categories in _context.Categories.ToList()
+                                          join categoryToPapers in _context.PaperCategories.ToList()
+                                          on categories.Id equals categoryToPapers.CategoryId
+                                          where categoryToPapers.PaperId == PaperDto.Id
+                                          select categories).ToList();*/
 
-            PaperDto.AvailableCategories = (from categories in _context.Categories.ToList()
-                                            where !PaperDto.PaperCategories.Contains(categories)
-                                            select categories).ToList();
-            if (PaperDto.AvailableCategories is not null)
-                PaperDto.CategoryList = new SelectList(PaperDto.AvailableCategories, nameof(CategoryInfo.Id), nameof(CategoryInfo.Title));
+            /*            PaperDto.AvailableCategories = (from categories in _context.Categories.ToList()
+                                                        where !PaperDto.PaperCategories.Contains(categories)
+                                                        select categories).ToList();
+                        if (PaperDto.AvailableCategories is not null)
+                            PaperDto.CategoryList = new SelectList(PaperDto.AvailableCategories, nameof(CategoryInfo.Id), nameof(CategoryInfo.Title));*/
             #endregion
 
             #region Keyword
@@ -150,13 +150,13 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 
 
 
-                PostInfo Paper = _mapper.Map<PostInfo>(PaperDto);
-                Paper.Summary = _hTMLToolsService.SanitizeContent(Paper.Summary);
-                Paper.Content = _hTMLToolsService.SanitizeContent(Paper.Content);
-                _context.Papers.Update(Paper);
+                PostInfo post = _mapper.Map<PostInfo>(PaperDto);
+                post.Summary = _hTMLToolsService.SanitizeContent(post.Summary);
+                post.Content = _hTMLToolsService.SanitizeContent(post.Content);
+                _context.Papers.Update(post);
                 await _context.SaveChangesAsync();
                 ShowSuccess();
-                return RedirectToPage("Index");
+                return RedirectToPage("./Index", new { sub = post.CategoryId });
             }
             catch (Exception ex)
             {
@@ -169,83 +169,83 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 
         }
         #region Category PageHandlers
-     /*   public async Task<IActionResult> OnPostAddCategory()
-        {
-            #region Validation
-            if (string.IsNullOrEmpty(PaperDto.SelectedCategory))
-            {
-                ShowError(ErrorMessages.IDINVALID);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            bool isValid = int.TryParse(PaperDto.SelectedCategory, out int Id);
-            if (isValid is false)
-            {
-                ShowError(ErrorMessages.IDINVALID);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            if (!await _context.Categories.AnyAsync(a => a.Id == Id))
-            {
-                ShowError(ErrorMessages.NOTFOUND);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            //Is already added
-            if (await _context.PaperCategories.AnyAsync(a => a.PaperId == PaperDto.Id && a.CategoryId == Id))
-            {
-                ShowError(ErrorMessages.CUSTOM, customMessage: "دسته بندی با همین نام برای این مقاله موجود است");
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            #endregion
-            try
-            {
-                await _context.PaperCategories.AddAsync(new PaperCategoryInfo
-                {
-                    CategoryId = Id,
-                    PaperId = PaperDto.Id
-                });
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
+        /*   public async Task<IActionResult> OnPostAddCategory()
+           {
+               #region Validation
+               if (string.IsNullOrEmpty(PaperDto.SelectedCategory))
+               {
+                   ShowError(ErrorMessages.IDINVALID);
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               bool isValid = int.TryParse(PaperDto.SelectedCategory, out int Id);
+               if (isValid is false)
+               {
+                   ShowError(ErrorMessages.IDINVALID);
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               if (!await _context.Categories.AnyAsync(a => a.Id == Id))
+               {
+                   ShowError(ErrorMessages.NOTFOUND);
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               //Is already added
+               if (await _context.PaperCategories.AnyAsync(a => a.PaperId == PaperDto.Id && a.CategoryId == Id))
+               {
+                   ShowError(ErrorMessages.CUSTOM, customMessage: "دسته بندی با همین نام برای این مقاله موجود است");
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               #endregion
+               try
+               {
+                   await _context.PaperCategories.AddAsync(new PaperCategoryInfo
+                   {
+                       CategoryId = Id,
+                       PaperId = PaperDto.Id
+                   });
+                   await _context.SaveChangesAsync();
+               }
+               catch (Exception ex)
+               {
 
-                ShowError(ErrorMessages.CUSTOM, customMessage: "اضافه کردن دسته بندی به مقاله با خطا مواجه شد");
-                _logger.Fatal(ex, ex.Message, "اضافه کردن دسته بندی به مقاله با خطا مواجه شد");
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            ShowSuccess();
-            InitLists();
-            return RedirectToPage("Edit", new { PaperDto?.Id });
-        }
-        public async Task<IActionResult> OnPostRemoveCategory(int Id)
-        {
-            if (Id == 0 || PaperDto?.Id == 0)
-            {
-                ShowError(ErrorMessages.IDINVALID);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            var category = await _context.PaperCategories
-                .FirstOrDefaultAsync(a => a.CategoryId == Id && a.PaperId == PaperDto.Id);
+                   ShowError(ErrorMessages.CUSTOM, customMessage: "اضافه کردن دسته بندی به مقاله با خطا مواجه شد");
+                   _logger.Fatal(ex, ex.Message, "اضافه کردن دسته بندی به مقاله با خطا مواجه شد");
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               ShowSuccess();
+               InitLists();
+               return RedirectToPage("Edit", new { PaperDto?.Id });
+           }
+           public async Task<IActionResult> OnPostRemoveCategory(int Id)
+           {
+               if (Id == 0 || PaperDto?.Id == 0)
+               {
+                   ShowError(ErrorMessages.IDINVALID);
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               var category = await _context.PaperCategories
+                   .FirstOrDefaultAsync(a => a.CategoryId == Id && a.PaperId == PaperDto.Id);
 
-            if (category is null)
-            {
-                ShowError(ErrorMessages.NOTFOUND);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
-            try
-            {
-                _context.PaperCategories.Remove(category);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                ShowError(ErrorMessages.CUSTOM, customMessage: "حذف کردن دسته بندی از مقاله با خطا مواجه شد");
-                _logger.Fatal(ex, ex.Message, "حذف کردن دسته بندی از مقاله با خطا مواجه شد");
-                return RedirectToPage("Edit", new { PaperDto?.Id });
-            }
+               if (category is null)
+               {
+                   ShowError(ErrorMessages.NOTFOUND);
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
+               try
+               {
+                   _context.PaperCategories.Remove(category);
+                   await _context.SaveChangesAsync();
+               }
+               catch (Exception ex)
+               {
+                   ShowError(ErrorMessages.CUSTOM, customMessage: "حذف کردن دسته بندی از مقاله با خطا مواجه شد");
+                   _logger.Fatal(ex, ex.Message, "حذف کردن دسته بندی از مقاله با خطا مواجه شد");
+                   return RedirectToPage("Edit", new { PaperDto?.Id });
+               }
 
-            ShowSuccess();
-            InitLists();
-            return RedirectToPage("Edit", new { PaperDto?.Id });
-        }*/
+               ShowSuccess();
+               InitLists();
+               return RedirectToPage("Edit", new { PaperDto?.Id });
+           }*/
         #endregion
 
 

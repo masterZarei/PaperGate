@@ -23,6 +23,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
         }
         public IReadOnlyList<PaperListDto> PaperDto { get; set; }
         public string CategoryTitle { get; set; }
+        public int Sub { get; set; }
         public async Task<IActionResult> OnGet(int sub, string? searchName)
         {
             try
@@ -51,6 +52,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowWarning("دسته بندی مورد نظر نامعتبر است");
                     return RedirectToLocalIndex();
                 }
+                Sub = sub;
                 CategoryTitle = category.Title;
                 var PaperList = await _unitOfWork.Post
                     .GetAllReadOnlyAsync(p=>p.CategoryId == category.Id/*, q=>q.Include(c=>c.Category)*/);

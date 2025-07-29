@@ -53,6 +53,7 @@ public class PaperEditDto
     public bool IsActive { get; set; }
     public string? AuthorId { get; set; }
     public string? Slug { get; set; }
+    public int CategoryId { get; set; }
 
 
     #region Upload Props

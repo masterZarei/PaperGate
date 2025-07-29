@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.Entities;
+using PaperGate.Core.Interfaces;
 using PaperGate.Core.Interfaces.Services;
 using PaperGate.Core.Libraries.Generators;
 using PaperGate.Infra.Data;
@@ -15,21 +17,21 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 {
     public class CreateModel : MyPageModel
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IFileManagementService _fileManagementService;
         private readonly IUserService _userService;
         private readonly IHTMLToolsService _hTMLToolsService;
 
-        public CreateModel(AppDbContext context,
+        public CreateModel(IUnitOfWork unitOfWork,
             IMapper mapper,
             ILogger logger,
             IFileManagementService fileManagementService,
             IUserService userService,
             IHTMLToolsService hTMLToolsService)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _fileManagementService = fileManagementService;
@@ -38,7 +40,9 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
         }
         [BindProperty]
         public PaperCreateDto PaperDto { get; set; }
-        public async Task<IActionResult> OnGet()
+        [BindProperty]
+        public int Sub { get; set; }
+        public async Task<IActionResult> OnGet(int sub)
         {
             try
             {
@@ -51,8 +55,18 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 {
                     /*MultipleFilesUp = []*/
                 };
-
-
+                if (sub <= 0)
+                {
+                    ShowWarning("دسته بندی مورد نظر نامعتبر است");
+                    return RedirectToLocalIndex();
+                }
+                var category = await _unitOfWork.Category.GetAsync(c => c.Id == sub);
+                if (category is null)
+                {
+                    ShowWarning("دسته بندی مورد نظر نامعتبر است");
+                    return RedirectToLocalIndex();
+                }
+                Sub = sub;
                 return Page();
             }
             catch (Exception ex)
@@ -74,6 +88,17 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 {
                     ShowError(ErrorMessages.CUSTOM, "لطفا فیلد های ضروری را پر کنید");
                     return RedirectToPage("Create");
+                }
+                if (Sub <= 0)
+                {
+                    ShowWarning("دسته بندی مورد نظر نامعتبر است");
+                    return RedirectToLocalIndex();
+                }
+                var category = await _unitOfWork.Category.GetAsync(c => c.Id == Sub);
+                if (category is null)
+                {
+                    ShowWarning("دسته بندی مورد نظر نامعتبر است");
+                    return RedirectToLocalIndex();
                 }
                 #endregion
 
@@ -113,15 +138,14 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowError(ErrorMessages.CUSTOM, "دسترسی نامعتبر");
                     return RedirectToIndex();
                 }
-                PostInfo paper = _mapper.Map<PostInfo>(PaperDto);
-                paper.AuthorId = user.Id;
-                paper.Slug = SlugGenerator.GenerateSlug(paper.Title, [.. _context.Papers.AsNoTracking()]);
-                paper.Summary = _hTMLToolsService.SanitizeContent(paper.Summary);
-                paper.Content = _hTMLToolsService.SanitizeContent(paper.Content);
-                await _context.AddAsync(paper);
-                await _context.SaveChangesAsync();
+                PostInfo post = _mapper.Map<PostInfo>(PaperDto);
+                post.CategoryId = Sub;
+                post.AuthorId = user.Id;
+                post.Slug = SlugGenerator.GenerateSlug(post.Title, [.. await _unitOfWork.Post.GetAllReadOnlyAsync()]);
+                await _unitOfWork.Post.AddAsync(post);
+                await _unitOfWork.SaveChangesAsync();
                 ShowSuccess();
-                var Addedpaper = await _context.Papers.FirstOrDefaultAsync(p => p.Title == paper.Title);
+                var Addedpaper = await _unitOfWork.Post.GetAsync(p => p.Title == post.Title);
                 ShowInfo("درصورت نیاز دسته بندی های لازم را برای پست انتخاب کنید");
                 return RedirectToPage("Edit", new { Addedpaper.Id });
             }
