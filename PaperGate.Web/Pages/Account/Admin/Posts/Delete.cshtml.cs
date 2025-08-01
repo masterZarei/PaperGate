@@ -95,14 +95,14 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     return Page();
                 }
                 ShowSuccess();
-                return RedirectToPage("Index");
+                return RedirectToPage("Index", new { sub = PaperDto.Id });
             }
             catch (Exception ex)
             {
 
                 ShowError(ErrorMessages.ERRORHAPPEDNED);
                 _logger.Fatal(ex, "Paper Delete Failed On OnPost", PaperDto);
-                return RedirectToPage("./Index");
+                return RedirectToPage("./Index",new {sub=PaperDto.Id});
             }
 
         }
