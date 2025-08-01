@@ -95,7 +95,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     return Page();
                 }
                 ShowSuccess();
-                return RedirectToPage("Index", new { sub = PaperDto.Id });
+                return RedirectToPage("Index", new { sub = Paper.CategoryId });
             }
             catch (Exception ex)
             {

@@ -51,6 +51,7 @@ public class PaperEditDto
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
     public bool IsActive { get; set; }
+    public bool ShowOnSlider { get; set; }
     public string? AuthorId { get; set; }
     public string? Slug { get; set; }
     public int CategoryId { get; set; }
@@ -99,6 +100,7 @@ public class PaperDetailsDto
     public string Summary { get; set; }
     public string Content { get; set; }
     public string? Picture { get; set; }
+    public int CategoryId { get; set; }
 
     public DateTime CreatedOn { get; set; }
     public IReadOnlyList<PaperKeywordInfo>? PaperKeywords { get; set; }

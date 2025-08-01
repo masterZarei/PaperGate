@@ -66,6 +66,11 @@
                                         <label for="status" class="customLabel">وضعیت</label>
                                         <input asp-for="PaperDto.IsActive" type="checkbox" class="w-10 h-10" id="status">
                                     </div>
+                                    <!--                                نمایش در SLIDER-->
+                                    <div class="flex gap-4 items-center mt-6">
+                                        <label for="status" class="customLabel">نمایش در اسلایدر</label>
+                                        <input asp-for="PaperDto.ShowOnSlider" type="checkbox" class="w-10 h-10" id="status">
+                                    </div>
                                 </div>
                                 <!--image-->
                                 <div class="flex flex-col mt-3">
@@ -135,7 +140,7 @@
                                 </button>
                             </div>
                             <div class="w-1/2 py-3 pr-3">
-                                <a asp-page="Index" class="subBtn btnDark">
+                                <a asp-page="Index" asp-route-sub="@Model.PaperDto.CategoryId" class="subBtn btnDark">
                                     بازگشت
                                 </a>
                             </div>

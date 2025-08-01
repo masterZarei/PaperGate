@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.Entities;
-using PaperGate.Core.Entities.Categories;
 using PaperGate.Core.Entities.Ketwords;
 using PaperGate.Core.Interfaces.Services;
 using PaperGate.Infra.Data;
