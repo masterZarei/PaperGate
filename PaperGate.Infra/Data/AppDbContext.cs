@@ -18,6 +18,7 @@ namespace PaperGate.Infra.Data
         public DbSet<PaperKeywordInfo> PaperKeywords { get; set; }
         public DbSet<MessageInfo> Messages { get; set; }
         public DbSet<AboutUsInfo> AboutUs { get; set; }
+        public DbSet<ContactWayInfo> ContactWays { get; set; }
 
 
 
