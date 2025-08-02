@@ -1,0 +1,53 @@
+﻿using PaperGate.Core.Entities;
+using PaperGate.Core.Interfaces;
+using PaperGate.Web.Utilities.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using ILogger = Serilog.ILogger;
+
+namespace PaperGate.Web.Pages.Account.Admin.ContactWays
+{
+    public class CreateModel : MyPageModel
+    {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger _logger;
+
+        public CreateModel(IUnitOfWork unitOfWork, ILogger logger)
+        {
+            _unitOfWork = unitOfWork;
+            _logger = logger;
+        }
+
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
+
+        [BindProperty]
+        public ContactWayInfo ContactWayInfo { get; set; } = default!;
+
+        // For more information, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnPostAsync()
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    ShowError(ErrorMessages.FILLREQUESTEDDATA);
+                    return Page();
+                }
+
+                await _unitOfWork.ContactWay.AddAsync(ContactWayInfo);
+                await _unitOfWork.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                ShowError(ErrorMessages.CUSTOM, customMessage: "در فرآیند ایجاد راه ارتباطی خطایی رخ داد. لطفا بعدا امتحان کنید");
+                _logger.Fatal(ex, ex.Message, "ایجاد راه ارتباطی با خطا مواجه شد");
+                return Page();
+            }
+
+        }
+    }
+}

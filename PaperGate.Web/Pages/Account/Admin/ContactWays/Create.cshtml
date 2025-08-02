@@ -1,0 +1,88 @@
+﻿@page
+@model PaperGate.Web.Pages.Account.Admin.ContactWays.CreateModel
+
+@{
+    ViewData["Title"] = "ایجاد راه ارتباطی";
+}
+
+<div class="container py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="#">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">محصول</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">ایجاد</a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">اضافه کردن راه ارتباطی</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+
+                        <div class="block tablet:flex justify-between">
+                            <div class="w-full tablet:w-1/2 px-2">
+                                <!--                                نام-->
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">نام </label>
+                                    <input asp-for="ContactWayInfo.Title" id="name"
+                                           class="customInput">
+                                    <span asp-validation-for="ContactWayInfo.Title" class="text-red-600"></span>
+
+                                </div>
+
+
+                                <!--    نمایه-->
+                                <div class="flex flex-col mt-3">
+                                    <label for="icon" class="customLabel">نمایه</label>
+                                    <div>
+                                        <input asp-for="ContactWayInfo.Icon" id="icon" class="customInput">
+                                        <span asp-validation-for="ContactWayInfo.Icon" class="text-red-600"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full tablet:w-1/2 px-2">
+                                <!-- آدرس -->
+                                <div class="flex flex-col mt-3">
+                                    <label for="price" class="customLabel">آدرس </label>
+                                    <input asp-for="ContactWayInfo.Link" type="text" id="price"
+                                           class="customInput">
+                                    <span asp-validation-for="ContactWayInfo.Icon" class="text-red-600"></span>
+
+                                </div>
+                                <div class="flex gap-4 items-center mt-6">
+                                    <label for="status" class="customLabel">آیا لینک است</label>
+                                    <input type="checkbox" asp-for="ContactWayInfo.IsLink" class="w-10 h-10" id="status">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full flex px-2">
+                            <div class="w-1/2 py-3 pl-3">
+                                <button type="submit" class="subBtn btnSuccess">
+                                    تایید
+                                </button>
+                            </div>
+                            <div class="w-1/2 py-3 pr-3">
+                                <a asp-page="Index" class="subBtn btnDark">
+                                    بازگشت
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

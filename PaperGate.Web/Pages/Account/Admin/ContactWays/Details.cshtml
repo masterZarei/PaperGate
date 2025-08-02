@@ -1,0 +1,63 @@
+﻿@page
+@model PaperGate.Web.Pages.Account.Admin.ContactWays.DetailsModel
+
+@{
+    ViewData["Title"] = "جزئیات راه ارتباطی";
+}
+<div class="container py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="#">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">محصول</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#">ایجاد</a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">جزئیات راه ارتباطی</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <div class="block tablet:flex justify-between">
+                        <div class="w-full tablet:w-1/2 px-2">
+                            <!--                                نام-->
+                            <div class="flex flex-col mt-3">
+                                <label for="name" class="customLabel">نام </label>
+                                <input asp-for="ContactWayInfo.Title" id="name" class="customInput disabled:bg-gray-100" disabled>
+                            </div>
+                            <!--    نمایه-->
+                            <div class="flex flex-col mt-3">
+                                <label for="icon" class="customLabel">نمایه</label>
+                                <div>
+                                    <input asp-for="ContactWayInfo.Icon" type="text" disabled id="icon" class="customInput">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full tablet:w-1/2 px-2">
+                            <!-- آدرس -->
+                            <div class="flex flex-col mt-3">
+                                <label class="customLabel">آدرس </label>
+                                <input asp-for="ContactWayInfo.Link" class="customInput disabled:bg-gray-100" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full flex px-2">
+                        <div class="w-1/2 py-3 pl-3">
+                            <a asp-page="Edit" asp-route-Id="@Model.ContactWayInfo.Id" class="subBtn btnIndigo">
+                                ویرایش
+                            </a>
+                        </div>
+                        <div class="w-1/2 py-3 pr-3">
+                            <a asp-page="Index" class="subBtn btnDark">
+                                بازگشت
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
