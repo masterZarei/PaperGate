@@ -6,6 +6,9 @@ public static class StaticValues
     //Images
     public const string PaperImagesPath = "wwwroot/Assets/Pictures/Papers/";
 
+    //Images
+    public const string PreferencesImagesPath = "wwwroot/Assets/Pictures/Preferences/";
+
 
     #endregion
     #region Saving Size

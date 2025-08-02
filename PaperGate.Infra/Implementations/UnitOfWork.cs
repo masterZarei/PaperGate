@@ -1,6 +1,7 @@
 ﻿using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Categories;
 using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Template;
 using PaperGate.Core.Interfaces;
 using PaperGate.Core.Interfaces.Repositories;
 using PaperGate.Infra.Data;
@@ -26,12 +27,14 @@ public class UnitOfWork : IUnitOfWork
         Keyword = new GenericRepository<KeywordInfo>(_db, myLogger);
         PaperKeyword = new GenericRepository<PaperKeywordInfo>(_db, myLogger);
         Message = new GenericRepository<MessageInfo>(_db, myLogger);
+        AboutUs = new GenericRepository<AboutUsInfo>(_db, myLogger);
     }
     public IGenericRepository<PostInfo> Post { get; set; }
     public IGenericRepository<CategoryInfo> Category { get; set; }
     public IGenericRepository<KeywordInfo> Keyword { get; set; }
     public IGenericRepository<PaperKeywordInfo> PaperKeyword { get; set; }
     public IGenericRepository<MessageInfo> Message { get; set; }
+    public IGenericRepository<AboutUsInfo> AboutUs { get; set; }
 
     public async Task<TaskResult> SaveChangesAsync()
     {
