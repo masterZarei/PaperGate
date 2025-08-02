@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
+using PaperGate.Core.Entities.Template;
 using PaperGate.Web.ViewModels;
 
 namespace PaperGate.Web.Config
@@ -26,6 +27,12 @@ namespace PaperGate.Web.Config
             CreateMap<PostInfo, PaperEditDto>().ReverseMap();
             CreateMap<PostInfo, PaperDetailsDto>().ReverseMap();
             CreateMap<PostInfo, PublicPaperDetailsDto>().ReverseMap();
+            #endregion
+
+            #region Preferences
+            CreateMap<AboutUsInfo, AboutUsEditDto>().ReverseMap();
+            CreateMap<AboutUsInfo, AboutUsPageDto>().ReverseMap();
+
             #endregion
         }
     }
