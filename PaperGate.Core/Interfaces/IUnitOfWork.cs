@@ -14,6 +14,7 @@ public interface IUnitOfWork
     IGenericRepository<PaperKeywordInfo> PaperKeyword { get; }
     IGenericRepository<MessageInfo> Message { get; }
     IGenericRepository<AboutUsInfo> AboutUs { get; }
+    IGenericRepository<ContactWayInfo> ContactWay { get; }
 
     Task<TaskResult> SaveChangesAsync();
 }
