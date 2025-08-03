@@ -4,9 +4,9 @@ using PaperGate.Core.Entities.Categories;
 using PaperGate.Core.Entities.Ketwords;
 using System.ComponentModel.DataAnnotations;
 
-namespace PaperGate.Web.ViewModels;
+namespace PostGate.Web.ViewModels;
 
-public class PaperCreateDto
+public class PostCreateDto
 {
     /*
      [Required(ErrorMessage ="لطفا موضوع بلاگ را وارد کنید")]
@@ -39,7 +39,7 @@ public class PaperCreateDto
     public IFormFile? FileUpload { get; set; } = default!;
     #endregion
 }
-public class PaperEditDto
+public class PostEditDto
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "لطفا موضوع بلاگ را وارد کنید")]
@@ -64,19 +64,19 @@ public class PaperEditDto
 
     #region Category List
     public List<CategoryInfo>? AvailableCategories { get; set; }
-    public List<CategoryInfo>? PaperCategories { get; set; }
+    public List<CategoryInfo>? PostCategories { get; set; }
     public SelectList? CategoryList { get; set; }
     public string? SelectedCategory { get; set; }
     #endregion
 
     #region Keyword List
     public List<KeywordInfo>? AvailableKeywords { get; set; }
-    public List<KeywordInfo>? PaperKeywords { get; set; }
+    public List<KeywordInfo>? PostKeywords { get; set; }
     public SelectList? KeywordList { get; set; }
     public string? SelectedKeyword { get; set; }
     #endregion
 }
-public class PaperListDto
+public class PostListDto
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -85,7 +85,7 @@ public class PaperListDto
     public UserInfo? Author { get; set; }
 
 }
-public class PaperDeleteDto
+public class PostDeleteDto
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -93,7 +93,7 @@ public class PaperDeleteDto
     public DateTime CreatedOn { get; set; }
 
 }
-public class PaperDetailsDto
+public class PostDetailsDto
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -103,24 +103,24 @@ public class PaperDetailsDto
     public int CategoryId { get; set; }
 
     public DateTime CreatedOn { get; set; }
-    public IReadOnlyList<PaperKeywordInfo>? PaperKeywords { get; set; }
+    public IReadOnlyList<PostKeywordInfo>? PostKeywords { get; set; }
 }
-public class PublicPaperDetailsDto
+public class PublicPostDetailsDto
 {
     public int Id { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
     public string Summary { get; set; }
     public string? Picture { get; set; }
-    public IReadOnlyList<PaperKeywordInfo>? PaperKeywords { get; set; }
-    public IReadOnlyList<PostInfo>? LatestPapers { get; set; }
+    public IReadOnlyList<PostKeywordInfo>? PostKeywords { get; set; }
+    public IReadOnlyList<PostInfo>? LatestPosts { get; set; }
     public UserInfo? Author { get; set; }
     public string? Slug { get; set; }
     public DateTime CreatedOn { get; set; }
 
 
 }
-public class PaperCardDto
+public class PostCardDto
 {
     public string? Picture { get; set; }
     public string Title { get; set; }
@@ -128,10 +128,10 @@ public class PaperCardDto
 
 
 }
-public class AllPapersDto
+public class AllPostsDto
 {
-    public IReadOnlyList<PostInfo>? Papers { get; set; }
-    public string? PaperTitle { get; set; } = string.Empty;
+    public IReadOnlyList<PostInfo>? Posts { get; set; }
+    public string? PostTitle { get; set; } = string.Empty;
     public UserInfo? Author { get; set; }
 
 

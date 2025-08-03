@@ -24,20 +24,20 @@
                             <!--                                نام-->
                             <div class="flex flex-col mt-3">
                                 <label for="name" class="customLabel">نام مقاله</label>
-                                <input type="text" asp-for="PaperDto.Title" id="name" class="customInput disabled:bg-gray-100" disabled>
+                                <input type="text" asp-for="PostDto.Title" id="name" class="customInput disabled:bg-gray-100" disabled>
                             </div>
                             <!--                               تاریخ ایجاد-->
                             <div class="flex flex-col mt-3">
                                 <label for="date" class="customLabel">تاریخ ایجاد مقاله</label>
-                                <input type="text" value="@Model.PaperDto.CreatedOn.ToShamsi(true)" id="date" class="customInput disabled:bg-gray-100" disabled>
+                                <input type="text" value="@Model.PostDto.CreatedOn.ToShamsi(true)" id="date" class="customInput disabled:bg-gray-100" disabled>
                             </div>
                             <!--کلید واژه ها-->
                             <div class="flex flex-col mt-3">
                                 <label for="keyword" class="customLabel">کلمات کلیدی</label>
                                 <div class="flex flex-wrap mt-4 gap-2">
-                                    @if (Model.PaperDto.PaperKeywords.Any())
+                                    @if (Model.PostDto.PostKeywords.Any())
                                     {
-                                        @foreach (var item in Model.PaperDto.PaperKeywords)
+                                        @foreach (var item in Model.PostDto.PostKeywords)
                                         {
                                             <button class="btnSolid">
                                                 @item?.Keyword?.Title
@@ -75,7 +75,7 @@
                             </div> *@
                             <!--    دمو عکس-->
                             <div>
-                                <img src="~/Assets/Pictures/Papers/@Model?.PaperDto?.Picture" class="border border-black w-72 h-52 mx-auto px-2 mt-8" alt="Paper">
+                                <img src="~/Assets/Pictures/Papers/@Model?.PostDto?.Picture" class="border border-black w-72 h-52 mx-auto px-2 mt-8" alt="Paper">
                             </div>
                         </div>
                     </div>
@@ -83,20 +83,20 @@
                     <!--         خلاصه کوتاه-->
                     <div class="w-full flex flex-col px-2 mt-3">
                         <label for="demo" class="customLabel">خلاصه </label>
-                        <textarea id="demo" asp-for="PaperDto.Summary" cols="30" rows="10" class="customInput disabled:bg-gray-100" disabled></textarea>
+                        <textarea id="demo" asp-for="PostDto.Summary" cols="30" rows="10" class="customInput disabled:bg-gray-100" disabled></textarea>
                     </div>
                         <!--       متن مقاله-->
                         <div class="w-full flex flex-col px-2 mt-3">
                             <label for="Paper" class="customLabel">مقاله : </label>
-                            <textarea asp-for="PaperDto.Content" id="Paper" cols="30" rows="30" class="customInput disabled:bg-gray-100" disabled></textarea>
+                            <textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput disabled:bg-gray-100" disabled></textarea>
                         </div>
                     </div>
                     <div class="w-full flex px-2">
                         <div class="w-1/2 py-3 pl-3">
-                            <a asp-page="Edit" asp-route-Id="@Model.PaperDto.Id" class="subBtn btnIndigo">ویرایش</a>
+                            <a asp-page="Edit" asp-route-Id="@Model.PostDto.Id" class="subBtn btnIndigo">ویرایش</a>
                         </div>
                         <div class="w-1/2 py-3 pr-3">
-                            <a asp-page="Index" asp-route-sub="@Model.PaperDto.CategoryId" class="subBtn btnDark">
+                            <a asp-page="Index" asp-route-sub="@Model.PostDto.CategoryId" class="subBtn btnDark">
                                 بازگشت
                             </a>
                         </div>

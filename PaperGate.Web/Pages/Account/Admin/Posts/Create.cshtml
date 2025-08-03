@@ -27,9 +27,9 @@
 								<!--                                نام-->
 								<div class="flex flex-col mt-3">
 									<label for="name" class="customLabel">موضوع مقاله</label>
-									<input asp-for="PaperDto.Title" type="text" id="name" placeholder="موضوع مقاله را وارد کنید"
+									<input asp-for="PostDto.Title" type="text" id="name" placeholder="موضوع مقاله را وارد کنید"
 										   class="customInput">
-									<span asp-validation-for="PaperDto.Title" class="text-red-600"></span>
+									<span asp-validation-for="PostDto.Title" class="text-red-600"></span>
 									<p class="text-gray-600">نکته: لطفا حداکثر 35 کاراکتر بنویسید</p>
 
 								</div>
@@ -38,7 +38,7 @@
 								<div class="flex flex-col mt-3">
 									<label class="customLabel"> عکس </label>
 									<label class="mt-3 text-white py-1 rounded-md pr-4 bg-indigo-600 cursor-pointer flex flex-row-reverse justify-between">
-										<input type="file" asp-for="PaperDto.FileUpload" id="imgUp" accept="image,.png,.jpg">
+										<input type="file" asp-for="PostDto.FileUpload" id="imgUp" accept="image,.png,.jpg">
 										<span class="text-center">آپلود فایل</span>
 									</label>
 								</div>
@@ -56,8 +56,8 @@
 							<!--         خلاصه کوتاه-->
 							<div class="w-full flex flex-col px-2 mt-3">
 								<label for="demo" class="customLabel">خلاصه </label>
-								<textarea asp-for="PaperDto.Summary" id="file-picker" cols="30" rows="10" class="customInput"></textarea>
-								<span asp-validation-for="PaperDto.Summary" class="text-red-600"></span>
+								<textarea asp-for="PostDto.Summary" id="file-picker" cols="30" rows="10" class="customInput"></textarea>
+								<span asp-validation-for="PostDto.Summary" class="text-red-600"></span>
 								<p class="text-gray-600">نکته: لطفا حداقل 15 کلمه بنویسید</p>
 
 							</div>
@@ -67,8 +67,8 @@
 							<!--       متن مقاله-->
 							<div class="w-full flex flex-col px-2 mt-3">
 								<label for="Paper" class="customLabel">محتوا : </label>
-								<textarea asp-for="PaperDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
-								<span asp-validation-for="PaperDto.Content" class="text-red-600"></span>
+								<textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
+								<span asp-validation-for="PostDto.Content" class="text-red-600"></span>
 								<p class="text-gray-600">نکته: لطفا حداقل 1000 کلمه بنویسید</p>
 
 							</div>

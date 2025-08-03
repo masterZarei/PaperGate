@@ -12,10 +12,10 @@ namespace PaperGate.Infra.Data
     {
 
         public DbSet<UserInfo> Users { get; set; }
-        public DbSet<PostInfo> Papers { get; set; }
+        public DbSet<PostInfo> Posts { get; set; }
         public DbSet<CategoryInfo> Categories { get; set; }
         public DbSet<KeywordInfo> Keywords { get; set; }
-        public DbSet<PaperKeywordInfo> PaperKeywords { get; set; }
+        public DbSet<PostKeywordInfo> PaperKeywords { get; set; }
         public DbSet<MessageInfo> Messages { get; set; }
         public DbSet<AboutUsInfo> AboutUs { get; set; }
         public DbSet<ContactWayInfo> ContactWays { get; set; }

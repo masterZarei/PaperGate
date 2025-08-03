@@ -4,6 +4,7 @@ using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Template;
 using PaperGate.Web.ViewModels;
+using PostGate.Web.ViewModels;
 
 namespace PaperGate.Web.Config
 {
@@ -21,12 +22,12 @@ namespace PaperGate.Web.Config
             #endregion
 
             #region Paper_DTOs
-            CreateMap<PostInfo, PaperCreateDto>().ReverseMap();
-            CreateMap<PostInfo, PaperListDto>().ReverseMap();
-            CreateMap<PostInfo, PaperDeleteDto>().ReverseMap();
-            CreateMap<PostInfo, PaperEditDto>().ReverseMap();
-            CreateMap<PostInfo, PaperDetailsDto>().ReverseMap();
-            CreateMap<PostInfo, PublicPaperDetailsDto>().ReverseMap();
+            CreateMap<PostInfo, PostCreateDto>().ReverseMap();
+            CreateMap<PostInfo, PostListDto>().ReverseMap();
+            CreateMap<PostInfo, PostDeleteDto>().ReverseMap();
+            CreateMap<PostInfo, PostEditDto>().ReverseMap();
+            CreateMap<PostInfo, PostDetailsDto>().ReverseMap();
+            CreateMap<PostInfo, PublicPostDetailsDto>().ReverseMap();
             #endregion
 
             #region Preferences

@@ -6,6 +6,7 @@ using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.Utilities.Libraries;
 using PaperGate.Web.ViewModels;
+using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 namespace PaperGate.Web.Pages.Account.Admin.Posts
 {
@@ -25,7 +26,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
         }
 
         [BindProperty]
-        public PaperDeleteDto PaperDto { get; set; }
+        public PostDeleteDto PostDto { get; set; }
 
         public async Task<IActionResult> OnGet(int Id)
         {
@@ -42,13 +43,13 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowError(ErrorMessages.IDINVALID);
                     return RedirectToIndex();
                 }
-                var Paper = await _context.GetAsync(p => p.Id == Id);
-                if (Paper is null)
+                var Post = await _context.GetAsync(p => p.Id == Id);
+                if (Post is null)
                 {
                     ShowError(ErrorMessages.NOTFOUND);
                     return RedirectToIndex();
                 }
-                PaperDto = _mapper.Map<PaperDeleteDto>(Paper);
+                PostDto = _mapper.Map<PostDeleteDto>(Post);
 
                 return Page();
             }
@@ -56,7 +57,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             {
 
                 ShowError(ErrorMessages.ERRORHAPPEDNED);
-                _logger.Fatal(ex, "Delete Create Failed On OnGet", PaperDto);
+                _logger.Fatal(ex, "Delete Create Failed On OnGet", PostDto);
                 return RedirectToPage("./Index");
             }
 
@@ -101,8 +102,8 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             {
 
                 ShowError(ErrorMessages.ERRORHAPPEDNED);
-                _logger.Fatal(ex, "Paper Delete Failed On OnPost", PaperDto);
-                return RedirectToPage("./Index",new {sub=PaperDto.Id});
+                _logger.Fatal(ex, "Paper Delete Failed On OnPost", PostDto);
+                return RedirectToPage("./Index",new {sub=PostDto.Id});
             }
 
         }

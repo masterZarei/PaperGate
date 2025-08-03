@@ -10,6 +10,7 @@ using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.Utilities.Libraries;
 using PaperGate.Web.ViewModels;
+using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 namespace PaperGate.Web.Pages.Account.Admin.Posts
 {
@@ -34,7 +35,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             _hTMLToolsService = hTMLToolsService;
         }
         [BindProperty]
-        public PaperEditDto PaperDto { get; set; }
+        public PostEditDto PostDto { get; set; }
 
         public async Task<IActionResult> OnGet(int Id)
         {
@@ -50,13 +51,13 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowError(ErrorMessages.IDINVALID);
                     return RedirectToIndex();
                 }
-                var Paper = await _context.Papers.AsNoTracking().FirstOrDefaultAsync(a => a.Id == Id);
+                var Paper = await _context.Posts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == Id);
                 if (Paper is null)
                 {
                     ShowError(ErrorMessages.NOTFOUND);
                     return RedirectToIndex();
                 }
-                PaperDto = _mapper.Map<PaperEditDto>(Paper);
+                PostDto = _mapper.Map<PostEditDto>(Paper);
 
                 InitLists();
                 return Page();
@@ -65,7 +66,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             {
 
                 ShowError(ErrorMessages.ERRORHAPPEDNED);
-                _logger.Fatal(ex, "Edit Paper Failed On OnGet", PaperDto);
+                _logger.Fatal(ex, "Edit Paper Failed On OnGet", PostDto);
                 return RedirectToPage("./Index");
             }
 
@@ -90,17 +91,17 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 
             #region Keyword
 
-            PaperDto.PaperKeywords = (from keywords in _context.Keywords.ToList()
+            PostDto.PostKeywords = (from keywords in _context.Keywords.ToList()
                                       join keywordToPapers in _context.PaperKeywords.ToList()
                                       on keywords.Id equals keywordToPapers.KeywordId
-                                      where keywordToPapers.PaperId == PaperDto.Id
+                                      where keywordToPapers.PostId == PostDto.Id
                                       select keywords).ToList();
 
-            PaperDto.AvailableKeywords = (from keyword in _context.Keywords.ToList()
-                                          where !PaperDto.PaperKeywords.Contains(keyword)
+            PostDto.AvailableKeywords = (from keyword in _context.Keywords.ToList()
+                                          where !PostDto.PostKeywords.Contains(keyword)
                                           select keyword).ToList();
-            if (PaperDto.AvailableKeywords is not null)
-                PaperDto.KeywordList = new SelectList(PaperDto.AvailableKeywords, nameof(KeywordInfo.Id), nameof(KeywordInfo.Title));
+            if (PostDto.AvailableKeywords is not null)
+                PostDto.KeywordList = new SelectList(PostDto.AvailableKeywords, nameof(KeywordInfo.Id), nameof(KeywordInfo.Title));
             #endregion
 
         }
@@ -116,18 +117,18 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 {
                     ShowError(ErrorMessages.CUSTOM, "لطفا فیلد های ضروری را پر کنید");
                     InitLists();
-                    return RedirectToPage("Edit", new { PaperDto.Id });
+                    return RedirectToPage("Edit", new { PostDto.Id });
                 }
                 #endregion
                 //Uploading Files
                 #region Image
                 //If User has selected one or more images
-                if (PaperDto?.FileUpload is not null)
+                if (PostDto?.FileUpload is not null)
                 {
                     var uploadResult = await _fileManagementService.Alter(new FMServiceAlterViewModel
                     {
-                        Files = [PaperDto?.FileUpload],
-                        LastFilesNames = PaperDto?.Picture,
+                        Files = [PostDto?.FileUpload],
+                        LastFilesNames = PostDto?.Picture,
                         FileType = FileType.Image,
                         FolderPath = StaticValues.PaperImagesPath,
                         FileCount = FileCount.Single
@@ -140,7 +141,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                         }
                         return Page();
                     }
-                    PaperDto.Picture = uploadResult.Result as string;
+                    PostDto.Picture = uploadResult.Result as string;
                 }
 
 
@@ -149,10 +150,10 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 
 
 
-                PostInfo post = _mapper.Map<PostInfo>(PaperDto);
+                PostInfo post = _mapper.Map<PostInfo>(PostDto);
                 post.Summary = _hTMLToolsService.SanitizeContent(post.Summary);
                 post.Content = _hTMLToolsService.SanitizeContent(post.Content);
-                _context.Papers.Update(post);
+                _context.Posts.Update(post);
                 await _context.SaveChangesAsync();
                 ShowSuccess();
                 return RedirectToPage("./Index", new { sub = post.CategoryId });
@@ -252,35 +253,35 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
         public async Task<IActionResult> OnPostAddKeyword()
         {
             #region Validation
-            if (string.IsNullOrEmpty(PaperDto.SelectedKeyword))
+            if (string.IsNullOrEmpty(PostDto.SelectedKeyword))
             {
                 ShowError(ErrorMessages.IDINVALID);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
-            bool isValid = int.TryParse(PaperDto.SelectedKeyword, out int Id);
+            bool isValid = int.TryParse(PostDto.SelectedKeyword, out int Id);
             if (isValid is false)
             {
                 ShowError(ErrorMessages.IDINVALID);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
             if (!await _context.Keywords.AnyAsync(a => a.Id == Id))
             {
                 ShowError(ErrorMessages.NOTFOUND);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
             //Is already added
-            if (await _context.PaperKeywords.AnyAsync(a => a.PaperId == PaperDto.Id && a.KeywordId == Id))
+            if (await _context.PaperKeywords.AnyAsync(a => a.PostId == PostDto.Id && a.KeywordId == Id))
             {
                 ShowError(ErrorMessages.CUSTOM, customMessage: "کلمه کلیدی با همین نام برای این مقاله موجود است");
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
             #endregion
             try
             {
-                await _context.PaperKeywords.AddAsync(new PaperKeywordInfo
+                await _context.PaperKeywords.AddAsync(new PostKeywordInfo
                 {
                     KeywordId = Id,
-                    PaperId = PaperDto.Id
+                    PostId = PostDto.Id
                 });
                 await _context.SaveChangesAsync();
             }
@@ -289,26 +290,26 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
 
                 ShowError(ErrorMessages.CUSTOM, customMessage: "اضافه کردن کلمه کلیدی به مقاله با خطا مواجه شد");
                 _logger.Fatal(ex, ex.Message, "اضافه کردن کلمه کلیدی به مقاله با خطا مواجه شد");
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
             ShowSuccess();
             InitLists();
-            return RedirectToPage("Edit", new { PaperDto?.Id });
+            return RedirectToPage("Edit", new { PostDto?.Id });
         }
         public async Task<IActionResult> OnPostRemoveKeyword(int Id)
         {
-            if (Id == 0 || PaperDto?.Id == 0)
+            if (Id == 0 || PostDto?.Id == 0)
             {
                 ShowError(ErrorMessages.IDINVALID);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
             var Keyword = await _context.PaperKeywords
-                .FirstOrDefaultAsync(a => a.KeywordId == Id && a.PaperId == PaperDto.Id);
+                .FirstOrDefaultAsync(a => a.KeywordId == Id && a.PostId == PostDto.Id);
 
             if (Keyword is null)
             {
                 ShowError(ErrorMessages.NOTFOUND);
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
             try
             {
@@ -319,12 +320,12 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             {
                 ShowError(ErrorMessages.CUSTOM, customMessage: "حذف کردن کلمه کلیدی از مقاله با خطا مواجه شد");
                 _logger.Fatal(ex, ex.Message, "حذف کردن لمه کلیدی از مقاله با خطا مواجه شد");
-                return RedirectToPage("Edit", new { PaperDto?.Id });
+                return RedirectToPage("Edit", new { PostDto?.Id });
             }
 
             ShowSuccess();
             InitLists();
-            return RedirectToPage("Edit", new { PaperDto?.Id });
+            return RedirectToPage("Edit", new { PostDto?.Id });
         }
         #endregion
     }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PaperGate.Infra.Data;
 using PaperGate.Web.Utilities.Helpers;
-using PaperGate.Web.ViewModels;
+using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 namespace PaperGate.Web.Pages.Account.Admin.Posts
 {
@@ -22,7 +22,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             _logger = logger;
         }
         [BindProperty]
-        public PaperDetailsDto PaperDto { get; set; }
+        public PostDetailsDto PostDto { get; set; }
 
         public async Task<IActionResult> OnGet(int Id)
         {
@@ -38,7 +38,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowError(ErrorMessages.IDINVALID);
                     return RedirectToIndex();
                 }
-                var Paper = await _context.Papers
+                var Paper = await _context.Posts
                     /*.Include(c => c.Categories)*/
                     .FirstOrDefaultAsync(p => p.Id == Id);
                 if (Paper is null)
@@ -46,21 +46,21 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowError(ErrorMessages.NOTFOUND);
                     return RedirectToIndex();
                 }
-                PaperDto = _mapper.Map<PaperDetailsDto>(Paper);
+                PostDto = _mapper.Map<PostDetailsDto>(Paper);
                 /*PaperDto.PaperCategories = await _context.PaperCategories
                     .Include(c => c.Category)
                     .Where(c => c.PaperId == Id).ToListAsync();*/
 
-                PaperDto.PaperKeywords = await _context.PaperKeywords
+                PostDto.PostKeywords = await _context.PaperKeywords
                     .Include(c => c.Keyword)
-                    .Where(c => c.PaperId == Id).ToListAsync();
+                    .Where(c => c.PostId == Id).ToListAsync();
 
                 return Page();
             }
             catch (Exception ex)
             {
                 ShowError(ErrorMessages.ERRORHAPPEDNED);
-                _logger.Fatal(ex.ToString(), $"Paper/Details/PaperViewModelJason:{PaperDto}");
+                _logger.Fatal(ex.ToString(), $"Paper/Details/PaperViewModelJason:{PostDto}");
                 return RedirectToIndex();
             }
 

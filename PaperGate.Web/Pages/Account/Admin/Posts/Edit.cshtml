@@ -21,19 +21,19 @@
                 <div class="PanelCard-body pt-5">
                     <form method="post" enctype="multipart/form-data">
                         <div class="text-center text-red-500" asp-validation-summary="All"></div>
-                        <input type="hidden" asp-for="PaperDto.Id" />
-                        <input type="hidden" asp-for="PaperDto.AuthorId" />
-                        <input type="hidden" asp-for="PaperDto.Picture" />
-                        <input type="hidden" asp-for="PaperDto.Slug" />
-                        <input type="hidden" asp-for="PaperDto.CategoryId" />
+                        <input type="hidden" asp-for="PostDto.Id" />
+                        <input type="hidden" asp-for="PostDto.AuthorId" />
+                        <input type="hidden" asp-for="PostDto.Picture" />
+                        <input type="hidden" asp-for="PostDto.Slug" />
+                        <input type="hidden" asp-for="PostDto.CategoryId" />
                         <div class="block tablet:flex justify-between">
                             <div class="w-full tablet:w-1/2 px-2">
                                 <!--                                موضوع-->
                                 <div class="flex flex-col mt-3">
                                     <label for="name" class="customLabel">موضوع مقاله</label>
-                                    <input asp-for="PaperDto.Title" type="text" id="name" placeholder="موضوع مقاله را وارد کنید"
+                                    <input asp-for="PostDto.Title" type="text" id="name" placeholder="موضوع مقاله را وارد کنید"
                                            class="customInput">
-                                    <span class="text-danger d-block" asp-validation-for="PaperDto.Title"></span>
+                                    <span class="text-danger d-block" asp-validation-for="PostDto.Title"></span>
                                     <p class="text-gray-600">نکته: لطفا حداکثر 35 کاراکتر بنویسید</p>
 
                                 </div>
@@ -42,17 +42,17 @@
                                     <div class="flex flex-col mt-3">
                                         <label for="keywords" class="customLabel">کلمات کلیدی</label>
                                         <div class="flex items-center">
-                                            <select id="CategoriesList" asp-for="PaperDto.SelectedKeyword" asp-items="@Model.PaperDto.KeywordList"
+                                            <select id="CategoriesList" asp-for="PostDto.SelectedKeyword" asp-items="@Model.PostDto.KeywordList"
                                                     class="customInput">
                                             </select>
                                             <button asp-page-handler="AddKeyword" type="submit" id="addKeyword" class="increaseBtn"> افزودن </button>
 
                                         </div>
                                         <!--                                    کلید واژه ها های انتخاب شده-->
-                                        @if (Model.PaperDto.PaperKeywords is not null && Model.PaperDto.PaperKeywords.Any())
+                                        @if (Model.PostDto.PostKeywords is not null && Model.PostDto.PostKeywords.Any())
                                         {
                                             <div class="flex flex-wrap mt-4 gap-2">
-                                                @foreach (var item in Model.PaperDto.PaperKeywords)
+                                                @foreach (var item in Model.PostDto.PostKeywords)
                                                 {
                                                     <button type="submit" asp-page-handler="RemoveKeyword" asp-route-Id="@item.Id" class="btnSolid">
                                                         @item.Title <i class="fa fa-trash text-warning" aria-hidden="true"></i>
@@ -64,19 +64,19 @@
                                     <!--                                وضعیت-->
                                     <div class="flex gap-4 items-center mt-6">
                                         <label for="status" class="customLabel">وضعیت</label>
-                                        <input asp-for="PaperDto.IsActive" type="checkbox" class="w-10 h-10" id="status">
+                                        <input asp-for="PostDto.IsActive" type="checkbox" class="w-10 h-10" id="status">
                                     </div>
                                     <!--                                نمایش در SLIDER-->
                                     <div class="flex gap-4 items-center mt-6">
                                         <label for="status" class="customLabel">نمایش در اسلایدر</label>
-                                        <input asp-for="PaperDto.ShowOnSlider" type="checkbox" class="w-10 h-10" id="status">
+                                        <input asp-for="PostDto.ShowOnSlider" type="checkbox" class="w-10 h-10" id="status">
                                     </div>
                                 </div>
                                 <!--image-->
                                 <div class="flex flex-col mt-3">
                                     <label class="customLabel"> عکس </label>
                                     <label class="mt-3 text-white py-1 rounded-md pr-4 bg-indigo-600 cursor-pointer flex flex-row-reverse justify-between">
-                                        <input type="file" asp-for="PaperDto.FileUpload" id="imgUp" accept="image/*,.png,.jpg">
+                                        <input type="file" asp-for="PostDto.FileUpload" id="imgUp" accept="image/*,.png,.jpg">
                                         <span class="text-center">آپلود فایل</span>
                                     </label>
                                 </div>
@@ -108,7 +108,7 @@
                                 </div> *@
                                 <!--    دمو عکس-->
                                 <div>
-                                    <img src="~/Assets/Pictures/Papers/@Model?.PaperDto?.Picture" id="imgPreview" class="border border-black w-72 h-52 mx-auto px-2 mt-8" alt="Paper">
+                                    <img src="~/Assets/Pictures/Papers/@Model?.PostDto?.Picture" id="imgPreview" class="border border-black w-72 h-52 mx-auto px-2 mt-8" alt="Paper">
                                 </div>
                             </div>
                         </div>
@@ -116,8 +116,8 @@
                             <!--         خلاصه کوتاه-->
                             <div class="w-full flex flex-col px-2 mt-3">
                                 <label for="demo" class="customLabel">خلاصه </label>
-                                <textarea asp-for="PaperDto.Summary" id="demo" cols="30" rows="10" class="customInput"></textarea>
-                                <span class="text-danger d-block" asp-validation-for="PaperDto.Summary"></span>
+                                <textarea asp-for="PostDto.Summary" id="demo" cols="30" rows="10" class="customInput"></textarea>
+                                <span class="text-danger d-block" asp-validation-for="PostDto.Summary"></span>
                                 <p class="text-gray-600">نکته: لطفا حداقل 15 کلمه بنویسید</p>
 
                             </div>
@@ -127,8 +127,8 @@
                             <!--       متن مقاله-->
                             <div class="w-full flex flex-col px-2 mt-3">
                                 <label for="Paper" class="customLabel">محتوا : </label>
-                                <textarea asp-for="PaperDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
-                                <span class="text-danger d-block" asp-validation-for="PaperDto.Content"></span>
+                                <textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
+                                <span class="text-danger d-block" asp-validation-for="PostDto.Content"></span>
                                 <p class="text-gray-600">نکته: لطفا حداقل 1000 کلمه بنویسید</p>
 
                             </div>
@@ -140,7 +140,7 @@
                                 </button>
                             </div>
                             <div class="w-1/2 py-3 pr-3">
-                                <a asp-page="Index" asp-route-sub="@Model.PaperDto.CategoryId" class="subBtn btnDark">
+                                <a asp-page="Index" asp-route-sub="@Model.PostDto.CategoryId" class="subBtn btnDark">
                                     بازگشت
                                 </a>
                             </div>

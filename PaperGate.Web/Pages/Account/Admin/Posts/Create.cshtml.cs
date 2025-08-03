@@ -11,6 +11,7 @@ using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.Utilities.Libraries;
 using PaperGate.Web.ViewModels;
+using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Posts
@@ -39,7 +40,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             _hTMLToolsService = hTMLToolsService;
         }
         [BindProperty]
-        public PaperCreateDto PaperDto { get; set; }
+        public PostCreateDto PostDto { get; set; }
         [BindProperty]
         public int Sub { get; set; }
         public async Task<IActionResult> OnGet(int sub)
@@ -51,7 +52,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 {
                     return RedirectToSpecialPage(StaticPages.Login);
                 }
-                PaperDto = new()
+                PostDto = new()
                 {
                     /*MultipleFilesUp = []*/
                 };
@@ -73,7 +74,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             {
 
                 ShowError(ErrorMessages.ERRORHAPPEDNED);
-                _logger.Fatal(ex, ex.Message, "paper Create Failed On OnGet", PaperDto);
+                _logger.Fatal(ex, ex.Message, "paper Create Failed On OnGet", PostDto);
                 return RedirectToPage("./Index");
             }
 
@@ -105,14 +106,14 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 //Upload paper photo
                 #region Uploading Files
                 #region Pictures
-                if (PaperDto.FileUpload is null)
+                if (PostDto.FileUpload is null)
                 {
                     ShowError(ErrorMessages.CUSTOM, customMessage: "لطفا حداقل یک عکس برای بلاگ انتخاب کنید");
                     return RedirectToPage("Create");
                 }
                 var uploadResult = await _fileManagementService.Upload(new FMServiceUploadViewModel
                 {
-                    Files = [PaperDto?.FileUpload],
+                    Files = [PostDto?.FileUpload],
                     FileType = FileType.Image,
                     FolderPath = StaticValues.PaperImagesPath,
                     FileCount = FileCount.Single
@@ -123,9 +124,9 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     {
                         ShowError(ErrorMessages.CUSTOM, customMessage: error);
                     }
-                    return RedirectToPage("Create", new { PaperDto });
+                    return RedirectToPage("Create", new { PostDto });
                 }
-                PaperDto.Picture = uploadResult.Result as string;
+                PostDto.Picture = uploadResult.Result as string;
 
                 #endregion
 
@@ -138,7 +139,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     ShowError(ErrorMessages.CUSTOM, "دسترسی نامعتبر");
                     return RedirectToIndex();
                 }
-                PostInfo post = _mapper.Map<PostInfo>(PaperDto);
+                PostInfo post = _mapper.Map<PostInfo>(PostDto);
                 post.CategoryId = Sub;
                 post.AuthorId = user.Id;
                 post.Slug = SlugGenerator.GenerateSlug(post.Title, [.. await _unitOfWork.Post.GetAllReadOnlyAsync()]);
@@ -152,7 +153,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             catch (Exception ex)
             {
 
-                _logger.Fatal(ex, ex.Message, "ایجاد پست با خطا مواجه شد", PaperDto);
+                _logger.Fatal(ex, ex.Message, "ایجاد پست با خطا مواجه شد", PostDto);
 
                 ShowError(ErrorMessages.CUSTOM, customMessage: "در فرآیند اضافه کردن پست خطایی رخ داد. لطفا بعدا امتحان کنید");
                 return RedirectToPage("./Index");

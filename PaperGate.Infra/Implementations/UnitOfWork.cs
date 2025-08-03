@@ -22,21 +22,21 @@ public class UnitOfWork : IUnitOfWork
         _myLogger = myLogger;
         _taskResult = new();
 
-        Post = new GenericRepository<PostInfo>(_db, myLogger);
+        Post = new PostRepository(_db, myLogger);
         Category = new GenericRepository<CategoryInfo>(_db, myLogger);
         Keyword = new GenericRepository<KeywordInfo>(_db, myLogger);
-        PaperKeyword = new GenericRepository<PaperKeywordInfo>(_db, myLogger);
+        PaperKeyword = new GenericRepository<PostKeywordInfo>(_db, myLogger);
         Message = new GenericRepository<MessageInfo>(_db, myLogger);
         AboutUs = new GenericRepository<AboutUsInfo>(_db, myLogger);
         ContactWay = new GenericRepository<ContactWayInfo>(_db, myLogger);
     }
-    public IGenericRepository<PostInfo> Post { get; set; }
     public IGenericRepository<CategoryInfo> Category { get; set; }
     public IGenericRepository<KeywordInfo> Keyword { get; set; }
-    public IGenericRepository<PaperKeywordInfo> PaperKeyword { get; set; }
+    public IGenericRepository<PostKeywordInfo> PaperKeyword { get; set; }
     public IGenericRepository<MessageInfo> Message { get; set; }
     public IGenericRepository<AboutUsInfo> AboutUs { get; set; }
     public IGenericRepository<ContactWayInfo> ContactWay { get; set; }
+    public IPostRepository Post { get; set; }
 
     public async Task<TaskResult> SaveChangesAsync()
     {

@@ -38,7 +38,7 @@
                         </div>
                     </form>
                     <div class="overflow-auto">
-                        @if(Model.PaperDto.Any())
+                        @if(Model.PostDto.Any())
                         {
                             <table class="table text-center">
                                 <thead class="bg-gray-200">
@@ -50,7 +50,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-gray-50">
-                                    @foreach (var item in Model.PaperDto)
+                                    @foreach (var item in Model.PostDto)
                                     {
                                         <tr class="hover:bg-gray-100 transition">
                                             <td class="border-b border-r">

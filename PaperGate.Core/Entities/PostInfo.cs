@@ -34,6 +34,6 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
 
     [ForeignKey(nameof(CategoryId))]
     public CategoryInfo Category { get; } = default!;
-    public ICollection<PaperKeywordInfo> Keywords { get; } = [];
+    public ICollection<PostKeywordInfo> Keywords { get; } = [];
     #endregion
 }

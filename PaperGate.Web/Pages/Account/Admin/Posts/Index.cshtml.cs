@@ -5,6 +5,7 @@ using PaperGate.Core.Interfaces;
 using PaperGate.Infra.Data;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.ViewModels;
+using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Posts
@@ -21,7 +22,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             _logger = logger;
             _mapper = mapper;
         }
-        public IReadOnlyList<PaperListDto> PaperDto { get; set; }
+        public IReadOnlyList<PostListDto> PostDto { get; set; }
         public string CategoryTitle { get; set; }
         public int Sub { get; set; }
         public async Task<IActionResult> OnGet(int sub, string? searchName)
@@ -43,7 +44,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     var FilteredPaperList = await _unitOfWork.Post
                         .GetAllReadOnlyAsync(a => a.Title.Contains(searchName.Trim()));
 
-                    PaperDto = _mapper.Map<List<PaperListDto>>(FilteredPaperList.OrderByDescending(p => p.CreatedOn));
+                    PostDto = _mapper.Map<List<PostListDto>>(FilteredPaperList.OrderByDescending(p => p.CreatedOn));
                     return Page();
                 }
                 var category = await _unitOfWork.Category.GetAsync(c => c.Id == sub);
@@ -54,10 +55,10 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 }
                 Sub = sub;
                 CategoryTitle = category.Title;
-                var PaperList = await _unitOfWork.Post
+                var postList = await _unitOfWork.Post
                     .GetAllReadOnlyAsync(p=>p.CategoryId == category.Id/*, q=>q.Include(c=>c.Category)*/);
 
-                PaperDto = _mapper.Map<List<PaperListDto>>(PaperList.OrderByDescending(p => p.CreatedOn));
+                PostDto = _mapper.Map<List<PostListDto>>(postList.OrderByDescending(p => p.CreatedOn));
 
                 return Page();
             }

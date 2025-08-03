@@ -20,20 +20,20 @@
                 </div>
                 <div class="PanelCard-body pt-5">
                     <form method="post">
-                        <input type="hidden" asp-for="PaperDto.Id" />
+                        <input type="hidden" asp-for="PostDto.Id" />
                         <div class="block tablet:flex justify-between">
                             <div class="w-full tablet:w-1/2 px-2">
                                 <!--                                نام-->
                                 <div class="flex flex-col mt-3">
                                     <label for="name" class="customLabel">موضوع مقاله</label>
-                                    <input asp-for="PaperDto.Title" type="text" id="name" class="customInput disabled:bg-gray-100" disabled>
+                                    <input asp-for="PostDto.Title" type="text" id="name" class="customInput disabled:bg-gray-100" disabled>
                                 </div>
                             </div>
                             <div class="w-full tablet:w-1/2 px-2">
                                 <!--نویسنده مقاله-->
                                 <div class="flex flex-col mt-3">
                                     <label for="author" class="customLabel">تاریخ ایجاد</label>
-                                    <input value="@Model.PaperDto.CreatedOn.ToShamsi(true)" type="text" id="author" class="customInput disabled:bg-gray-100" disabled>
+                                    <input value="@Model.PostDto.CreatedOn.ToShamsi(true)" type="text" id="author" class="customInput disabled:bg-gray-100" disabled>
                                 </div>
                             </div>
                         </div>

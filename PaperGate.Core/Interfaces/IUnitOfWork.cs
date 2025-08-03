@@ -8,10 +8,10 @@ using PaperGate.Shared.ReturnTypes;
 namespace PaperGate.Core.Interfaces;
 public interface IUnitOfWork
 {
-    IGenericRepository<PostInfo> Post { get; }
+    IPostRepository Post { get; }
     IGenericRepository<CategoryInfo> Category { get; }
     IGenericRepository<KeywordInfo> Keyword { get; }
-    IGenericRepository<PaperKeywordInfo> PaperKeyword { get; }
+    IGenericRepository<PostKeywordInfo> PaperKeyword { get; }
     IGenericRepository<MessageInfo> Message { get; }
     IGenericRepository<AboutUsInfo> AboutUs { get; }
     IGenericRepository<ContactWayInfo> ContactWay { get; }
