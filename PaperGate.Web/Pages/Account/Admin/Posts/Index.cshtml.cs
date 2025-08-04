@@ -42,7 +42,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 if (!string.IsNullOrEmpty(searchName))
                 {
                     var FilteredPaperList = await _unitOfWork.Post
-                        .GetAllReadOnlyAsync(a => a.Title.Contains(searchName.Trim()));
+                        .GetAllReadOnlyAsync(a => a.Title.Contains(searchName.Trim()) && a.CategoryId == sub);
 
                     PostDto = _mapper.Map<List<PostListDto>>(FilteredPaperList.OrderByDescending(p => p.CreatedOn));
                     return Page();

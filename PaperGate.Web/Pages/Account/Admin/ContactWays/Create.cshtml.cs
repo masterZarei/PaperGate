@@ -1,7 +1,9 @@
-﻿using PaperGate.Core.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces;
 using PaperGate.Web.Utilities.Helpers;
-using Microsoft.AspNetCore.Mvc;
+using PaperGate.Web.Utilities.Libraries;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.ContactWays
@@ -19,23 +21,33 @@ namespace PaperGate.Web.Pages.Account.Admin.ContactWays
 
         public IActionResult OnGet()
         {
+            Init();
             return Page();
+        }
+        void Init()
+        {
+            Icons = new SelectList(IconCollection.GetIcons, "Value", "Name");
         }
 
         [BindProperty]
         public ContactWayInfo ContactWayInfo { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        public SelectList Icons { get; set; }
+
+        [BindProperty]
+        public string SelectedIcon { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
+                    Init();
                     ShowError(ErrorMessages.FILLREQUESTEDDATA);
-                    return Page();
+                    return Page(ContactWayInfo);
                 }
-
+                ContactWayInfo.Icon = SelectedIcon;
                 await _unitOfWork.ContactWay.AddAsync(ContactWayInfo);
                 await _unitOfWork.SaveChangesAsync();
 

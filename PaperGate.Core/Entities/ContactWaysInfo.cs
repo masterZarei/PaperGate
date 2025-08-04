@@ -3,7 +3,7 @@ public class ContactWayInfo : BaseEntity
 {
     public string Title { get; set; }
     public string? Link { get; set; }
-    public string Icon { get; set; }
+    public string? Icon { get; set; }
     public bool IsLink { get; set; }
 
 }

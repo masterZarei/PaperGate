@@ -40,7 +40,8 @@
                                 <div class="flex flex-col mt-3">
                                     <label for="icon" class="customLabel">نمایه</label>
                                     <div>
-                                        <input asp-for="ContactWayInfo.Icon" id="icon" class="customInput">
+                                        @* <input asp-for="ContactWayInfo.Icon" id="icon" class="customInput"> *@
+                                        <select asp-for="SelectedIcon" asp-items="@Model.Icons" class="customInput"></select>
                                         <span asp-validation-for="ContactWayInfo.Icon" class="text-red-600"></span>
 
                                     </div>
@@ -55,9 +56,9 @@
                                     <span asp-validation-for="ContactWayInfo.Icon" class="text-red-600"></span>
 
                                 </div>
-                                <div class="flex gap-4 items-center mt-6">
+                                <div class="flex gap-4 items-center mt-8">
                                     <label for="status" class="customLabel">آیا لینک است</label>
-                                    <input type="checkbox" asp-for="ContactWayInfo.IsLink" class="w-10 h-10" id="status">
+                                    <input type="checkbox" asp-for="ContactWayInfo.IsLink" class="w-12 h-12" id="status">
                                 </div>
                             </div>
                         </div>
