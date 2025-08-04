@@ -1,13 +1,10 @@
-﻿/*using Qoraba.Core.DTOs;
-using Qoraba.Core.Entities.Template;
+﻿using PaperGate.Core.DTOs;
 
 namespace PaperGate.Core.Interfaces.Services;
-    public interface IPublicInfoService
-    {
-        public Task<AboutUsInfo> GetAboutUsInfoAsync();
-        public Task<FooterDto> GetFooterInfoAsync();
-        public Task<AllProductsDto> GetAllProductsInfoAsync();
-       // public Task<AllBlogsDto> GetAllBlogsInfoAsync();
+public interface IPublicInfoService
+{
+    public Task<AboutUsPageDto> GetAboutUsInfoAsync();
+    //public Task<FooterDto> GetFooterInfoAsync();
+    // public Task<AllPostsDto> GetAllPostsInfoAsync();
 
-    }
-*/
+}

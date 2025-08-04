@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities.Template;
 using PaperGate.Core.Interfaces;
 using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.Utilities.Libraries;
 using PaperGate.Web.ViewModels;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages.Account.Admin.Preferences

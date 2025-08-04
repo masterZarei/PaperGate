@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using PaperGate.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace PaperGate.Web.ViewModels;
+namespace PaperGate.Core.DTOs;
 
 public class AboutUsEditDto
 {
@@ -15,4 +17,5 @@ public class AboutUsPageDto
 {
     public string? Description { get; set; }
     public string? Image { get; set; }
+    public List<ContactWayInfo>? ContactWays { get; set; }
 }

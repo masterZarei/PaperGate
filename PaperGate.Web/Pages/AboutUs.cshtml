@@ -1,0 +1,57 @@
+﻿@page
+@model PaperGate.Web.Pages.AboutUsModel
+@{
+}
+@{
+	ViewData["Title"] = "درباره ما";
+}
+
+<div class="space-x-normal py-8">
+	<!--    main image-->
+	<div>
+		<img src="~/images/AboutUs.jpg" alt="main image"
+			 class="w-full h-\[50vh\] sm768:h-[80vh] rounded-sm shadow shadow-gray-500 o ">
+	</div>
+	<!--    information-->
+	<div class="tablet:flex mt-16">
+		<div class="w-full tablet:w-1/3 pl-3 h-auto">
+			<img src="~/Assets/Pictures/Preferences/@Model.PageDto?.Image" alt="Aboutus image" class="h-96 w-full rounded-sm shadow shadow-gray-500">
+		</div>
+		<div class="w-full tablet:w-2/3 pr-3">
+			<p class="text-gray-100 leading-9 text-justify mt-8 tablet:mt-0">
+				@Model.PageDto.Description
+			</p>
+		</div>
+	</div>
+	<div>
+		@if (Model.PageDto.ContactWays is not null && Model.PageDto.ContactWays.Count > 0)
+		{
+			<div class="gap-8 items-center mx-auto justify-center mt-8">
+				<h1 class="text-xl text-gray-100 font-bold text-center"> راه های ارتباطی </h1>
+				@foreach (var item in Model.PageDto.ContactWays.Where(c => c.IsLink))
+				{
+					<div class="mt-4 gap-4 flex justify-center items-center">
+						<a href="@item.Link"><i class="text-3xl text-red-500 @item.Icon"></i></a>
+					</div>
+				}
+			</div>
+			<div class="mt-4 mx-auto">
+				@foreach (var item in Model.PageDto.ContactWays.Where(c => !c.IsLink))
+				{
+					<h2 class="text-center text-style text-gray-100">
+						<i class="@item.Icon"></i>
+						@item.Title
+					</h2>
+				}
+			</div>
+		}
+
+	</div>
+</div>
+@section Styles {
+	<style>
+		body {
+			background-color: #626b32;
+		}
+	</style>
+}
