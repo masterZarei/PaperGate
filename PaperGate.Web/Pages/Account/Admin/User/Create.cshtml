@@ -1,0 +1,158 @@
+﻿@page
+@model PaperGate.Web.Pages.Account.Admin.User.CreateModel
+@{
+}
+@{
+    ViewData["Title"] = "ایجاد کاربر";
+}
+<div class="space-x-normal py-8">
+    <ul class="breadcrumb">
+        <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="~/Account/Admin/Users">کاربر</a><span class="text-gray-500">/</span></li>
+        <li><a class="hover:text-blue-600 transition" href="#"> ایجاد </a></li>
+    </ul>
+    <div class="block tablet:flex justify-between">
+        <partial name="_Panel" />
+        <div class="w-full tablet:w-9/12 px-3 mt-5">
+            <div class="PanelCard border rounded p-3">
+                <!--                تایتل-->
+                <div class="PanelCard-header">
+                    <h2 class="text-lg">ایجاد کاربر</h2>
+                </div>
+                <div class="PanelCard-body pt-5">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-red-600 text-center"></div>
+                        <div class="block tablet:flex justify-between">
+                            <div class="w-full tablet:w-1/2 px-2">
+                                <!--                                نام-->
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">نام</label>
+                                    <input asp-for="CreateDto.Name" type="text" placeholder="نام را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-danger d-block" asp-validation-for="CreateDto.Name"></span>
+
+                                </div>
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">کد ملی </label>
+                                    <input asp-for="CreateDto.NationalCode" type="text" placeholder="شماره تلفن را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-danger d-block" asp-validation-for="CreateDto.NationalCode"></span>
+
+                                </div>
+                                <!--                                رمز عبور-->
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">رمز عبور</label>
+                                    <input type="text" asp-for="CreateDto.Password" placeholder="رمز عبور را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-danger d-block" asp-validation-for="CreateDto.Password"></span>
+
+                                </div>
+                                <!--نقش کاربر-->
+                                <div class="flex flex-col mt-3">
+                                    <label for="user" class="customLabel">نقش</label>
+                                    <div>
+                                        <select asp-for="CreateDto.Role" asp-items="@Model.CreateDto.RolesList" class="customInput"></select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="w-full tablet:w-1/2 px-2">
+                                <!--    نام خانوادگی-->
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">نام خانوادگی</label>
+                                    <input type="text" asp-for="CreateDto.LastName" placeholder="نام خانوادگی را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-danger d-block" asp-validation-for="CreateDto.LastName"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full flex px-2">
+                            <div class="w-1/2 py-3 pl-3">
+                                <button type="submit" class="subBtn btnSuccess">
+                                    تایید
+                                </button>
+                            </div>
+                            <div class="w-1/2 py-3 pr-3">
+                                <a asp-page="Index" class="subBtn btnDark">
+                                    بازگشت
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        let CitySelect = document.querySelector("#selectCity");
+        let ProvinceSelect = document.querySelector("#selectProvince");
+
+
+        console.log(CitySelect);
+        console.log(ProvinceSelect);
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetProvinces", "Api")",
+                dataType: "json",
+                success: function (result) {
+                    let data = JSON.parse(result);
+                    data.forEach((e) => {
+                        let option = document.createElement("Option");
+                        option.id = e.Id;
+                        option.value = e.Name;
+                        option.innerHTML = e.Name;
+
+                        ProvinceSelect.appendChild(option);
+                    });
+                    console.log(data);
+                },
+                error: (req, status, error) => {
+                    console.log(error)
+                }
+            });
+        });
+
+        ProvinceSelect.addEventListener("change", (e) => {
+            //Deleting Last Options
+            var obsoleteOptions = document.querySelectorAll("#selectCity option");
+            console.log("obsoleteOptions")
+            console.log(obsoleteOptions)
+            obsoleteOptions.forEach((e) => {
+                e.remove();
+            });
+            let selectedCitiesId = ProvinceSelect.options[ProvinceSelect.selectedIndex].id;
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetCities", "Api")" + '?provinceId=' + selectedCitiesId,
+                dataType: "json",
+                success: function (result) {
+                    let data = JSON.parse(result);
+                    data.forEach((e) => {
+                        let option = document.createElement("Option");
+                        option.id = e.Id;
+                        option.value = e.Name;
+                        option.innerHTML = e.Name;
+
+                        CitySelect.appendChild(option);
+                    });
+                    console.log(data);
+                },
+                error: (req, status, error) => {
+                    console.log(error)
+                }
+            });
+        });
+    </script>
+}
