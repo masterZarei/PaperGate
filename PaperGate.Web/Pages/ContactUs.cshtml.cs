@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces;
-using PaperGate.Core.Interfaces.Repositories;
 using PaperGate.Web.Utilities.Helpers;
 using System.Text.Json;
+using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages
 {
     public class ContactUsModel : MyPageModel
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMyLoggerRepository _myLogger;
+        private readonly ILogger _logger;
 
-        public ContactUsModel(IUnitOfWork unitOfWork, IMyLoggerRepository myLogger)
+        public ContactUsModel(IUnitOfWork unitOfWork, ILogger logger)
         {
             _unitOfWork = unitOfWork;
-            _myLogger = myLogger;
+            _logger = logger;
         }
         [BindProperty]
         public MessageInfo MessageDto { get; set; }
@@ -37,13 +37,13 @@ namespace PaperGate.Web.Pages
                     await _unitOfWork.SaveChangesAsync();
 
                     string message = $"New Message has been received {JsonSerializer.Serialize(MessageDto)}";
-                    await _myLogger.Log("ContactUs", message, LoggingLevel.Information);
                     ShowSuccess("پیام شما با موفقیت ارسال شد");
                 }
                 return RedirectToIndex();
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.Fatal(ex, "DANGER DANGER DANGER ContactUs FAILED ON OnGet", MessageDto);
                 ShowWarning("فرآیند ارسال پیام انجام نشد.");
                 return RedirectToIndex();
             }
