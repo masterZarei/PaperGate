@@ -1,0 +1,129 @@
+
+@import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light|Source+Sans+Pro:400,700);
+@font-face {
+  font-family: 'vazir'; /* Ù†Ø§Ù… Ø¯Ù„Ø®ÙˆØ§Ù‡ */
+  src: url('../Fonts/Vazir.woff') format('woff'), /* Ù…Ø³ÛŒØ± Ø¨Ù‡ ÙÙˆÙ†Øª */
+  url('../Fonts/Vazir.woff2') format('woff2'); /* Ù†Ø³Ø®Ù‡ Ù¾Ø´ØªÛŒØ¨Ø§Ù† */
+  font-weight: normal;
+  font-style: normal;
+}
+body , * {
+    direction: rtl !important;
+    font-family: Vazir !important;
+    overflow-x: hidden;
+}
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+h1 , h2 , h3 , h4 , h5 , h6, span, form, div , p , input , textarea ,select, button, li, ul , img, input, label, div{
+    overflow: visible;
+}
+
+body {
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+.slider .slider-items .item {
+  display: none;
+}
+
+.slider .slider-items .item.active {
+  display: flex;
+}
+
+.slider .slider-items .item .img {
+  animation: zoom 1s linear forwards;
+  -webkit-animation: zoom 1s linear forwards;
+}
+
+
+@keyframes zoom {
+  0% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+  }
+  100% {
+    transform: scale(1.01);
+    -webkit-transform: scale(1.01);
+    -moz-transform: scale(1.01);
+    -ms-transform: scale(1.01);
+    -o-transform: scale(1.01);
+  }
+}
+
+.slider .slider-items .item .caption {
+  width: 1400px;
+  position: relative;
+  margin: auto;
+  top: -20%;
+  right: 4%;
+  text-align: right;
+}
+
+.slider .slider-items .item .caption .text h2 {
+  font-size: 50px;
+  animation: text 1s ease forwards;
+  -webkit-animation: text 1s ease forwards;
+  text-shadow: 4px 7px 14px #e5e7eb;
+}
+
+@keyframes text {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+    -webkit-transform: translateX(100px);
+    -moz-transform: translateX(100px);
+    -ms-transform: translateX(100px);
+    -o-transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+  }
+}
+
+
+.slider .controls .next,
+.slider .controls .prev {
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  transition: all .3s ease;
+  cursor: pointer;
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  -o-transition: all .3s ease;
+}
+
+.slider .controls .next:hover,
+.slider .controls .prev:hover {
+  background: #c00;
+}
+
+.slider .controls .next {
+  right: 30px;
+}
+
+.slider .controls .prev {
+  left: 30px;
+}
+
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}

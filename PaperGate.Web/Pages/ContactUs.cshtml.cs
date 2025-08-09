@@ -19,8 +19,13 @@ namespace PaperGate.Web.Pages
         }
         [BindProperty]
         public MessageInfo MessageDto { get; set; }
-        public void OnGet()
+
+        [BindProperty]
+        public IReadOnlyCollection<PostInfo> LastestPosts { get; set; }
+        public async Task<IActionResult> OnGet()
         {
+            LastestPosts = await _unitOfWork.Post.GetAllReadOnlyAsync();
+            return Page();
         }
         public async Task<IActionResult> OnPost()
         {
