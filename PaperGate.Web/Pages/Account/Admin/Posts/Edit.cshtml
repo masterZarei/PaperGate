@@ -133,6 +133,16 @@
 
                             </div>
                         </div>
+                        <div class="w-full">
+                            <!--       متن انگلیسی مقاله-->
+                            <div class="w-full flex flex-col px-2 mt-3">
+                                <label for="Paper" class="customLabel">محتوا (انگلیسی) : </label>
+                                <textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
+                                <span asp-validation-for="PostDto.EnglishContent" class="text-red-600"></span>
+                                <p class="text-gray-600">نکته: لطفا حداقل 1000 کلمه بنویسید</p>
+
+                            </div>
+                        </div>
                         <div class="w-full flex px-2">
                             <div class="w-1/2 py-3 pl-3">
                                 <button type="submit" class="subBtn btnSuccess">

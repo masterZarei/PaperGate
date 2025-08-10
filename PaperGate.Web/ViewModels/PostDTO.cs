@@ -34,6 +34,8 @@ public class PostCreateDto
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
+    public string EnglishContent { get; set; } = default!;
+
     #region Upload Props
     public string? Picture { get; set; }
     public IFormFile? FileUpload { get; set; } = default!;
@@ -50,6 +52,7 @@ public class PostEditDto
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
+    public string EnglishContent { get; set; } = default!;
     public bool IsActive { get; set; }
     public bool ShowOnSlider { get; set; }
     public string? AuthorId { get; set; }
@@ -99,6 +102,7 @@ public class PostDetailsDto
     public string Title { get; set; }
     public string Summary { get; set; }
     public string Content { get; set; }
+    public string EnglishContent { get; set; } = default!;
     public string? Picture { get; set; }
     public int CategoryId { get; set; }
 
@@ -110,6 +114,7 @@ public class PublicPostDetailsDto
     public int Id { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
+    public string EnglishContent { get; set; } = default!;
     public string Summary { get; set; }
     public string? Picture { get; set; }
     public IReadOnlyList<PostKeywordInfo>? PostKeywords { get; set; }
@@ -117,22 +122,6 @@ public class PublicPostDetailsDto
     public UserInfo? Author { get; set; }
     public string? Slug { get; set; }
     public DateTime CreatedOn { get; set; }
-
-
-}
-public class PostCardDto
-{
-    public string? Picture { get; set; }
-    public string Title { get; set; }
-    public UserInfo? Author { get; set; }
-
-
-}
-public class AllPostsDto
-{
-    public IReadOnlyList<PostInfo>? Posts { get; set; }
-    public string? PostTitle { get; set; } = string.Empty;
-    public UserInfo? Author { get; set; }
 
 
 }

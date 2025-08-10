@@ -15,6 +15,7 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
 
     [Required(ErrorMessage = "لطفا محتوای پست را وارد کنید")]
     public required string Content { get; set; }
+    public string? EnglishContent { get; set; } 
     public bool IsActive { get; set; } = false;
 
     public string? Picture { get; set; }

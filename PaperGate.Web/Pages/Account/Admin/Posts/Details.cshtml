@@ -91,6 +91,13 @@
                             <textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput disabled:bg-gray-100" disabled></textarea>
                         </div>
                     </div>
+                </div>
+                <!--       متن انگلیسی مقاله-->
+                <div class="w-full flex flex-col px-2 mt-3">
+                    <label for="Paper" class="customLabel">محتوا (انگلیسی) : </label>
+                    <textarea asp-for="PostDto.EnglishContent" id="Paper" cols="30" rows="30" class="customInput disabled:bg-gray-100" disabled></textarea>
+                </div>
+            </div>
                     <div class="w-full flex px-2">
                         <div class="w-1/2 py-3 pl-3">
                             <a asp-page="Edit" asp-route-Id="@Model.PostDto.Id" class="subBtn btnIndigo">ویرایش</a>
