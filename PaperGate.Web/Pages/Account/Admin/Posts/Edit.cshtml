@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "ویرایش مقاله";
 }
-<div class="space-x-normal py-8">
+<div class="container py-8">
     <ul class="breadcrumb">
         <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
         <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
@@ -64,12 +64,12 @@
                                     <!--                                وضعیت-->
                                     <div class="flex gap-4 items-center mt-6">
                                         <label for="status" class="customLabel">وضعیت</label>
-                                        <input asp-for="PostDto.IsActive" type="checkbox" class="w-12 h-12" id="status">
+                                        <input asp-for="PostDto.IsActive" type="checkbox" class="checkBtn" id="status">
                                     </div>
                                     <!--                                نمایش در SLIDER-->
                                     <div class="flex gap-4 items-center mt-6">
                                         <label for="status" class="customLabel">نمایش در اسلایدر</label>
-                                        <input asp-for="PostDto.ShowOnSlider" type="checkbox" class="w-12 h-12" id="status">
+                                        <input asp-for="PostDto.ShowOnSlider" type="checkbox" class="checkBtn" id="status">
                                     </div>
                                 </div>
                                 <!--image-->

@@ -4,7 +4,7 @@
     ViewData["Title"] = "مدیریت درباره ما";
 }
 
-<div class="space-x-normal py-8">
+<div class="container py-8">
     <ul class="breadcrumb">
         <li><a class="hover:text-blue-600 transition" href="~/">خانه</a> <span class="text-gray-500">/</span></li>
         <li><a class="hover:text-blue-600 transition" href="~/Account/Admin">پنل</a> <span class="text-gray-500">/</span></li>
@@ -25,9 +25,12 @@
 
                         <div class="block">
                             <div class="w-full px-2 my-3">
-                                <label class="customLabel"> درباره ما </label>
+                                <br />
+                                <label class="customLabel my-4 font-bold"> محتوا </label>
                                 <textarea asp-for="AboutUsDto.Description" type="text" rows="8" class="customInput"></textarea>
                             </div>
+                            <br />
+                            <br />
                             <div class="w-full tablet:flex px-2 my-3">
                                 <div class="w-full tablet:w-1/2 px-3 mt-2 tablet:mt-0">
                                     <div class="flex flex-col mt-3">
