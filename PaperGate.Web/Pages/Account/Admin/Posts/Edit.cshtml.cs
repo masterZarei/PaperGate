@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Ketwords;
 using PaperGate.Core.Interfaces.Services;
@@ -10,7 +11,6 @@ using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
 using PaperGate.Web.Utilities.Libraries;
 using PaperGate.Web.ViewModels;
-using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 namespace PaperGate.Web.Pages.Account.Admin.Posts
 {

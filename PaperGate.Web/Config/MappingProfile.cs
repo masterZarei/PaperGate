@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Template;
-using PaperGate.Web.ViewModels;
-using PostGate.Web.ViewModels;
 
 namespace PaperGate.Web.Config
 {

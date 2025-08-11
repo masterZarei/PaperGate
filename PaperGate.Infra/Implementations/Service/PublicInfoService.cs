@@ -50,4 +50,27 @@ public class PublicInfoService : IPublicInfoService
             return null;
         }
     }
+
+    public async Task<AllPostsDto> GetAllPostsInfoAsync(int sub)
+    {
+        try
+        {
+            var Posts = await _context.Posts
+                .Where(b => b.IsActive && b.CategoryId == sub)
+                .Include(b => b.Author)
+                .OrderByDescending(b => b.CreatedOn)
+                .ToListAsync();
+
+            return new AllPostsDto
+            {
+                Posts = Posts,
+            };
+        }
+        catch (Exception ex)
+        {
+
+            _logger.Fatal(ex, $"AllPosts {nameof(GetAllPostsInfoAsync)} has been failed");
+            return null;
+        }
+    }
 }

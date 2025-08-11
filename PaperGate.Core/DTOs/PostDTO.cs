@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Categories;
 using PaperGate.Core.Entities.Ketwords;
 using System.ComponentModel.DataAnnotations;
 
-namespace PostGate.Web.ViewModels;
+namespace PaperGate.Core.DTOs;
 
 public class PostCreateDto
 {
@@ -124,4 +125,9 @@ public class PublicPostDetailsDto
     public DateTime CreatedOn { get; set; }
 
 
+}
+public class AllPostsDto
+{
+    public IReadOnlyList<PostInfo>? Posts { get; set; }
+    public string? PostTitle { get; set; } = string.Empty;
 }

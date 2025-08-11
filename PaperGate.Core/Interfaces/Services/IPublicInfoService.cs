@@ -5,6 +5,6 @@ public interface IPublicInfoService
 {
     public Task<AboutUsPageDto> GetAboutUsInfoAsync();
     //public Task<FooterDto> GetFooterInfoAsync();
-    // public Task<AllPostsDto> GetAllPostsInfoAsync();
+     public Task<AllPostsDto> GetAllPostsInfoAsync(int sub);
 
 }

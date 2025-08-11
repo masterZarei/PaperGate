@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PaperGate.Core.DTOs;
 using PaperGate.Core.Interfaces;
 using PaperGate.Core.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
-using PostGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages

@@ -15,7 +15,30 @@ public class MyPageModel : PageModel
     private const string _info = "info";
     private const string _warning = "warning";
     private const string _success = "success";
+    #region Tools
+    public string GetSummary(string text, int maxLength = 150)
+    {
+        if (string.IsNullOrEmpty(text))
+            return string.Empty;
 
+        if (text.Length <= maxLength)
+            return text;
+
+        // گرفتن 150 کاراکتر اول
+        var substring = text.Substring(0, maxLength);
+
+        // پیدا کردن آخرین فاصله در محدوده
+        var lastSpaceIndex = substring.LastIndexOf(' ');
+
+        // اگر فاصله‌ای وجود داشت، متن را تا آنجا ببُر
+        if (lastSpaceIndex > 0)
+            substring = substring.Substring(0, lastSpaceIndex);
+
+        // افزودن سه نقطه در انتها
+        return $"{substring}...";
+    }
+
+    #endregion
     #region Notifications
     public enum ErrorMessages
     {
