@@ -1,62 +1,103 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - درگاه مقالات</title>
     <partial name="_Styles" />
     @await RenderSectionAsync("Styles", required: false)
-
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow">
+        <div class="w-full mx-auto px-4 py-4 container flex justify-between items-center">
+            <nav class="overflow-hidden flex">
+                <h1 class="font-bold text-indigo-600 myBlogTitle">مرجع مقالات</h1>
+                <div class="space-x-4 space-x-reverse links">
+					<a href="~/" class="text-gray-700 hover:text-indigo-600">خانه</a>
+                    <a href="~/AboutUs" class="text-gray-700 hover:text-indigo-600">درباره ما</a>
+                    <a href="~/ContactUs" class="text-gray-700 hover:text-indigo-600">تماس با ما</a>
+                </div>
+            </nav>
+
+           
 
 
-    <header class="bg-white shadow-sm py-6">
-        <div class="container flex justify-between">
-            <div><a class="text-lg font-medium text-purple-800" href="/">خانه</a> </div>
-            <div><a class="text-xl font-semibold" href="/">درگاه مقالات</a> </div>
-
-
-            @if (User.Identity.IsAuthenticated)
-            {
-
-                    <li class="relative h-full flex items-center gap-4">
-                @if (User.IsInRole(Roles.AdminEndUser))
+            <div class="flex space-x-4 space-x-reverse overflow-hidden">
+                @if (User.Identity.IsAuthenticated)
                 {
 
-                        <a href="~/Account/Admin/Categories" class="hover:hover:text-orange-400">پنل کاربری</a>
+                    <a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">پنل کاربری</a>
+
+                    <a href="~/Identity/Account/Logout" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">خروج</a>
                 }
                 else
                 {
+                    <a href="~/Identity/Account/Login" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">ورود</a>
 
-                        <a href="~/Account/Student/Categories" class="hover:hover:text-orange-400">پنل کاربری</a>
                 }
-
-                    <a href="~/Identity/Account/Logout" class="hover:hover:text-orange-400">خروج</a>
-                </li>
-            }
-            else
-            {
-                <li class="relative h-full flex items-center gap-4">
-
-                    <a class="text-lg font-medium text-purple-800" href="~/Identity/Account/Login">ورود</a>
-                    <a class="text-lg font-medium text-purple-800" href="~/Identity/Account/Register"> ثبت نام </a>
-                </li>
-            }
-
-
-
-
-
+            </div>
         </div>
     </header>
 
     @RenderBody()
 
-
-    <footer class="bg-white mt-8 py-6">
-        
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-10">
+        <div class="max-w-6xl mx-auto px-4 py-6 text-center text-gray-500">
+            © ۱۴۰۴ - تمامی حقوق محفوظ است | وبلاگ من
+        </div>
     </footer>
+
+<script>
+    $(document).ready(function () {
+      $(".lightSlider").lightSlider({
+        rtl: true,
+        item: 5,
+        slideMargin: 10,
+        loop: true,
+        pager: true,
+        auto: true,
+        pause: 3000,
+        enableTouch: true,
+        enableDrag: true,
+        responsive: [
+          {
+            breakpoint: 1280,
+            settings: {
+              item: 4,
+              slideMargin: 7
+            }
+          },
+          {
+            breakpoint: 1190,
+            settings: {
+              item: 3,
+              slideMargin: 7
+            }
+          },
+
+          {
+            breakpoint: 850,
+            settings: {
+              item: 2,
+              slideMargin: 7
+            }
+          },
+
+          {
+            breakpoint: 560,
+            settings: {
+              item: 1,
+              slideMargin: 7
+            }
+          },
+        ]
+      });
+    });
+</script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <partial name="_Scripts" />
     @await RenderSectionAsync("Scripts", required: false)
@@ -91,7 +132,5 @@
         TempData["State"] = null;
         TempData["Msg"] = null;
     }
-
 </body>
 </html>
-

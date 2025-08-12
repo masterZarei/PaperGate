@@ -11,7 +11,7 @@ body {
 * {
     outline: none;
 }
-.container {
+.space-x-normal {
     width: 95%;
     margin: 0 auto 0 auto;
 }

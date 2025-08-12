@@ -24,7 +24,17 @@ h1 , h2 , h3 , h4 , h5 , h6, span, form, div , p , input , textarea ,select, but
 body {
   font-family: 'Vazirmatn', sans-serif;
 }
-
+.myBlogTitle {
+  font-size: 20px   ;
+}
+.links{
+  margin-top: 5px;
+  margin-right: 10px;
+}
+.slider {
+  height: 80vh;
+  border: 2px solid #666;
+}
 .slider .slider-items .item {
   display: none;
 }
@@ -38,12 +48,9 @@ body {
   -webkit-animation: zoom 1s linear forwards;
 }
 
-.checkBtn {
-    width: 25px;
-    height: 25px;
-}
+
 @keyframes zoom {
-    0% {
+  0% {
     transform: scale(1);
     -webkit-transform: scale(1);
     -moz-transform: scale(1);

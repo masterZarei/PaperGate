@@ -31,7 +31,7 @@ public class IndexModel : MyPageModel
             IndexDto = new IndexDto
             {
                 Posts = await _unitOfWork.Post.GetAllReadOnlyAsync(b => b.IsActive, queryCustomizer: b => b.Include(b => b.Author).OrderByDescending(b => b.CreatedOn).Take(6)),
-                Sliders = await _unitOfWork.Post.GetAllReadOnlyAsync(p=>p.ShowOnSlider && p.IsActive),
+                Sliders = await _unitOfWork.Post.GetAllReadOnlyAsync(p => p.ShowOnSlider && p.IsActive),
             };
             if (System.IO.File.Exists(AddOnHeadPath))
                 IndexDto.AddOnHeadHtml = System.IO.File.ReadAllText(AddOnHeadPath);
