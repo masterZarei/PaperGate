@@ -14,10 +14,6 @@ namespace PaperGate.Core.Interfaces
             return JsonSerializer.Serialize(this);
         }
     }
-    public interface IMultipleUploadDto
-    {
-        public List<IFormFile>? MultipleFilesUp { get; set; }
-    }
     public interface IBaseEntity
     {
         public int Id { get; set; }

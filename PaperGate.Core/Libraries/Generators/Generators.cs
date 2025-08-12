@@ -10,10 +10,6 @@ public static class NameGenerator
     }
     public static string GenerateUniqueName => $"{DateTime.Now.ToBinary()}";
 }
-public static class CodeGenerator
-{
-    public static int GenerateUniqueCode => new Random().Next(10000000, 99999999);
-}
 public static class SlugGenerator
 {
     public static string GenerateSlug(string input, List<PostInfo>? papers)
