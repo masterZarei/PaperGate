@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Entities;
 using PaperGate.Web.Utilities.Helpers;
+using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Areas.Identity.Pages.Account;
 public class LogoutModel : MyPageModel
@@ -21,10 +22,18 @@ public class LogoutModel : MyPageModel
 
     public async Task<IActionResult> OnPost()
     {
-        HttpContext.Session.Clear(); // پاک‌سازی سشن
-        await _signInManager.SignOutAsync();
-        ShowInfo("با موفقیت خارج شدید");
-        return RedirectToIndex();
+        try
+        {
+            await _signInManager.SignOutAsync();
+            ShowInfo("با موفقیت خارج شدید");
+            return RedirectToIndex();
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex,"LogOUT Page Failed.");
+            return RedirectToIndex();
+        }
+        
 
     }
 }
