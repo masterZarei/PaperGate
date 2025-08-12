@@ -5,8 +5,8 @@
     ViewData["Title"] = "ورود";
 }
 
-<section class="bg-no-repeat bg-cover bg-center h-[100vh] w-full overflow-hidden" style="background-image: url('../images/logo.png')">
-    <div class="login w-72 sm470:w-80 xs600:w-96 h-full mt-8 mx-auto flex justify-center items-center">
+<section class="bg-no-repeat bg-cover bg-center w-full mt overflow-hidden" style="background-image: url('../images/logo.png')">
+    <div class="login w-72 sm470:w-80 xs600:w-96 py-12 h-full mx-auto flex justify-center items-center">
         <form method="post" class="customForm w-full m-auto bg-white rounded-t-md rounded-b-md overflow-hidden">
             <div class="text-red-600" asp-validation-summary="All"></div>
             <div class="formHead h-24 bg-gray-800 w-100">
@@ -30,7 +30,6 @@
                     <span asp-validation-for="LoginDto.NationalCode" class="text-red-600"></span>
 
                 </div>
-                <h6 class="mb-4">حساب کاربری ندارید ؟ <a asp-page="Register" class="text-indigo-700"> ثبت نام کنید </a> </h6>
                 <button type="submit" class="formSubmit border-2 border-gray-800 text-base w-full py-4 text-white my-8 mx-auto block duration-200 bg-gray-800 text-center font-semibold transition-all ease-in-out rounded-sm hover:bg-white hover:text-gray-800">ورود</button>
             </div>
         </form>
@@ -41,11 +40,5 @@
     <partial name="_ValidationScriptsPartial" />
 }
 @section Styles{
-    <style>
-        body{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+    
 }

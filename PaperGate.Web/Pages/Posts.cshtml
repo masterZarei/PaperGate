@@ -15,43 +15,25 @@
 					@foreach (var item in Model.PostsDto.Posts)
 					{
 
-						<div class="px-1 wow fadeInRight" data-wow-delay="1s">
-							<div class="Tourist_attraction-item mt-4 bg-white shadow shadow-gray-300 rounded-sm">
-								<!--          /Assets/images           -->
-								<a href="/Post/@item.Slug">
-									<img src="/Assets/Pictures/Posts/@item.Picture" class="h-64 w-full" alt="@item.Slug">
-								</a>
-								<!--                     Info-->
-								<div class="b-info">
-									<div class="Tourist_attraction-desc px-4 pt-1">
-										<!--                     Name-->
-										<h2 class="text-gray-800"><a href="/Post/@item.Slug" class="text-jadeGreen text-base font-bold">@item.Title</a></h2>
-										<!--                        Description-->
-										@if (item.Summary.Length > 150)
-										{
-											<p class="PostSummary text-justify text-gray-600 line-clamp-3 text-sm tablet:text-base leading-7">
-
-												@Html.Raw($"{Model.GetSummary(item.Summary, 100)}")
-												<a href="/Post/@item.Slug" class="font-bold">ادامه...</a>
-											</p>
-										}
-										else
-										{
-											<p class="text-justify text-gray-600 line-clamp-3 text-sm tablet:text-base leading-7">
-
-												@Html.Raw(item.Summary)
-											</p>
-										}
-
+						<div style="width: 248px; margin-left: 10px;">
+							<div class="box-item bg-white rounded">
+								<div class="border border-gray-100 shadow transition ease-in-out duration-300 hover:shadow-xl">
+									<!-- img box -->
+									<div class="relative overflow-hidden">
+										<a href="#">
+											<img src="~/Assets/Pictures/@item.Picture" alt="Book" class="w-full h-64 sm:h-72 cursor-pointer transition-transform duration-300 group-hover:scale-110">
+										</a>
 									</div>
-									<div class="author p-4 flex justify-between items-center">
-										<span class="text-sm text-gray-600">
-											<i class="fas fa-calendar"></i>
-											@item.CreatedOn.ToShamsi()
-										</span>
+									<!-- content box -->
+									<div class="px-3 py-4 mt-2">
+										<h1 class="text-gray-800 font-semibold mb-1 cursor-pointer group-hover:text-purple-700 transition-colors duration-300">
+											<a href="#">تایتل مقاله</a>
+										</h1>
+								
+										<div class="pt-3 mt-3 border-t border-t-gray-400">
+											<p class="text-sm font-semibold text-purple-700">14 خرداد 1404</p>
+										</div>
 									</div>
-
-
 								</div>
 							</div>
 						</div>

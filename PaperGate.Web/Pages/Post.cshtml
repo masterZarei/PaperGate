@@ -60,7 +60,7 @@
 							<ol class="flex flex-col gap-2 list-disc mr-4">
 								@foreach (var item in Model.PostDto.LatestPosts)
 								{
-									<li><a href="~/Post/@item.Slug" class="text-indigo-950">@item.Title</a></li>
+									<li class="overflow-hidden"><a href="~/Post/@item.Slug" class="text-indigo-950">@item.Title</a></li>
 								}
 							</ol>
 						</div>

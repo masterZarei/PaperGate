@@ -137,3 +137,124 @@ body {
     width: 100%;
   }
 }
+
+
+.line-height{
+    line-height: 2;
+}
+/*footer*/
+.footer {
+    background-color: #3730a3;
+    padding: 4rem 0;
+    margin-top: 2rem;
+    color: white;
+}
+
+.footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    width: 90%;
+    margin: auto;
+}
+
+@media (min-width: 500px) {
+    .footer-bottom {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .footer-bottom {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.footer-title {
+    font-weight: 600;
+    font-size: 1.125rem; /* text-lg */
+}
+
+.footer-text {
+    text-align: justify;
+    line-height: 1.75rem;
+    margin-top: 0.5rem;
+}
+
+.footer-social-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 9rem;
+    margin: 1rem auto 0 auto;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+    .footer-social-icons a {
+        color: white;
+        transition: color 0.3s ease;
+    }
+
+        .footer-social-icons a:hover {
+            color: #c084fc; /* رنگ بنفش روشن‌تر */
+        }
+
+.footer-newsletter-form {
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.footer-input {
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem 0 0 0.375rem;
+    height: 2.75rem;
+    padding: 0 0.75rem;
+    flex: 1;
+    color: #111827;
+}
+
+.footer-btn {
+    background-color: #6d28d9; /* bg-purple-700 */
+    color: white;
+    height: 2.75rem;
+    padding: 0 1rem;
+    border-radius: 0 0.375rem 0.375rem 0;
+    margin-left: -1px;
+    margin-top: 0.5rem;
+    cursor: pointer;
+}
+
+    .footer-btn:hover {
+        background-color: #5b21b6;
+    }
+
+.footer-links ul {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-links a {
+    color: white;
+    transition: color 0.3s ease;
+}
+
+    .footer-links a:hover {
+        color: #d1d5db;
+    }
+
+.footer-badge-list {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+    .footer-badge-list img {
+        width: 10rem;
+        height: 11rem;
+        border-radius: 0.375rem;
+        margin: 0 auto;
+    }

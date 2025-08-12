@@ -47,7 +47,7 @@ namespace PaperGate.Web.Pages
             }
 
             PostDto.PostKeywords = post?.Keywords?.ToList();
-            PostDto.LatestPosts = [.. (await _unitOfWork.Post.GetAllAsync(p => p.IsActive))
+            PostDto.LatestPosts = [.. (await _unitOfWork.Post.GetAllAsync(p => p.IsActive && p.Id != post.Id))
                              .OrderByDescending(b => b.CreatedOn)
                              .Take(5)];
             PostDto.Author = await _userService.GetUserById(post.AuthorId);
