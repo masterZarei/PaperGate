@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using PaperGate.Core.Config;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Libraries.StaticValues;
 using PaperGate.Infra.Config;
@@ -196,7 +195,6 @@ public class Program
     }
     public static void RegisterServices(IServiceCollection services)
     {
-        CoreServicesRegisteration.RegisterServices(services);
         InfraServicesRegisteration.RegisterServices(services);
         WebServicesRegisteration.RegisterServices(services);
     }
