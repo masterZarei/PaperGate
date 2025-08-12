@@ -1,68 +1,83 @@
 ﻿@page "/Post/{slug}"
+@using PaperGate.Core.DTOs
 @model PaperGate.Web.Pages.PostModel
 @{
-    ViewData["Title"] = Model.PostDto.Title;
+	ViewData["Title"] = Model.PostDto.Title;
 }
 <section class="py-12 ">
-    <div class="container mx-auto grid grid-cols-1 tablet:grid-cols-4 gap-4">
-        <!-- متن مقاله -->
-        <div class="tablet:col-span-3 bg-white rounded-lg shadow p-6">
-            <div class="flex justify-between">
-                <h1 class="text-2xl font-bold text-gray-800 mb-4">
-                    @Model.PostDto.Title
-                </h1>
-                <button class="px-3 rounded-full text-white bg-gray-800">انگلیسی</button>
-            </div>
-            <div class="text-gray-700 mt-4 pt-8 border-t">
-                @Html.Raw(Model.PostDto.Content);
-            </div>
-        </div>
+	<div class="container mx-auto grid grid-cols-1 tablet:grid-cols-4 gap-4">
+		<!-- متن مقاله -->
+		<div class="tablet:col-span-3 bg-white rounded-lg shadow p-6">
+			<div class="flex justify-between">
+				<h1 class="text-2xl font-bold text-gray-800 mb-4">
+					@Model.PostDto.Title
+				</h1>
+				<form method="post">
+					<input type="hidden" asp-for="PostDto.Title" />
+					<input type="hidden" asp-for="PostDto.CurrentLanguage" />
+					<input type="hidden" asp-for="PostDto.Slug" />
+					<input type="hidden" asp-for="PostDto.Content" />
+					<input type="hidden" asp-for="PostDto.EnglishContent" />
+					<button asp-page-handler="ChangeLanguage" class="px-3 rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") == Language.Persian) ? "فارسی" : "English")</button>
+				</form>
+			</div>
+			<div class="text-gray-700 mt-4 pt-8 border-t">
+				@if ((Language)TempData.Peek("Lang") == Language.Persian)
+				{
+					@Html.Raw(Model.PostDto.Content)
+				}
+				else
+				{
+					@Html.Raw(Model.PostDto.EnglishContent)
 
-        <!-- سایدبار -->
-        <aside class=" rounded-lg -mt-4">
-            <div class="sidebar mt-5 flex flex-col gap-2">
-                @if(Model.PostDto.PostKeywords is not null && Model.PostDto.PostKeywords.Count > 0)
-                {
-                <div class="shadow-sm bg-white shadow-gray-100 border rounded">
-                    <div class="title p-4 text-base border-b">برچسب ها</div>
-                    <div class="py-6 px-4">
-                        <div class="flex flex-wrap gap-2 mt-2">
-                           @foreach (var item in Model.PostDto.PostKeywords)
-                                {
-                                    <div class="py-1 px-4 border border-indigo-400 rounded-sm text-indigo-700 hover:scale-95 transition">
-                                        @item.Keyword.Title
-                                    </div>
-                                }
-                        </div>
-                    </div>
-                </div>
-                }
-                @if(Model.PostDto.LatestPosts is not null && Model.PostDto.LatestPosts.Count > 0)
-                {
-                <div class="shadow-sm bg-white shadow-gray-100 border rounded">
-                    <div class="title p-4 text-base border-b"> انتشارات اخیر</div>
-                    <div class="py-6 px-4">
-                        <ol class="flex flex-col gap-2 list-disc mr-4">
-                            @foreach (var item in Model.PostDto.LatestPosts)
-                            {
-                            <li><a href="~/Post/@item.Slug" class="text-indigo-950">SEO</a></li>
-                                
-                            }
-                        </ol>
-                    </div>
-                </div>
-                }
-                <div class="shadow-sm bg-white shadow-gray-100 border rounded">
-                    <div class="title p-4 text-base border-b">لینک های مفید</div>
-                    <div class="py-6 px-4">
-                        <ol class="flex flex-col gap-2 list-disc mr-4">
-                            <li>
-                                <a href="https://emzacode.com" class="text-indigo-950">تیم برنامه نویسی امضاکد </a>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </aside>
-    </div>
+				}
+			</div>
+		</div>
+
+		<!-- سایدبار -->
+		<aside class=" rounded-lg -mt-4">
+			<div class="sidebar mt-5 flex flex-col gap-2">
+				@if (Model.PostDto.PostKeywords is not null && Model.PostDto.PostKeywords.Count > 0)
+				{
+					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
+						<div class="title p-4 text-base border-b">برچسب ها</div>
+						<div class="py-6 px-4">
+							<div class="flex flex-wrap gap-2 mt-2">
+								@foreach (var item in Model.PostDto.PostKeywords)
+								{
+									<div class="py-1 px-4 border border-indigo-400 rounded-sm text-indigo-700 hover:scale-95 transition">
+										@item.Keyword.Title
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				}
+				@if (Model.PostDto.LatestPosts is not null && Model.PostDto.LatestPosts.Count > 0)
+				{
+					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
+						<div class="title p-4 text-base border-b"> انتشارات اخیر</div>
+						<div class="py-6 px-4">
+							<ol class="flex flex-col gap-2 list-disc mr-4">
+								@foreach (var item in Model.PostDto.LatestPosts)
+								{
+									<li><a href="~/Post/@item.Slug" class="text-indigo-950">@item.Title</a></li>
+								}
+							</ol>
+						</div>
+					</div>
+				}
+				<div class="shadow-sm bg-white shadow-gray-100 border rounded">
+					<div class="title p-4 text-base border-b">لینک های مفید</div>
+					<div class="py-6 px-4">
+						<ol class="flex flex-col gap-2 list-disc mr-4">
+							<li>
+								<a href="https://emzacode.com" class="text-indigo-950">تیم برنامه نویسی امضاکد </a>
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</aside>
+	</div>
 </section>

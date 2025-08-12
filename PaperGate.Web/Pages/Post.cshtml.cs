@@ -26,32 +26,52 @@ namespace PaperGate.Web.Pages
             _unitOfWork = unitOfWork;
             _userService = userService;
         }
+        [BindProperty]
         public PublicPostDetailsDto PostDto { get; set; }
         public async Task<IActionResult> OnGet(string? slug)
         {
+            if (string.IsNullOrEmpty(slug))
+                return RedirectToIndex();
+
+            var post = await _unitOfWork.Post.GetPostBySlugAsync(slug);
+            if (post is null)
+                return RedirectToIndex();
+
+            PostDto = _mapper.Map<PublicPostDetailsDto>(post);
+
+            //PostDto.CurrentLanguage = lang;
+            //lang = TempData.ContainsKey("Lang") ? (Language)TempData["Lang"] : Language.Persian;
+            if (TempData.ContainsKey("Lang") == false)
+            {
+                TempData["Lang"] = Language.Persian;
+            }
+
+            PostDto.PostKeywords = post?.Keywords?.ToList();
+            PostDto.LatestPosts = [.. (await _unitOfWork.Post.GetAllAsync(p => p.IsActive))
+                             .OrderByDescending(b => b.CreatedOn)
+                             .Take(5)];
+            PostDto.Author = await _userService.GetUserById(post.AuthorId);
+
+            return Page();
+        }
+        public async Task<IActionResult> OnPostChangeLanguage()
+        {
             try
             {
-                if (string.IsNullOrEmpty(slug))
-                    return RedirectToIndex();
+                if ((Language)TempData["Lang"] == Language.Persian)
+                    TempData["Lang"] = Language.English;
+                else
+                    TempData["Lang"] = Language.Persian;
 
-                var post = await _unitOfWork.Post.GetPostBySlugAsync(slug);
+               // return RedirectToPage("/Post", new { slug = PostDto.Slug });
+               // return RedirectToPage("Post", new { PostDto?.Slug });
+                return RedirectToPage("/Post", new { slug = PostDto.Slug });
 
-                if (post is null)
-                    return RedirectToIndex();
-
-                PostDto = _mapper.Map<PublicPostDetailsDto>(post);
-
-                PostDto.PostKeywords = post?.Keywords?.ToList();
-                PostDto.LatestPosts = [.. (await _unitOfWork.Post.GetAllAsync(p => p.IsActive)).OrderByDescending(b => b.CreatedOn).Take(5)];
-                var author = await _userService.GetUserById(post.AuthorId);
-                PostDto.Author = author;
-                return Page();
             }
             catch (Exception ex)
             {
-                _logger.Fatal(ex, "DANGER DANGER DANGER Blog Details Failed to LOAD! GET METHOD");
-                ShowError(ErrorMessages.ERRORHAPPEDNED);
-                return RedirectToIndex();
+
+                throw;
             }
         }
     }

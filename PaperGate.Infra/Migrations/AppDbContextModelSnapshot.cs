@@ -254,7 +254,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.ContactWayInfo", b =>
@@ -286,7 +286,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactWays");
+                    b.ToTable("ContactWays", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.Ketwords.KeywordInfo", b =>
@@ -314,7 +314,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Keywords");
+                    b.ToTable("Keywords", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.Ketwords.PostKeywordInfo", b =>
@@ -343,7 +343,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("PaperKeywords");
+                    b.ToTable("PaperKeywords", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.MessageInfo", b =>
@@ -379,7 +379,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.PostInfo", b =>
@@ -443,7 +443,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasIndex("CategoryInfoId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.Template.AboutUsInfo", b =>
@@ -469,7 +469,7 @@ namespace PaperGate.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AboutUs");
+                    b.ToTable("AboutUs", (string)null);
                 });
 
             modelBuilder.Entity("PaperGate.Core.Entities.UserInfo", b =>

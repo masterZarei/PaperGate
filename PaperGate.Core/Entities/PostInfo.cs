@@ -34,7 +34,7 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
     public UserInfo Author { get; set; }
 
     [ForeignKey(nameof(CategoryId))]
-    public CategoryInfo Category { get; } = default!;
+    public virtual CategoryInfo Category { get; set; } = default!;
     public ICollection<PostKeywordInfo> Keywords { get; } = [];
     #endregion
 }

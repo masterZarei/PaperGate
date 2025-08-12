@@ -123,8 +123,14 @@ public class PublicPostDetailsDto
     public UserInfo? Author { get; set; }
     public string? Slug { get; set; }
     public DateTime CreatedOn { get; set; }
+    public Language CurrentLanguage { get; set; }
 
 
+}
+public enum Language
+{
+    Persian,
+    English
 }
 public class AllPostsDto
 {
