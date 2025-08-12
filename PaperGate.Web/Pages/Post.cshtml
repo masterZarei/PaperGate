@@ -18,7 +18,7 @@
 					<input type="hidden" asp-for="PostDto.Slug" />
 					<input type="hidden" asp-for="PostDto.Content" />
 					<input type="hidden" asp-for="PostDto.EnglishContent" />
-					<button asp-page-handler="ChangeLanguage" class="px-3 rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") != Language.Persian) ? "فارسی" : "English")</button>
+					<button asp-page-handler="ChangeLanguage" class="px-3 py-2 rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") != Language.Persian) ? "فارسی" : "English")</button>
 				</form>
 			</div>
 			<div class="text-gray-700 mt-4 pt-8 border-t">

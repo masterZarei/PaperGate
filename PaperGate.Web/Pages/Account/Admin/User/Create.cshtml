@@ -34,18 +34,10 @@
 
                                 </div>
                                 <div class="flex flex-col mt-3">
-                                    <label class="customLabel">کد ملی </label>
+                                    <label class="customLabel">کد ملی (نام کاربری) </label>
                                     <input asp-for="CreateDto.NationalCode" type="text" placeholder="کد ملی را وارد کنید"
                                            class="customInput">
                                     <span class="text-danger d-block" asp-validation-for="CreateDto.NationalCode"></span>
-
-                                </div>
-                                <!--                                رمز عبور-->
-                                <div class="flex flex-col mt-3">
-                                    <label class="customLabel">رمز عبور</label>
-                                    <input type="text" asp-for="CreateDto.Password" placeholder="رمز عبور را وارد کنید"
-                                           class="customInput">
-                                    <span class="text-danger d-block" asp-validation-for="CreateDto.Password"></span>
 
                                 </div>
                                 <!--نقش کاربر-->
@@ -65,6 +57,14 @@
                                     <input type="text" asp-for="CreateDto.LastName" placeholder="نام خانوادگی را وارد کنید"
                                            class="customInput">
                                     <span class="text-danger d-block" asp-validation-for="CreateDto.LastName"></span>
+                                </div>
+
+                                <!--                                رمز عبور-->
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">رمز عبور</label>
+                                    <input type="text" asp-for="CreateDto.Password" placeholder="رمز عبور را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-danger d-block" asp-validation-for="CreateDto.Password"></span>
 
                                 </div>
                             </div>

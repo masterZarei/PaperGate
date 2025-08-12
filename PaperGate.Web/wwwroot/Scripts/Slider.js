@@ -55,7 +55,7 @@ function progress(){
   div.style.position = 'absolute';
   div.style.top = '0';
   div.style.left = '0';
-  div.style.backgroundColor= 'red';
+    div.style.backgroundColor = '#4f94f8';
   div.id = 'progress';
   div.style.animation = 'progress ' + duration/1000 + "s linear";
   document.querySelector('.progress').appendChild(div)

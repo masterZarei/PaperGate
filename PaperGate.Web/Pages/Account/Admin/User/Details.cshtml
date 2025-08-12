@@ -30,19 +30,20 @@
                                 <input type="text" asp-for="DetailsDto.NationalCode" class="customInput disabled:bg-gray-100" disabled>
                             </div>
 
-                            <div class="flex flex-col mt-3">
-                                <label for="user" class="customLabel">نقش</label>
-                                <div>
-                                    <input type="text" asp-for="DetailsDto.Role" class="customInput disabled:bg-gray-100" disabled>
-                                </div>
-                            </div>
+                         
                         </div>
 
                         <div class="w-full tablet:w-1/2 px-2">
                             <div class="flex flex-col mt-3">
                                 <label class="customLabel">نام خانوادگی</label>
-                                <input asp-for="DetailsDto.LastName" type="text"
+                                <input asp-for="DetailsDto.LastName" type="text" disabled
                                        class="customInput">
+                            </div>
+                            <div class="flex flex-col mt-3">
+                                <label for="user" class="customLabel">نقش</label>
+                                <div>
+                                    <input type="text" asp-for="DetailsDto.Role" class="customInput disabled:bg-gray-100" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>

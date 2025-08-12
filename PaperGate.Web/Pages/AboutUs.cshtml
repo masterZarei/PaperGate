@@ -11,7 +11,7 @@
 	</div>
 	<!--    information-->
 		<div class="w-full pr-3 mt-10">
-			<p class="text-indigo-700 line-height font-bold text-justify mt-8 tablet:mt-0">
+			<p class="text-gray-800 line-height font-bold text-justify mt-8 tablet:mt-0">
 				@Model.PageDto.Description
 			</p>
 	</div>
@@ -19,7 +19,7 @@
 		@if (Model.PageDto.ContactWays is not null && Model.PageDto.ContactWays.Count > 0)
 		{
 			<div class="gap-8 items-center mx-auto justify-center mt-8">
-				<h1 class="text-xl text-indigo-700 font-bold text-center"> راه های ارتباطی </h1>
+				<h1 class="text-xl text-gray-800 font-bold text-center"> راه های ارتباطی </h1>
 				@foreach (var item in Model.PageDto.ContactWays.Where(c => c.IsLink))
 				{
 					<div class="mt-4 gap-4 flex justify-center items-center">
@@ -30,7 +30,7 @@
 			<div class="mt-4 mx-auto">
 				@foreach (var item in Model.PageDto.ContactWays.Where(c => !c.IsLink))
 				{
-					<h2 class="text-center text-style text-indigo-700">
+					<h2 class="text-center text-style text-gray-800">
 						<i class="@item.Icon"></i>
 						@item.Title
 					</h2>

@@ -38,14 +38,6 @@
                                     <span class="text-danger d-block" asp-validation-for="EditDto.NationalCode"></span>
 
                                 </div>
-                                <div class="flex flex-col mt-3">
-                                    <label class="customLabel">رمز عبور</label>
-                                    <a asp-page="ChangePassword" asp-route-Id="@Model.EditDto.Id" type="text"
-                                       class="customInput">رمز عبور را وارد کنید</a>
-
-                                </div>
-
-
 
                                 <div class="flex flex-col mt-3">
                                     <label for="user" class="customLabel">نقش</label>
@@ -63,8 +55,14 @@
                                     <input asp-for="EditDto.LastName" type="text"
                                            class="customInput">
                                     <span class="text-danger d-block" asp-validation-for="EditDto.LastName"></span>
+                                </div>
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">رمز عبور</label>
+                                    <a asp-page="ChangePassword" asp-route-Id="@Model.EditDto.Id" type="text"
+                                       class="customInput">رمز عبور را وارد کنید</a>
 
                                 </div>
+
                             </div>
                         </div>
 

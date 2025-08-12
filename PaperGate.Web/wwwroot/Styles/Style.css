@@ -115,10 +115,10 @@ body {
   -o-transition: all .3s ease;
 }
 
-.slider .controls .next:hover,
-.slider .controls .prev:hover {
-  background: #c00;
-}
+    .slider .controls .next:hover,
+    .slider .controls .prev:hover {
+        background-color: #4f94f8;
+    }
 
 .slider .controls .next {
   right: 30px;
@@ -142,9 +142,56 @@ body {
 .line-height{
     line-height: 2;
 }
+.bg-blue {
+    background-color: #4f94f8;
+}
+.text-blue {
+    color: #4f94f8;
+}
+/*title*/
+.title-box {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 1.25rem; 
+    position: relative;
+}
+    .title-box::before {
+        content: "";
+        width: 100%; 
+        height: 0.25rem; 
+        background-color: #93c5fd; 
+        display: block; 
+        cursor: pointer; 
+        border-radius: 0.25rem; 
+        position: relative; 
+        top: 1.25rem; 
+    }
+
+.title-content {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.title-text {
+    background-color: #4f94f8;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 0.25rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 99;
+}
+
+    .title-text i {
+        margin-top: 0.25rem; 
+    }
+
 /*footer*/
 .footer {
-    background-color: #3730a3;
+    background-color: #1f2937;
     padding: 4rem 0;
     margin-top: 2rem;
     color: white;
@@ -173,7 +220,7 @@ body {
 
 .footer-title {
     font-weight: 600;
-    font-size: 1.125rem; /* text-lg */
+    font-size: 1.125rem;
 }
 
 .footer-text {
@@ -197,7 +244,7 @@ body {
     }
 
         .footer-social-icons a:hover {
-            color: #c084fc; /* رنگ بنفش روشن‌تر */
+            color: #646464;
         }
 
 .footer-newsletter-form {
@@ -215,7 +262,7 @@ body {
 }
 
 .footer-btn {
-    background-color: #6d28d9; /* bg-purple-700 */
+    background-color: #6d28d9;
     color: white;
     height: 2.75rem;
     padding: 0 1rem;
