@@ -36,47 +36,56 @@
 
 	</section>
 }
-
-<!---->
-<div class="title-box">
-    <div class="title-content">
-        <div class="title-text">
-            <i class="fas fa-envelope" aria-hidden="true"></i>
-            <span>جدیدترین محصولات</span>
-        </div>
-    </div>
-</div>
-
-
-<section class="bg-gray-200 pb-4 container mx-auto">
-	<div class="px-2 py-5">
-		<ul class="lightSlider">
-			<li>
-				<div class="box-item bg-white rounded">
-					<div class="border border-gray-100 shadow transition ease-in-out duration-300 hover:shadow-xl">
-						<!-- img box -->
-						<div class="relative overflow-hidden">
-							<a href="#">
-								<img src="../images/2.jpg" alt="Book"
-									 class="w-full h-64 sm:h-72 cursor-pointer transition-transform duration-300 group-hover:scale-110">
-							</a>
-						</div>
-						<!-- content box -->
-						<div class="px-3 py-4 mt-2">
-							<h1 class="text-gray-800 font-semibold mb-1 cursor-pointer transition-colors duration-300">
-								<a href="#">تایتل مقاله</a>
-							</h1>
-							<div class="pt-3 mt-3 border-t border-t-gray-400">
-								<p class="text-sm font-semibold text-gray-800">14 خرداد 1404</p>
-							</div>
-						</div>
+@if(Model.IndexDto.Categories is not null && Model.IndexDto.Categories.Count > 0)
+{
+	@foreach (var category in Model.IndexDto.Categories)
+	{
+		@if(category.Posts is not null && category.Posts.Count > 0)
+		{
+			<div class="title-box">
+				<div class="title-content">
+					<div class="title-text">
+						<i class="fas fa-envelope" aria-hidden="true"></i>
+						<span>جدیدترین پست های @category.Title</span>
 					</div>
 				</div>
-			</li>
-		</ul>
+			</div>
+			@foreach (var post in category.Posts)
+			{
+				<section class="bg-gray-200 pb-4 container mx-auto">
+					<div class="px-2 py-5">
+						<ul class="lightSlider">
+							<li>
+								<div class="box-item bg-white rounded">
+									<div class="border border-gray-100 shadow transition ease-in-out duration-300 hover:shadow-xl">
+										<!-- img box -->
+										<div class="relative overflow-hidden">
+											<a href="#">
+												<img src="~/Assets/Pictures/Papers/@post.Picture" alt="Book"
+													 class="w-full h-64 sm:h-72 cursor-pointer transition-transform duration-300 group-hover:scale-110">
+											</a>
+										</div>
+										<!-- content box -->
+										<div class="px-3 py-4 mt-2">
+											<h1 class="text-gray-800 font-semibold mb-1 cursor-pointer transition-colors duration-300">
+												<a href="~/Post/@post.Slug">@post.Title</a>
+											</h1>
+											<div class="pt-3 mt-3 border-t border-t-gray-400">
+												<p class="text-sm font-semibold text-gray-800">@post.CreatedOn.ToShamsi()</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
 
-	</div>
-	<a href="#" class="block mx-auto text-center text-white py-2 rounded mt-4 bg-blue w-40">
-		مشاهده همه
-	</a>
-</section>
+					</div>
+					<a href="~/Posts?sub=@category.Id" class="block mx-auto text-center text-white py-2 rounded mt-4 bg-blue w-40">
+						مشاهده همه
+					</a>
+				</section>
+			}
+		}
+	}
+	
+}
