@@ -1,0 +1,42 @@
+﻿@using PaperGate.Core.ViewModels
+@model FooterDto
+
+<!-- Footer -->
+<footer class="footer">
+	<div class="footer-bottom">
+		@if (Model.AboutUs is not null && !string.IsNullOrEmpty(Model.AboutUs.Description))
+		{
+			<div class="footer-about">
+				<h2 class="footer-title">درباره ما</h2>
+				<p class="footer-text">
+					@Model.AboutUs.Description.GetSummary(255)
+				</p>
+			</div>
+		}
+		@if (Model.AboutUs.ContactWays is not null && Model.AboutUs.ContactWays.Where(c => c.IsLink).Count() > 0)
+		{
+			<div class="footer-social">
+				<h2 class="footer-title text-center">دنبال کنید</h2>
+				<div class="footer-social-icons">
+					@foreach (var item in Model.AboutUs.ContactWays.Where(c => c.IsLink))
+					{
+						<a href="@item.Link"><i class="@item.Icon"></i></a>
+					}
+				</div>
+			</div>
+		}
+		@if (Model.UsefulLinks is not null && Model.UsefulLinks.Count > 0)
+		{
+			<div class="footer-links">
+				<h2 class="footer-title">لینک های مفید</h2>
+				<ul>
+					@foreach (var item in Model.UsefulLinks)
+					{
+						<li><a href="@item.Link">@item.Title</a></li>
+					}
+				</ul>
+			</div>
+		}
+
+	</div>
+</footer>

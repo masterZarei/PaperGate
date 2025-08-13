@@ -23,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
     private IGenericRepository<MessageInfo> _message;
     private IGenericRepository<AboutUsInfo> _aboutUs;
     private IGenericRepository<ContactWayInfo> _contactWay;
+    private IGenericRepository<UsefulLinkInfo> _usefulLink;
 
     public UnitOfWork(AppDbContext db, ILogger myLogger)
     {
@@ -38,6 +39,7 @@ public class UnitOfWork : IUnitOfWork
     public IGenericRepository<MessageInfo> Message => _message ??= new GenericRepository<MessageInfo>(_db, _myLogger);
     public IGenericRepository<AboutUsInfo> AboutUs => _aboutUs ??= new GenericRepository<AboutUsInfo>(_db, _myLogger);
     public IGenericRepository<ContactWayInfo> ContactWay => _contactWay ??= new GenericRepository<ContactWayInfo>(_db, _myLogger);
+    public IGenericRepository<UsefulLinkInfo> UsefulLink => _usefulLink ??= new GenericRepository<UsefulLinkInfo>(_db, _myLogger);
 
     public async Task<TaskResult> SaveChangesAsync()
     {

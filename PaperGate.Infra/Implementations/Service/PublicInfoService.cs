@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities.Template;
 using PaperGate.Core.Interfaces.Services;
+using PaperGate.Core.ViewModels;
 using PaperGate.Infra.Data;
 using ILogger = Serilog.ILogger;
 
@@ -39,7 +40,7 @@ public class PublicInfoService : IPublicInfoService
                     .FirstOrDefaultAsync();
             }
             AboutUsPageDto dto = _mapper.Map<AboutUsPageDto>(info);
-            dto.ContactWays = await _context.ContactWays.ToListAsync();
+            dto.ContactWays = await _context.ContactWays.OrderByDescending(a => a.CreatedOn).ToListAsync();
 
             return dto;
         }
@@ -70,6 +71,24 @@ public class PublicInfoService : IPublicInfoService
         {
 
             _logger.Fatal(ex, $"AllPosts {nameof(GetAllPostsInfoAsync)} has been failed");
+            return null;
+        }
+    }
+
+    public async Task<FooterDto> GetFooterInfoAsync()
+    {
+        try
+        {
+            return new FooterDto
+            {
+                AboutUs = await GetAboutUsInfoAsync(),
+                UsefulLinks = await _context.UsefulLinks.OrderByDescending(a=>a.CreatedOn).ToListAsync(),
+            };
+        }
+        catch (Exception ex)
+        {
+
+            _logger.Fatal(ex, $"Footer {nameof(GetFooterInfoAsync)} has been failed");
             return null;
         }
     }

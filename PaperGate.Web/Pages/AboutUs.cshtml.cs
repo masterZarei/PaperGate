@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.DTOs;
 using PaperGate.Core.Interfaces.Services;
 using PaperGate.Web.Utilities.Helpers;
-using PaperGate.Web.ViewModels;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages

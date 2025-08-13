@@ -15,6 +15,7 @@ public interface IUnitOfWork
     IGenericRepository<MessageInfo> Message { get; }
     IGenericRepository<AboutUsInfo> AboutUs { get; }
     IGenericRepository<ContactWayInfo> ContactWay { get; }
+    IGenericRepository<UsefulLinkInfo> UsefulLink { get; }
 
     Task<TaskResult> SaveChangesAsync();
 }

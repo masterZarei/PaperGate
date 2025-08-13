@@ -51,36 +51,7 @@
 
     @RenderBody()
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-bottom">
-            <div class="footer-about">
-                <h2 class="footer-title">درباره ما</h2>
-                <p class="footer-text">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است...
-                </p>
-            </div>
-            <div class="footer-social">
-                <h2 class="footer-title text-center">دنبال کنید</h2>
-                <div class="footer-social-icons">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-telegram"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h2 class="footer-title">لینک های مفید</h2>
-                <ul>
-                    <li><a href="#">خانه</a></li>
-                    <li><a href="#">درباره ما</a></li>
-                    <li><a href="#">بلاگ</a></li>
-                    <li><a href="#">محصولات</a></li>
-                    <li><a href="#">دسته بندی ها</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    @await Component.InvokeAsync("FooterComponent")
 
 <script>
     $(document).ready(function () {
