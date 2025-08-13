@@ -120,6 +120,7 @@ public class PublicPostDetailsDto
     public string? Picture { get; set; }
     public IReadOnlyList<PostKeywordInfo>? PostKeywords { get; set; }
     public IReadOnlyList<PostInfo>? LatestPosts { get; set; }
+    public IReadOnlyList<UsefulLinkInfo>? UsefulLinks { get; set; }
     public UserInfo? Author { get; set; }
     public string? Slug { get; set; }
     public DateTime CreatedOn { get; set; }

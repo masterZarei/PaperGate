@@ -10,16 +10,16 @@
 			 class="w-full h-\[50vh\] sm768:h-[80vh] rounded-sm shadow shadow-gray-500">
 	</div>
 	<!--    information-->
-		<div class="w-full pr-3 mt-10">
-			<p class="text-gray-800 line-height font-bold text-justify mt-8 tablet:mt-0">
-				@Model.PageDto.Description
-			</p>
+	<div class="w-full pr-3 mt-10">
+		<p class="text-gray-800 line-height font-bold text-justify mt-8 tablet:mt-0">
+			@Model.PageDto.Description
+		</p>
 	</div>
 	<div>
 		@if (Model.PageDto.ContactWays is not null && Model.PageDto.ContactWays.Count > 0)
 		{
-			<div class="gap-8 items-center mx-auto justify-center mt-8">
-				<h1 class="text-xl text-gray-800 font-bold text-center"> راه های ارتباطی </h1>
+			<h1 class="text-xl text-gray-800 font-bold text-center py-3"> راه های ارتباطی </h1>
+			<div class="flex gap-8 items-center mx-auto justify-center mt-4">
 				@foreach (var item in Model.PageDto.ContactWays.Where(c => c.IsLink))
 				{
 					<div class="mt-4 gap-4 flex justify-center items-center">
@@ -32,7 +32,7 @@
 				{
 					<h2 class="text-center text-style text-gray-800">
 						<i class="@item.Icon"></i>
-						@item.Title:@item.Link
+						@item.Title : @item.Link
 					</h2>
 				}
 			</div>

@@ -35,7 +35,7 @@ namespace PaperGate.Web.Pages.Account.Admin.ContactWays
                 return RedirectToLocalIndex();
             }
 
-            var contactwayinfo =  await _unitOfWork.ContactWay.GetAsync(m => m.Id == id);
+            var contactwayinfo = await _unitOfWork.ContactWay.GetAsync(m => m.Id == id);
             if (contactwayinfo == null)
             {
                 ShowError(ErrorMessages.NOTFOUND);
@@ -47,7 +47,7 @@ namespace PaperGate.Web.Pages.Account.Admin.ContactWays
         }
         void Init(string? currentIcon)
         {
-            Icons = new SelectList(IconCollection.GetIcons, "Value", "Name",currentIcon);
+            Icons = new SelectList(IconCollection.GetIcons, "Value", "Name", currentIcon);
         }
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
