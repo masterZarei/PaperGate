@@ -16,7 +16,7 @@
 		@if (Model.AboutUs.ContactWays is not null && Model.AboutUs.ContactWays.Where(c => c.IsLink).Count() > 0)
 		{
 			<div class="footer-social">
-				<h2 class="footer-title text-center">دنبال کنید</h2>
+				<h2 class="footer-title text-center">شبکه های اجتماعی</h2>
 				<div class="footer-social-icons">
 					@foreach (var item in Model.AboutUs.ContactWays.Where(c => c.IsLink))
 					{

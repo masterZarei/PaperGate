@@ -95,11 +95,11 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                                       join keywordToPapers in _context.PaperKeywords.ToList()
                                       on keywords.Id equals keywordToPapers.KeywordId
                                       where keywordToPapers.PostId == PostDto.Id
-                                      select keywords).ToList();
+                                      select keywords).OrderByDescending(c=>c.CreatedOn).ToList();
 
             PostDto.AvailableKeywords = (from keyword in _context.Keywords.ToList()
                                           where !PostDto.PostKeywords.Contains(keyword)
-                                          select keyword).ToList();
+                                          select keyword).OrderByDescending(c => c.CreatedOn).ToList();
             if (PostDto.AvailableKeywords is not null)
                 PostDto.KeywordList = new SelectList(PostDto.AvailableKeywords, nameof(KeywordInfo.Id), nameof(KeywordInfo.Title));
             #endregion

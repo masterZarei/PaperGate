@@ -15,7 +15,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Keywords
         public IReadOnlyList<KeywordInfo> KeywordDTO { get; set; }
         public async Task OnGet()
         {
-            KeywordDTO = await _unitOfWork.Keyword.GetAllReadOnlyAsync();
+            KeywordDTO = await _unitOfWork.Keyword.GetAllReadOnlyAsync(queryCustomizer: q => q.OrderByDescending(c => c.CreatedOn));
         }
     }
 }

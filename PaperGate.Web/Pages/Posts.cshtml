@@ -12,34 +12,35 @@
 		{
 
 			<section class="container">
-				<div class="grid xs500:grid-cols-1 sm768:grid-cols-2 tablet:grid-cols-3">
-					@foreach (var item in Model.PostsDto.Posts)
-					{
+					<div class="flex flex-wrap sm768:grid-cols-2 justify-center items-center">
+						@foreach (var item in Model.PostsDto.Posts)
+						{
+							<div class="p-3">
+								<div style="width: 248px;" class="mb-4">
+									<div class="box-item bg-white rounded">
+										<div class="border border-gray-100 shadow transition ease-in-out duration-300 hover:shadow-xl">
+											<!-- img box -->
+											<div class="relative overflow-hidden">
+												<a href="~/Post/@item.Slug">
+													<img src="~/Assets/Pictures/Papers/@item.Picture" alt="@item.Slug" class="w-full h-64 sm:h-72 cursor-pointer transition-transform duration-300 group-hover:scale-110">
+												</a>
+											</div>
+											<!-- content box -->
+											<div class="px-3 py-4 mt-2">
+												<h1 class="text-gray-800 font-semibold mb-1 cursor-pointer group-hover:text-purple-700 transition-colors duration-300">
+													<a href="~/Post/@item.Slug">@item.Title</a>
+												</h1>
 
-						<div style="width: 248px; margin-left: 10px;">
-							<div class="box-item bg-white rounded">
-								<div class="border border-gray-100 shadow transition ease-in-out duration-300 hover:shadow-xl">
-									<!-- img box -->
-									<div class="relative overflow-hidden">
-										<a href="~/Post/@item.Slug">
-											<img src="~/Assets/Pictures/Papers/@item.Picture" alt="@item.Slug" class="w-full h-64 sm:h-72 cursor-pointer transition-transform duration-300 group-hover:scale-110">
-										</a>
-									</div>
-									<!-- content box -->
-									<div class="px-3 py-4 mt-2">
-										<h1 class="text-gray-800 font-semibold mb-1 cursor-pointer group-hover:text-purple-700 transition-colors duration-300">
-											<a href="~/Post/@item.Slug">@item.Title</a>
-										</h1>
-								
-										<div class="pt-3 mt-3 border-t border-t-gray-400">
-											<p class="text-sm font-semibold text-gray-800">@item.CreatedOn.ToShamsi()</p>
+												<div class="pt-3 mt-3 border-t border-t-gray-400">
+													<p class="text-sm font-semibold text-gray-800">@item.CreatedOn.ToShamsi()</p>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					}
-				</div>
+						}
+			</div>
 			</section>
 		}
 		else

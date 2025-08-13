@@ -35,7 +35,7 @@ public class PostCreateDto
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
-    public string EnglishContent { get; set; } = default!;
+    public string? EnglishContent { get; set; } = default!;
 
     #region Upload Props
     public string? Picture { get; set; }
@@ -53,7 +53,7 @@ public class PostEditDto
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
-    public string EnglishContent { get; set; } = default!;
+    public string? EnglishContent { get; set; } = default!;
     public bool IsActive { get; set; }
     public bool ShowOnSlider { get; set; }
     public string? AuthorId { get; set; }
@@ -103,7 +103,7 @@ public class PostDetailsDto
     public string Title { get; set; }
     public string Summary { get; set; }
     public string Content { get; set; }
-    public string EnglishContent { get; set; } = default!;
+    public string? EnglishContent { get; set; } = default!;
     public string? Picture { get; set; }
     public int CategoryId { get; set; }
 

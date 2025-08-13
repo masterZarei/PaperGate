@@ -24,7 +24,7 @@ namespace PaperGate.Web.Pages
         public IReadOnlyCollection<PostInfo> LastestPosts { get; set; }
         public async Task<IActionResult> OnGet()
         {
-            LastestPosts = await _unitOfWork.Post.GetAllReadOnlyAsync();
+            LastestPosts = await _unitOfWork.Post.GetAllReadOnlyAsync(queryCustomizer: q => q.Take(6));
             return Page();
         }
         public async Task<IActionResult> OnPost()

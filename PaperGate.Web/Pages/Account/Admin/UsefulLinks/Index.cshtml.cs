@@ -15,7 +15,7 @@ namespace PaperGate.Web.Pages.Account.Admin.UsefulLinks
         public IReadOnlyList<UsefulLinkInfo> UsefulLinkDTO { get; set; }
         public async Task OnGet()
         {
-            UsefulLinkDTO = await _unitOfWork.UsefulLink.GetAllReadOnlyAsync();
+            UsefulLinkDTO = await _unitOfWork.UsefulLink.GetAllReadOnlyAsync(queryCustomizer: q => q.OrderByDescending(c => c.CreatedOn));
         }
     }
 }

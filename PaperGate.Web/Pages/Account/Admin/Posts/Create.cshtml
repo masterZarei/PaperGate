@@ -77,7 +77,7 @@
 							<!--       متن مقاله-->
 							<div class="w-full flex flex-col px-2 mt-3">
 								<label for="Paper" class="customLabel">محتوا (انگلیسی) : </label>
-								<textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput"></textarea>
+								<textarea asp-for="PostDto.EnglishContent" id="Paper" cols="30" rows="30" class="customInput"></textarea>
 								<span asp-validation-for="PostDto.EnglishContent" class="text-red-600"></span>
 								<p class="text-gray-600">نکته: لطفا حداقل 1000 کلمه بنویسید</p>
 
@@ -184,9 +184,9 @@
 		  language_url: '/Scripts/tinymce/fa.js', // مسیر فایل زبان
 		  language: 'fa',
 		  plugins: [
-			'link', 'image', 'lists', 'table', 'autolink', 'visualblocks', 'searchreplace'
+			'link', 'image', 'lists', 'table', 'autolink', 'visualblocks', 'searchreplace', 'paste'
 		  ],
-		  toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | link image table | removeformat',
+		  toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | link image table | removeformat | paste',
 		  valid_elements: '*[*]', // اجازه به تمام تگ‌ها و ویژگی‌ها
 		  extended_valid_elements: 'span[style|class],a[href|target],img[src|alt|title|width|height|style],strong/b,em/i,u,strike', // تگ‌ها و ویژگی‌های اضافی
 		  content_style: 'body { font-family:Vazir,Arial,sans-serif;}', // استایل پیش‌فرض

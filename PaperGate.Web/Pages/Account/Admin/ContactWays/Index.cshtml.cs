@@ -1,6 +1,7 @@
 ﻿using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace PaperGate.Web.Pages.Account.Admin.ContactWays
 {
@@ -17,7 +18,7 @@ namespace PaperGate.Web.Pages.Account.Admin.ContactWays
 
         public async Task OnGetAsync()
         {
-            ContactWayInfo = await _unitOfWork.ContactWay.GetAllReadOnlyAsync();
+            ContactWayInfo = await _unitOfWork.ContactWay.GetAllReadOnlyAsync(queryCustomizer: q=>q.OrderByDescending(c=>c.CreatedOn));
         }
     }
 }

@@ -4,6 +4,7 @@
 	ViewData["Title"] = "خانه";
 }
 @if (Model.IndexDto.Sliders is not null && Model.IndexDto.Sliders.Count > 0)
+
 {
 	<section class="container overflow-hidden mx-auto mb-12 px-4 mt-6">
 		<div class="slider w-full h-[80vh] relative">
@@ -21,14 +22,10 @@
 
 				}
 			</div>
-
-
 			<div class="controls">
 				<div class="next absolute bg-gray-800 text-white rounded-full flex items-center justify-center"><i class="fas fa-chevron-right"></i></div>
 				<div class="prev absolute bg-gray-800 text-white rounded-full flex items-center justify-center"><i class="fas fa-chevron-left"></i></div>
 			</div>
-
-
 			<div class="progress">
 			</div>
 
@@ -36,25 +33,26 @@
 
 	</section>
 }
-@if(Model.IndexDto.Categories is not null && Model.IndexDto.Categories.Count > 0)
+
+@if (Model.IndexDto.Categories is not null && Model.IndexDto.Categories.Count > 0)
 {
 	@foreach (var category in Model.IndexDto.Categories)
 	{
-		@if(category.Posts is not null && category.Posts.Count > 0)
+		@if (category.Posts is not null && category.Posts.Count > 0)
 		{
 			<div class="title-box">
 				<div class="title-content">
 					<div class="title-text">
 						<i class="fas fa-envelope" aria-hidden="true"></i>
-						<span>جدیدترین پست های @category.Title</span>
+						<span>جدیدترین @category.Title</span>
 					</div>
 				</div>
 			</div>
-			@foreach (var post in category.Posts)
-			{
-				<section class="bg-gray-200 pb-4 container mx-auto">
-					<div class="px-2 py-5">
-						<ul class="lightSlider">
+			<section class="bg-gray-200 pb-4 container mx-auto">
+				<div class="px-2 py-5">
+					<ul class="lightSlider">
+						@foreach (var post in category.Posts)
+						{
 							<li>
 								<div class="box-item bg-white rounded">
 									<div class="border border-gray-100 shadow transition ease-in-out duration-300 hover:shadow-xl">
@@ -77,15 +75,15 @@
 									</div>
 								</div>
 							</li>
-						</ul>
+						}
+					</ul>
 
-					</div>
-					<a href="~/Posts?sub=@category.Id" class="block mx-auto text-center text-white py-2 rounded mt-4 bg-blue w-40">
-						مشاهده همه
-					</a>
-				</section>
-			}
+				</div>
+				<a href="~/Posts?sub=@category.Id" class="block mx-auto text-center text-white py-2 rounded mt-4 bg-blue w-40">
+					مشاهده همه
+				</a>
+			</section>
 		}
 	}
-	
+
 }

@@ -15,7 +15,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
         public IReadOnlyList<CategoryInfo> CategoryDTO { get; set; }
         public async Task OnGet()
         {
-            CategoryDTO = await _unitOfWork.Category.GetAllReadOnlyAsync();
+            CategoryDTO = await _unitOfWork.Category.GetAllReadOnlyAsync(queryCustomizer: q => q.OrderByDescending(c => c.CreatedOn));
         }
     }
 }

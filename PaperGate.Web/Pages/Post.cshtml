@@ -6,21 +6,28 @@
 }
 <section class="py-12 ">
 	<div class="container mx-auto grid grid-cols-1 tablet:grid-cols-4 gap-4">
+		
 		<!-- متن مقاله -->
 		<div class="tablet:col-span-3 bg-white rounded-lg shadow p-6">
 			<div class="flex justify-between">
-				<h1 class="text-2xl font-bold text-gray-800 mb-4">
-					@Model.PostDto.Title
-				</h1>
+				
 				<form method="post">
 					<input type="hidden" asp-for="PostDto.Title" />
 					<input type="hidden" asp-for="PostDto.CurrentLanguage" />
 					<input type="hidden" asp-for="PostDto.Slug" />
 					<input type="hidden" asp-for="PostDto.Content" />
 					<input type="hidden" asp-for="PostDto.EnglishContent" />
-					<button asp-page-handler="ChangeLanguage" class="px-3 py-2 rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") != Language.Persian) ? "فارسی" : "English")</button>
+					<button asp-page-handler="ChangeLanguage" class="px-3 py-2 mb-4 flex justify-end rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") != Language.Persian) ? "فارسی" : "English")</button>
 				</form>
 			</div>
+			<!--                عکس-->
+			<div class="ImgBlog">
+				<img src="~/Assets/Pictures/Papers/@Model.PostDto.Picture" alt="@Model.PostDto.Slug"
+					 class="w-full border rounded-t-lg object-cover">
+			</div>
+			<h1 class="text-2xl font-bold text-gray-800 mb-4">
+				@Model.PostDto.Title
+			</h1>
 			<div class="text-gray-700 mt-4 pt-8 border-t">
 				@if ((Language)TempData.Peek("Lang") == Language.Persian)
 				{
@@ -57,7 +64,7 @@
 					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
 						<div class="title p-4 text-base border-b"> انتشارات اخیر</div>
 						<div class="py-6 px-4">
-							<ol class="flex flex-col gap-2 list-disc mr-4">
+							<ol class="flex flex-col gap-2 list-disc mr-4 overflow-hidden">
 								@foreach (var item in Model.PostDto.LatestPosts)
 								{
 									<li class="overflow-hidden"><a href="~/Post/@item.Slug" class="text-indigo-950">@item.Title</a></li>
@@ -71,7 +78,7 @@
 					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
 						<div class="title p-4 text-base border-b">لینک های مفید</div>
 						<div class="py-6 px-4">
-							<ol class="flex flex-col gap-2 list-disc mr-4">
+							<ol class="flex flex-col gap-2 list-disc mr-4 overflow-hidden">
 								@foreach (var item in Model.PostDto.UsefulLinks)
 								{
 									<li>
