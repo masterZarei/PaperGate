@@ -76,10 +76,12 @@ body {
 }
 
 .slider .slider-items .item .caption .text h2 {
-  font-size: 50px;
+  font-size: 35px;
   animation: text 1s ease forwards;
   -webkit-animation: text 1s ease forwards;
-  text-shadow: 4px 7px 14px #e5e7eb;
+/*  text-shadow: 4px 7px 14px #e5e7eb;
+*/
+ background-color: #eee;
 }
 
 @keyframes text {
