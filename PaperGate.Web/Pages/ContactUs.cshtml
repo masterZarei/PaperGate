@@ -13,15 +13,22 @@
 					<div class="mt-3">
 						<label class="customLabel"> نام شما </label>
 						<input asp-for="MessageDto.SendersName" type="text" class="customInput">
+						<span asp-validation-for="MessageDto.SendersName" class="text-red-600"></span>
 					</div>
 					<div class="mt-3">
 						<label class="customLabel"> ایمیل </label>
 						<input asp-for="MessageDto.SendersEmail" type="text" class="customInput">
+						<span asp-validation-for="MessageDto.SendersEmail" class="text-red-600"></span>
+
 					</div>
 					<div class="mt-3">
 						<label class="customLabel"> پیام </label>
 						<textarea type="text" asp-for="MessageDto.Content" class="customInput" rows="5"></textarea>
+						<span asp-validation-for="MessageDto.Content" class="text-red-600"></span>
+
 					</div>
+
+					<button type="submit" class="bg-blue px-8 py-2 rounded-full text-base font-bold text-white mt-8"> ارسال </button>
 				</form>
 			</div>
 
