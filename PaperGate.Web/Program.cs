@@ -134,7 +134,12 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
+        // Seed admin
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            IdentitySeed.SeedAdmin(services).GetAwaiter().GetResult();
+        }
         app.UseHttpsRedirection();
         app.UseHsts();
         app.UseStaticFiles();
