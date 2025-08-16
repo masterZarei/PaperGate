@@ -236,14 +236,14 @@
           xhr.send(formData);
         });
 
-                tinymce.init({
+            tinymce.init({
           selector: 'textarea',
           language_url: '/Scripts/tinymce/fa.js', // مسیر فایل زبان
           language: 'fa',
           plugins: [
-            'link', 'image', 'lists', 'table', 'autolink', 'visualblocks', 'searchreplace', 'paste'
+            'link', 'image', 'lists', 'table', 'autolink', 'visualblocks', 'searchreplace', 'directionality'
           ],
-          toolbar: 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | link image table | removeformat | paste',
+          toolbar: 'ltr rtl |undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify  | bullist numlist outdent indent | link image table | removeformat | paste',
           valid_elements: '*[*]', // اجازه به تمام تگ‌ها و ویژگی‌ها
           extended_valid_elements: 'span[style|class],a[href|target],img[src|alt|title|width|height|style],strong/b,em/i,u,strike', // تگ‌ها و ویژگی‌های اضافی
           content_style: 'body { font-family:Vazir,Arial,sans-serif;}', // استایل پیش‌فرض

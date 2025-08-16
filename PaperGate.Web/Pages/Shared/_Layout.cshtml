@@ -36,10 +36,8 @@
             <div class="flex space-x-4 space-x-reverse overflow-hidden">
                 @if (User.Identity.IsAuthenticated)
                 {
-
-                    <a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">پنل کاربری</a>
-
                     <a href="~/Identity/Account/Logout" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">خروج</a>
+                    <a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">پنل کاربری</a>
                 }
                 else
                 {

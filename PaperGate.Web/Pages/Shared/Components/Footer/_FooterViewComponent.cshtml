@@ -9,19 +9,31 @@
 			<div class="footer-about">
 				<h2 class="footer-title">درباره ما</h2>
 				<p class="footer-text">
-					@Model.AboutUs.Description.GetSummary(255)
+					@Model.AboutUs.Description.GetSummary(255) <a href="~/AboutUs" class="border-b pb-2">بیشتر</a>
 				</p>
 			</div>
 		}
 		@if (Model.AboutUs.ContactWays is not null && Model.AboutUs.ContactWays.Where(c => c.IsLink).Count() > 0)
 		{
 			<div class="footer-social">
-				<h2 class="footer-title text-center">شبکه های اجتماعی</h2>
+				<h2 class="footer-title text-center">راه های ارتباطی</h2>
 				<div class="footer-social-icons">
 					@foreach (var item in Model.AboutUs.ContactWays.Where(c => c.IsLink))
 					{
 						<a href="@item.Link"><i class="@item.Icon"></i></a>
 					}
+
+				</div>
+				<div class="footer-social-icons">
+					@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
+					{
+						<span class="text-sm">
+							<i class="@item.Icon"></i>
+							@item.Title
+							: @item.Link
+						</span>
+					}
+
 				</div>
 			</div>
 		}

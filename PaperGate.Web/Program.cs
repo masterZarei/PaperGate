@@ -71,14 +71,12 @@ public class Program
 
         #region Authorization
         builder.Services.AddAuthorizationBuilder()
-        .AddPolicy("Admin", p => p.RequireRole(Roles.AdminEndUser))
-        .AddPolicy("User", p => p.RequireAuthenticatedUser());
+        .AddPolicy(Roles.AdminEndUser, p => p.RequireRole(Roles.AdminEndUser));
 
 
         builder.Services.AddRazorPages(options =>
         {
-            //options.Conventions.AuthorizeFolder("/Account", "User");
-            //options.Conventions.AuthorizeFolder("/Account/Admin", "Admin");
+            options.Conventions.AuthorizeFolder("/Account/Admin", Roles.AdminEndUser);
 
         }).AddJsonOptions(options =>
         {
