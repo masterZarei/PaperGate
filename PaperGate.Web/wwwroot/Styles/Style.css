@@ -140,10 +140,18 @@ body {
   }
 }
 
-
-.line-height{
-    line-height: 2;
+.container-404 {
+    background-color: #151729;
+    height: 100vh;
+    width: 100vw;
 }
+    .container-404 .content h2 {
+        font-size: 190px;
+        font-weight: 900
+    }
+    .line-height {
+        line-height: 2;
+    }
 .bg-blue {
     background-color: #4f94f8;
 }

@@ -24,14 +24,14 @@
 					}
 
 				</div>
-				<div class="footer-social-icons">
+				<div class="block mx-auto text-center">
 					@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
 					{
-						<span class="text-sm">
+						<span class="text-sm text-center">
 							<i class="@item.Icon"></i>
 							@item.Title
 							: @item.Link
-						</span>
+						</span> <br />
 					}
 
 				</div>

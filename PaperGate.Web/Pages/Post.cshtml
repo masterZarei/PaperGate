@@ -23,9 +23,9 @@
 			<!--                عکس-->
 			<div class="ImgBlog">
 				<img src="~/Assets/Pictures/Papers/@Model.PostDto.Picture" alt="@Model.PostDto.Slug"
-					 class="w-full border rounded-t-lg object-cover">
+					 class="w-full border rounded-t-lg object-cover" style="height:70vh">
 			</div>
-			<h1 class="text-2xl font-bold text-gray-800 mb-4">
+			<h1 class="text-2xl font-bold text-gray-800 my-4">
 				@Model.PostDto.Title
 			</h1>
 			@if ((Language)TempData.Peek("Lang") == Language.Persian)
