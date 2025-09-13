@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.Interfaces;
 using PaperGate.Web.Utilities.Helpers;
@@ -50,5 +51,15 @@ public class IndexModel : MyPageModel
             return Content("خطایی رخ داد");
         }
 
+    }
+    public IActionResult OnPostChangeLanguage(string culture)
+    {
+        Response.Cookies.Append(
+            CookieRequestCultureProvider.DefaultCookieName,
+            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+            new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+
+        ShowSuccess($"زبان سایت به {(culture=="fa" ? "فارسی" : "انگلیسی")} تغییر کرد.");
+        return RedirectToPage();
     }
 }

@@ -1,8 +1,15 @@
 ﻿@page
+@using Microsoft.Extensions.Localization
 @model IndexModel
+@inject IStringLocalizer<SharedResources> Localizer
 @{
 	ViewData["Title"] = "خانه";
 }
+<form method="post">
+	<button asp-page-handler="ChangeLanguage" asp-route-culture="fa">فارسی</button>
+	<button asp-page-handler="ChangeLanguage" asp-route-culture="en">English</button>
+</form>
+
 @if (Model.IndexDto.Sliders is not null && Model.IndexDto.Sliders.Count > 0)
 
 {
@@ -80,7 +87,8 @@
 
 				</div>
 				<a href="~/Posts?sub=@category.Id" class="block mx-auto text-center text-white py-2 rounded mt-4 bg-blue w-40">
-					مشاهده همه
+					@* مشاهده همه *@
+					@Localizer["ShowAll"]
 				</a>
 			</section>
 		}

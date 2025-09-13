@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Libraries.StaticValues;
 using PaperGate.Infra.Config;
@@ -11,6 +13,7 @@ using PaperGate.Web.Utilities.Libraries;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
+using System.Globalization;
 
 namespace PaperGate.Web;
 
@@ -54,6 +57,28 @@ public class Program
             options.UseSqlServer(connectionString));
         //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
         #endregion
+
+
+        #region Localization
+        // اضافه کردن Localization
+        builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+        // تنظیم زبان‌های پشتیبانی‌شده
+        var supportedCultures = new[]
+        {
+          new CultureInfo("fa"),
+          new CultureInfo("en")
+        };
+
+        builder.Services.Configure<RequestLocalizationOptions>(options =>
+        {
+            options.DefaultRequestCulture = new RequestCulture("fa"); // پیش‌فرض فارسی
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+        });
+        #endregion
+
+
         #region Authentication
         builder.Services.AddAuthentication(options =>
         {
@@ -84,7 +109,7 @@ public class Program
             options.JsonSerializerOptions.WriteIndented = true; // Optional for readability
             options.JsonSerializerOptions.MaxDepth = 128; // افزایش عمق به مقدار مورد نیاز
 
-        });
+        }).AddViewLocalization();
         builder.Services.AddAntiforgery();
         #endregion
 
@@ -143,6 +168,7 @@ public class Program
         app.UseStaticFiles();
 
         app.UseSerilogRequestLogging();
+        app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
         app.UseRouting();
         app.UseAuthentication();
