@@ -8,6 +8,10 @@ public class CategoryInfo : BaseEntity, IDatabaseModel<CategoryInfo>
     [MaxLength(200, ErrorMessage = "نام دسته بندی نمی تواند از 200 کاراکتر بیشتر باشد")]
     public required string Title { get; set; }
 
+    [Required(ErrorMessage = "لطفا نام لاتین دسته بندی را وارد کنید")]
+    [MaxLength(200, ErrorMessage = "نام لاتین دسته بندی نمی تواند از 200 کاراکتر بیشتر باشد")]
+    public required string EnglishTitle { get; set; }
+
     [MaxLength(2000, ErrorMessage = "نام دسته بندی نمی تواند از 2000 کاراکتر بیشتر باشد")]
     public string? Description { get; set; }
 
