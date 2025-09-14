@@ -11,6 +11,10 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
     [Required(ErrorMessage = "لطفا موضوع پست را وارد کنید")]
     [MaxLength(150, ErrorMessage = "موضوع پست نمی تواند از 150 کاراکتر بیشتر باشد")]
     public required string Title { get; set; }
+
+    [Required(ErrorMessage = "لطفا موضوع لاتین پست را وارد کنید")]
+    [MaxLength(150, ErrorMessage = "موضوع لاتین پست نمی تواند از 150 کاراکتر بیشتر باشد")]
+    public required string EnglishTitle { get; set; }
     public string? Slug { get; set; }
 
     [Required(ErrorMessage = "لطفا محتوای پست را وارد کنید")]
