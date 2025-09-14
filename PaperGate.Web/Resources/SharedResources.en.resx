@@ -138,8 +138,11 @@
   <data name="header_PaperGate" xml:space="preserve">
     <value>Paper Gate</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>en</value>
+  </data>
   <data name="Layout" xml:space="preserve">
-    <value>lang="en" dir="ltr"</value>
+    <value>ltr</value>
   </data>
   <data name="ShowAll" xml:space="preserve">
     <value>Show All</value>

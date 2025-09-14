@@ -124,7 +124,16 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to lang=&quot;fa&quot; dir=&quot;rtl&quot;.
+        ///   Looks up a localized string similar to fa.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rtl.
         /// </summary>
         public static string Layout {
             get {

@@ -138,8 +138,11 @@
   <data name="header_PaperGate" xml:space="preserve">
     <value>درگاه مقالات</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>fa</value>
+  </data>
   <data name="Layout" xml:space="preserve">
-    <value>lang="fa" dir="rtl"</value>
+    <value>rtl</value>
   </data>
   <data name="ShowAll" xml:space="preserve">
     <value>مشاهده همه</value>
