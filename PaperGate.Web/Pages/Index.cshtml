@@ -78,7 +78,11 @@
 										<!-- content box -->
 										<div class="px-3 py-4 mt-2">
 											<h1 class="text-gray-800 font-semibold mb-1 cursor-pointer transition-colors duration-300">
-												<a href="~/Post/@post.Slug">@post.Title</a>
+												<a href="~/Post/@post.Slug">
+													@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+																						? $"{post.Title}"
+																						: $"{post.EnglishTitle}")
+												</a>
 											</h1>
 											<div class="pt-3 mt-3 border-t border-t-gray-400">
 												<p class="text-sm font-semibold text-gray-800">@post.CreatedOn.ToShamsi()</p>
