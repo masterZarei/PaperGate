@@ -34,6 +34,16 @@
 
                                 </div>
                             </div>
+                            <!--                       نام لاتین-->
+                            <div class="w-full md:w-1/2 px-2">
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">نام لاتین دسته بندی</label>
+                                    <input asp-for="CategoryDTO.EnglishTitle" type="text"  placeholder="نام لاتین دسته بندی را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-red-600 block" asp-validation-for="CategoryDTO.EnglishTitle"></span>
+
+                                </div>
+                            </div>
                             <!--    توضیحات-->
                             <div class="w-full md:w-1/2 px-2">
                                 <div class="flex flex-col mt-3">

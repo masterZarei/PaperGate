@@ -1,6 +1,7 @@
 ﻿@page
 @model IndexModel
 @using Microsoft.Extensions.Localization
+@using System.Globalization
 @inject IStringLocalizer<SharedResources> Localizer
 @{
 	ViewData["Title"] = "خانه";
@@ -51,7 +52,11 @@
 				<div class="title-content">
 					<div class="title-text">
 						<i class="fas fa-envelope" aria-hidden="true"></i>
-						<span>جدیدترین @category.Title</span>
+						<span>
+							 @(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+											? $"جدیدترین {category.Title}"
+											: $"Latest {category.EnglishTitle}")
+			</span>
 					</div>
 				</div>
 			</div>
