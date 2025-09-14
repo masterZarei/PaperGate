@@ -61,20 +61,83 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show All.
+        ///   Looks up a localized string similar to درباره ما.
         /// </summary>
-        public static string ShowAll {
+        public static string header_AboutUs {
             get {
-                return ResourceManager.GetString("ShowAll", resourceCulture);
+                return ResourceManager.GetString("header_AboutUs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to خوش آمدید.
+        ///   Looks up a localized string similar to تماس با ما.
         /// </summary>
-        public static string WelcomeTitle {
+        public static string header_ContactUs {
             get {
-                return ResourceManager.GetString("WelcomeTitle", resourceCulture);
+                return ResourceManager.GetString("header_ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خانه.
+        /// </summary>
+        public static string header_Home {
+            get {
+                return ResourceManager.GetString("header_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ورود.
+        /// </summary>
+        public static string header_Login {
+            get {
+                return ResourceManager.GetString("header_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خروج.
+        /// </summary>
+        public static string header_Logout {
+            get {
+                return ResourceManager.GetString("header_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پنل کاربری.
+        /// </summary>
+        public static string header_Panel {
+            get {
+                return ResourceManager.GetString("header_Panel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to درگاه مقالات.
+        /// </summary>
+        public static string header_PaperGate {
+            get {
+                return ResourceManager.GetString("header_PaperGate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lang=&quot;fa&quot; dir=&quot;rtl&quot;.
+        /// </summary>
+        public static string Layout {
+            get {
+                return ResourceManager.GetString("Layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشاهده همه.
+        /// </summary>
+        public static string ShowAll {
+            get {
+                return ResourceManager.GetString("ShowAll", resourceCulture);
             }
         }
     }

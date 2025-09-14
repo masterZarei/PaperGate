@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResources> Localizer
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -12,7 +13,7 @@
     <meta name="description" content="درگاه مقالات">
     <meta name="author" content="درگاه مقالات">
 
-    <title>@ViewData["Title"] - درگاه مقالات</title>
+    <title>@ViewData["Title"] - @Localizer["header_PaperGate"]</title>
     <partial name="_Styles" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -22,11 +23,11 @@
     <header class="bg-white shadow">
         <div class="w-full mx-auto px-4 py-4 container flex justify-between items-center">
             <nav class="overflow-hidden flex">
-                <a href="~/" class="text-gray-700 hover:text-indigo-600"><h1 class="font-bold text-blue myBlogTitle">درگاه مقالات</h1></a>
+                <a href="~/" class="text-gray-700 hover:text-indigo-600"><h1 class="font-bold text-blue myBlogTitle">@Localizer["header_PaperGate"]</h1></a>
                 <div class="space-x-4 space-x-reverse links">
-					<a href="~/" class="text-gray-700 hover:text-indigo-600">خانه</a>
-                    <a href="~/AboutUs" class="text-gray-700 hover:text-indigo-600">درباره ما</a>
-                    <a href="~/ContactUs" class="text-gray-700 hover:text-indigo-600">تماس با ما</a>
+                    <a href="~/" class="text-gray-700 hover:text-indigo-600">@Localizer["header_Home"]</a>
+                    <a href="~/AboutUs" class="text-gray-700 hover:text-indigo-600">@Localizer["header_AboutUs"]</a>
+                    <a href="~/ContactUs" class="text-gray-700 hover:text-indigo-600">@Localizer["header_ContactUs"]</a>
                 </div>
             </nav>
 
@@ -36,12 +37,12 @@
             <div class="flex space-x-4 space-x-reverse overflow-hidden">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a href="~/Identity/Account/Logout" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">خروج</a>
-                    <a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">پنل کاربری</a>
+                    <a href="~/Identity/Account/Logout" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Logout"]</a>
+                    <a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Panel"]</a>
                 }
                 else
                 {
-                    <a href="~/Identity/Account/Login" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">ورود</a>
+                    <a href="~/Identity/Account/Login" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Login"]</a>
                 }
             </div>
         </div>

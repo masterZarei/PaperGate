@@ -117,10 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ShowAll" xml:space="preserve">
-    <value>Show All</value>
+  <data name="header_AboutUs" xml:space="preserve">
+    <value>درباره ما</value>
   </data>
-  <data name="WelcomeTitle" xml:space="preserve">
-    <value>خوش آمدید</value>
+  <data name="header_ContactUs" xml:space="preserve">
+    <value>تماس با ما</value>
+  </data>
+  <data name="header_Home" xml:space="preserve">
+    <value>خانه</value>
+  </data>
+  <data name="header_Login" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="header_Logout" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="header_Panel" xml:space="preserve">
+    <value>پنل کاربری</value>
+  </data>
+  <data name="header_PaperGate" xml:space="preserve">
+    <value>درگاه مقالات</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>lang="fa" dir="rtl"</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>مشاهده همه</value>
   </data>
 </root>
