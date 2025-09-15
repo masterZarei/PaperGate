@@ -23,7 +23,11 @@
 						<div class="img w-full h-full absolute top-0 right-0 bg-center bg-cover" style="background-image: url('/Assets/Pictures/Papers/@item.Picture');"></div>
 						<div class="caption relative text-right">
 							<div class="text">
-								<h2>@item.Title</h2>
+								<h2>
+									@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+																? $"{item.Title}"
+																: $"{item.EnglishTitle}")
+						</h2>
 							</div>
 						</div>
 					</a>
