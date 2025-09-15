@@ -49,10 +49,18 @@
                             <div class="w-full tablet:w-1/2 px-2">
                                 <!-- آدرس -->
                                 <div class="flex flex-col mt-3">
-                                    <label for="price" class="customLabel">آدرس </label>
-                                    <input asp-for="ContactWayInfo.Link" type="text" id="price"
+                                    <label class="customLabel">آدرس </label>
+                                    <input asp-for="ContactWayInfo.Link" type="text"
                                            class="customInput">
-                                    <span asp-validation-for="ContactWayInfo.Icon" class="text-red-600"></span>
+                                    <span asp-validation-for="ContactWayInfo.Link" class="text-red-600"></span>
+
+                                </div>
+                                <!-- آدرس -->
+                                <div class="flex flex-col mt-3">
+                                    <label class="customLabel">آدرس (لاتین) </label>
+                                    <input asp-for="ContactWayInfo.EnglishLink" type="text"
+                                           class="customInput">
+                                    <span asp-validation-for="ContactWayInfo.EnglishLink" class="text-red-600"></span>
 
                                 </div>
                                 <div class="flex gap-4 items-center mt-8">
