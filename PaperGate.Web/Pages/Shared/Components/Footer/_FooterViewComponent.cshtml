@@ -32,7 +32,11 @@
 		@if (Model.AboutUs.ContactWays is not null && Model.AboutUs.ContactWays.Where(c => c.IsLink).Count() > 0)
 		{
 			<div class="footer-social">
-				<h2 class="footer-title text-center">راه های ارتباطی</h2>
+				<h2 class="footer-title text-center">
+					@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+											? "راه های ارتباطی"
+											: "Contact Information")
+				</h2>
 				<div class="footer-social-icons">
 					@foreach (var item in Model.AboutUs.ContactWays.Where(c => c.IsLink))
 					{
@@ -41,13 +45,26 @@
 
 				</div>
 				<div class="block mx-auto text-center">
-					@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
+					@if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
 					{
+						@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
+						{
 						<span class="text-sm text-center">
 							<i class="@item.Icon"></i>
 							@item.Title
 							: @item.Link
 						</span> <br />
+						}
+					}
+					else
+					{
+						@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
+						{
+						<span class="text-sm text-center">
+							<i class="@item.Icon"></i>
+							@item.Link
+						</span> <br />
+						}
 					}
 
 				</div>
