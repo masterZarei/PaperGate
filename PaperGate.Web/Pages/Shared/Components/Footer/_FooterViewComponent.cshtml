@@ -72,7 +72,9 @@
 		}
 		@if (Model.UsefulLinks is not null && Model.UsefulLinks.Count > 0)
 		{
-			<div class="footer-links">
+			@if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
+			{
+				<div class="footer-links">
 				<h2 class="footer-title">لینک های مفید</h2>
 				<ul>
 					@foreach (var item in Model.UsefulLinks)
@@ -81,7 +83,20 @@
 					}
 				</ul>
 			</div>
+			}
+			else
+			{
+				<div class="footer-links">
+				<h2 class="footer-title">Useful Links</h2>
+				<ul>
+					@foreach (var item in Model.UsefulLinks)
+					{
+						<li><a href="@item.Link">@item.EnglishTitle</a></li>
+					}
+				</ul>
+			</div>
+			}
+			
 		}
-
 	</div>
 </footer>
