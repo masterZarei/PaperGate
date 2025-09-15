@@ -66,12 +66,22 @@
 				@if (Model.PostDto.LatestPosts is not null && Model.PostDto.LatestPosts.Count > 0)
 				{
 					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
-						<div class="title p-4 text-base border-b"> انتشارات اخیر</div>
+						<div class="title p-4 text-base border-b">
+							@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+													? "انتشارات اخیر"
+													: "Recent publications")
+					</div>
 						<div class="py-6 px-4">
 							<ol class="flex flex-col gap-2 mr-4 overflow-hidden">
 								@foreach (var item in Model.PostDto.LatestPosts)
 								{
-									<li class="overflow-hidden"><a href="~/Post/@item.Slug" class="text-indigo-950">@item.Title</a></li>
+									<li class="overflow-hidden">
+										<a href="~/Post/@item.Slug" class="text-indigo-950">
+											@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+																				? $"{item.Title}"
+																				: $"{item.EnglishTitle}")
+								</a>
+							</li>
 								}
 							</ol>
 						</div>
@@ -86,7 +96,11 @@
 								@foreach (var item in Model.PostDto.UsefulLinks)
 								{
 									<li>
-										<a href="@item.Link" class="text-indigo-950">@item.Title</a>
+										<a href="@item.Link" class="text-indigo-950">
+											@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+																				? $"{item.Title}"
+																				: $"{item.EnglishTitle}")
+								</a>
 									</li>
 								}
 							</ol>

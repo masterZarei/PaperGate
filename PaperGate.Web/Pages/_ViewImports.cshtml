@@ -3,5 +3,8 @@
 @using PaperGate.Infra.Data
 @using PaperGate.Core.Libraries.StaticValues
 @using PaperGate.Core.Libraries.Convertors
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+@inject IStringLocalizer<SharedResources> Localizer
 @namespace PaperGate.Web.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

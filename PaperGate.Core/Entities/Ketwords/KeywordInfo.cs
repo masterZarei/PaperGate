@@ -8,6 +8,9 @@ public class KeywordInfo : BaseEntity, IDatabaseModel<KeywordInfo>
     [MaxLength(200, ErrorMessage = "نام نمی تواند از 200 کاراکتر بیشتر باشد")]
     public required string Title { get; set; }
 
-    [MaxLength(2000, ErrorMessage = "نام نمی تواند از 2000 کاراکتر بیشتر باشد")]
+    [MaxLength(200, ErrorMessage = "نام لاتین نمی تواند از 200 کاراکتر بیشتر باشد")]
+    public required string? EnglishTitle { get; set; }
+
+    [MaxLength(2000, ErrorMessage = "توضضیحات نمی تواند از 2000 کاراکتر بیشتر باشد")]
     public string? Description { get; set; }
 }
