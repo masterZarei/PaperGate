@@ -1,4 +1,7 @@
 ﻿@using PaperGate.Core.ViewModels
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+@inject IStringLocalizer<SharedResources> Localizer
 @model FooterDto
 
 <!-- Footer -->
@@ -6,12 +9,25 @@
 	<div class="footer-bottom">
 		@if (Model.AboutUs is not null && !string.IsNullOrEmpty(Model.AboutUs.Description))
 		{
-			<div class="footer-about">
+			@if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
+			{
+				<div class="footer-about">
 				<h2 class="footer-title">درباره ما</h2>
 				<p class="footer-text">
 					@Model.AboutUs.Description.GetSummary(255) <a href="~/AboutUs" class="border-b pb-2">بیشتر</a>
 				</p>
+				</div>
+			}
+			else
+			{
+				<div class="footer-about">
+				<h2 class="footer-title">About Us</h2>
+				<p class="footer-text">
+					@Model.AboutUs.EnglishDescription.GetSummary(255) <a href="~/AboutUs" class="border-b pb-2">More</a>
+				</p>
 			</div>
+			}
+
 		}
 		@if (Model.AboutUs.ContactWays is not null && Model.AboutUs.ContactWays.Where(c => c.IsLink).Count() > 0)
 		{

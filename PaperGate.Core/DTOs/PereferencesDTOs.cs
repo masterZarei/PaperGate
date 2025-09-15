@@ -18,6 +18,7 @@ public class AboutUsEditDto
 public class AboutUsPageDto
 {
     public string? Description { get; set; }
+    public string? EnglishDescription { get; set; }
     public string? Image { get; set; }
     public List<ContactWayInfo>? ContactWays { get; set; }
 }

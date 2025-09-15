@@ -32,6 +32,7 @@ public class PublicInfoService : IPublicInfoService
                 await _context.AboutUs.AddAsync(new AboutUsInfo
                 {
                     Image = string.Empty,
+                    EnglishDescription = string.Empty,
                     Description = string.Empty
                 });
                 await _context.SaveChangesAsync();
