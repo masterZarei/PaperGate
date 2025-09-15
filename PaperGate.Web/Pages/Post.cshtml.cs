@@ -39,12 +39,11 @@ namespace PaperGate.Web.Pages
 
             PostDto = _mapper.Map<PublicPostDetailsDto>(post);
 
-            //PostDto.CurrentLanguage = lang;
-            //lang = TempData.ContainsKey("Lang") ? (Language)TempData["Lang"] : Language.Persian;
-            if (TempData.ContainsKey("Lang") == false)
+
+            /*if (TempData.ContainsKey("Lang") == false)
             {
                 TempData["Lang"] = Language.Persian;
-            }
+            }*/
 
             PostDto.PostKeywords = post?.Keywords?.ToList();
             PostDto.LatestPosts = [.. (await _unitOfWork.Post.GetAllAsync(p => p.IsActive && p.Id != post.Id))
@@ -55,7 +54,7 @@ namespace PaperGate.Web.Pages
 
             return Page();
         }
-        public async Task<IActionResult> OnPostChangeLanguage()
+       /* public async Task<IActionResult> OnPostChangeLanguage()
         {
             try
             {
@@ -74,6 +73,6 @@ namespace PaperGate.Web.Pages
 
                 throw;
             }
-        }
+        }*/
     }
 }

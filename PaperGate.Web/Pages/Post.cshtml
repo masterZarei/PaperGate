@@ -2,7 +2,9 @@
 @using PaperGate.Core.DTOs
 @model PaperGate.Web.Pages.PostModel
 @{
-	ViewData["Title"] = Model.PostDto.Title;
+	ViewData["Title"] = CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+													? Model.PostDto.Title
+													: Model.PostDto.EnglishContent;
 }
 <section class="py-12 ">
 	<div class="container mx-auto grid grid-cols-1 tablet:grid-cols-4 gap-4">
@@ -17,8 +19,8 @@
 					<input type="hidden" asp-for="PostDto.Slug" />
 					<input type="hidden" asp-for="PostDto.Content" />
 					<input type="hidden" asp-for="PostDto.EnglishContent" />
-					<button asp-page-handler="ChangeLanguage" class="px-3 py-2 mb-4 flex justify-end rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") != Language.Persian) ? "فارسی" : "English")</button>
-				</form>
+					@* 					<button asp-page-handler="ChangeLanguage" class="px-3 py-2 mb-4 flex justify-end rounded-full text-white bg-gray-800">@(((Language)TempData.Peek("Lang") != Language.Persian) ? "فارسی" : "English")</button>
+ *@				</form>
 			</div>
 			<!--                عکس-->
 			<div class="ImgBlog">
@@ -28,13 +30,12 @@
 			<h1 class="text-2xl font-bold text-gray-800 my-4">
 				@Model.PostDto.Title
 			</h1>
-			@if ((Language)TempData.Peek("Lang") == Language.Persian)
+			@if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
 			{
 				<div class="text-gray-700 mt-4 pt-8 border-t text-right" style="direction:rtl !important;">
 
 					@Html.Raw(Model.PostDto.Content)
 				</div>
-
 			}
 			else
 			{
@@ -42,6 +43,19 @@
 					@Html.Raw(Model.PostDto.EnglishContent)
 				</div>
 			}
+			@* @if ((Language)TempData.Peek("Lang") == Language.Persian)
+			{
+				<div class= "text-gray-700 mt-4 pt-8 border-t text-right" style = "direction:rtl !important;" >
+
+						@Html.Raw(Model.PostDto.Content)
+						</div>
+			}
+			else
+			{
+				<div class="text-gray-700 mt-4 pt-8 border-t text-left" style="direction:ltr !important;">
+					@Html.Raw(Model.PostDto.EnglishContent)
+				</div>
+			} *@
 		</div>
 
 		<!-- سایدبار -->
@@ -50,15 +64,21 @@
 				@if (Model.PostDto.PostKeywords is not null && Model.PostDto.PostKeywords.Count > 0)
 				{
 					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
-						<div class="title p-4 text-base border-b">برچسب ها</div>
-						<div class="py-6 px-4">
-							<div class="flex flex-wrap gap-2 mt-2">
-								@foreach (var item in Model.PostDto.PostKeywords)
+						<div class="title p-4 text-base border-b">
+							@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+													? $"برچسب ها"
+													: $"Keywords")
+					</div>
+					<div class="py-6 px-4">
+						<div class="flex flex-wrap gap-2 mt-2">
+							@foreach (var item in Model.PostDto.PostKeywords)
 								{
 									<div class="py-1 px-4 border border-indigo-400 rounded-sm text-indigo-700 hover:scale-95 transition">
-										@item.Keyword.Title
-									</div>
-								}
+										@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+																		? $"{item.Keyword.Title}"
+																		: $"{item.Keyword.EnglishTitle}")
+							</div>
+														}
 							</div>
 						</div>
 					</div>
@@ -71,9 +91,9 @@
 													? "انتشارات اخیر"
 													: "Recent publications")
 					</div>
-						<div class="py-6 px-4">
-							<ol class="flex flex-col gap-2 mr-4 overflow-hidden">
-								@foreach (var item in Model.PostDto.LatestPosts)
+					<div class="py-6 px-4">
+						<ol class="flex flex-col gap-2 mr-4 overflow-hidden">
+							@foreach (var item in Model.PostDto.LatestPosts)
 								{
 									<li class="overflow-hidden">
 										<a href="~/Post/@item.Slug" class="text-indigo-950">
@@ -82,7 +102,7 @@
 																				: $"{item.EnglishTitle}")
 								</a>
 							</li>
-								}
+														}
 							</ol>
 						</div>
 					</div>
@@ -90,10 +110,14 @@
 				@if (Model.PostDto.UsefulLinks is not null && Model.PostDto.UsefulLinks.Count > 0)
 				{
 					<div class="shadow-sm bg-white shadow-gray-100 border rounded">
-						<div class="title p-4 text-base border-b">لینک های مفید</div>
-						<div class="py-6 px-4">
-							<ol class="flex flex-col gap-2 list-disc mr-4 overflow-hidden">
-								@foreach (var item in Model.PostDto.UsefulLinks)
+						<div class="title p-4 text-base border-b">
+							@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+													? "لینک های مفید"
+													: "Useful Links")
+					</div>
+					<div class="py-6 px-4">
+						<ol class="flex flex-col gap-2 list-disc mr-4 overflow-hidden">
+							@foreach (var item in Model.PostDto.UsefulLinks)
 								{
 									<li>
 										<a href="@item.Link" class="text-indigo-950">
@@ -101,8 +125,8 @@
 																				? $"{item.Title}"
 																				: $"{item.EnglishTitle}")
 								</a>
-									</li>
-								}
+							</li>
+														}
 							</ol>
 						</div>
 					</div>
