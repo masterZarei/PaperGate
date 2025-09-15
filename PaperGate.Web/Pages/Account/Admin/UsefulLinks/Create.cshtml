@@ -34,6 +34,16 @@
 
                                 </div>
                             </div>
+                            <!--                            نام لاتین-->
+                            <div class="w-full md:w-1/2 px-2">
+                                <div class="flex flex-col mt-3">
+                                    <label for="name" class="customLabel">نام لاتین لینک مفید</label>
+                                    <input asp-for="UsefulLinkDto.EnglishTitle" type="text" id="name" placeholder="نام لاتین لینک مفید را وارد کنید"
+                                           class="customInput">
+                                    <span class="text-red-600 block" asp-validation-for="UsefulLinkDto.EnglishTitle"></span>
+
+                                </div>
+                            </div>
                             <!--    توضیحات-->
                             <div class="w-full md:w-1/2 px-2">
                                 <div class="flex flex-col mt-3">

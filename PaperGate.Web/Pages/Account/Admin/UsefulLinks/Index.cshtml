@@ -32,6 +32,7 @@
                             <thead class="bg-gray-200">
                                 <tr>
                                     <th class="tableBorder p-3">نام</th>
+                                    <th class="tableBorder p-3">نام لاتین</th>
                                     <th class="tableBorder p-3">مدیریت</th>
                                 </tr>
                             </thead>
@@ -41,6 +42,8 @@
                                     <tr class="hover:bg-gray-100 transition">
                                         <!--    نام -->
                                         <td class="tableBorder p-3">@item.Title </td>
+                                        <!--    نام لاتین -->
+                                        <td class="tableBorder p-3">@item.EnglishTitle </td>
                                         <!--    مدیریت-->
                                         <td class="tableBorder p-3">
                                             <div class="flex items-center justify-center">
@@ -63,7 +66,7 @@
                     }
                     else
                     {
-                        <h3 class="alertInfo text-center"> لینک مفید ای موجود نیست </h3>
+                        <h3 class="alertInfo text-center"> لینک مفیدی موجود نیست </h3>
                     }
                 </div>
             </div>
