@@ -44,6 +44,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Preferences
                     await _unitOfWork.AboutUs.AddAsync(new AboutUsInfo
                     {
                         Description = "تنظیم نشده",
+                        EnglishDescription = "Not set",
                         Image = "~/images/empty.jpg"
                     });
                     await _unitOfWork.SaveChangesAsync();
