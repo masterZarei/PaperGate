@@ -114,6 +114,7 @@ public class PublicPostDetailsDto
 {
     public int Id { get; set; }
     public string Title { get; set; }
+    public required string EnglishTitle { get; set; }
     public string Content { get; set; }
     public string EnglishContent { get; set; } = default!;
     public string Summary { get; set; }

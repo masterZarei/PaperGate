@@ -4,7 +4,7 @@
 @{
 	ViewData["Title"] = CultureInfo.CurrentUICulture.Name.StartsWith("fa")
 													? Model.PostDto.Title
-													: Model.PostDto.EnglishContent;
+													: Model.PostDto.EnglishTitle;
 }
 <section class="py-12 ">
 	<div class="container mx-auto grid grid-cols-1 tablet:grid-cols-4 gap-4">
@@ -28,7 +28,9 @@
 					 class="w-full border rounded-t-lg object-cover" style="height:70vh">
 			</div>
 			<h1 class="text-2xl font-bold text-gray-800 my-4">
-				@Model.PostDto.Title
+				@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+				? Model.PostDto.Title
+				: Model.PostDto.EnglishTitle)
 			</h1>
 			@if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
 			{
