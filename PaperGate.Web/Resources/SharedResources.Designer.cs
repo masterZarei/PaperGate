@@ -61,6 +61,51 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ایمیل.
+        /// </summary>
+        public static string contactUs_Email {
+            get {
+                return ResourceManager.GetString("contactUs_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پیام.
+        /// </summary>
+        public static string contactUs_Message {
+            get {
+                return ResourceManager.GetString("contactUs_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پست های اخیر.
+        /// </summary>
+        public static string contactUs_RecentPublications {
+            get {
+                return ResourceManager.GetString("contactUs_RecentPublications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ارسال.
+        /// </summary>
+        public static string contactUs_Send {
+            get {
+                return ResourceManager.GetString("contactUs_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام شما.
+        /// </summary>
+        public static string contactUs_YourName {
+            get {
+                return ResourceManager.GetString("contactUs_YourName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to درباره ما.
         /// </summary>
         public static string header_AboutUs {
