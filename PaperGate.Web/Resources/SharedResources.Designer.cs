@@ -106,6 +106,15 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to راه های ارتباطی.
+        /// </summary>
+        public static string ContactWays {
+            get {
+                return ResourceManager.GetString("ContactWays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to درباره ما.
         /// </summary>
         public static string header_AboutUs {

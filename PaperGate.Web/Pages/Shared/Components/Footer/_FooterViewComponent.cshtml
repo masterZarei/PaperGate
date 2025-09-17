@@ -33,9 +33,7 @@
 		{
 			<div class="footer-social">
 				<h2 class="footer-title text-center">
-					@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
-											? "راه های ارتباطی"
-											: "Contact Information")
+					@Localizer["ContactWays"]
 				</h2>
 				<div class="footer-social-icons">
 					@foreach (var item in Model.AboutUs.ContactWays.Where(c => c.IsLink))
@@ -50,9 +48,8 @@
 						@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
 						{
 						<span class="text-sm text-center">
-							<i class="@item.Icon"></i>
-							@item.Title
-							: @item.Link
+							<i class="@item.Icon"></i>:
+							@item.Link
 						</span> <br />
 						}
 					}
@@ -61,12 +58,11 @@
 						@foreach (var item in Model.AboutUs.ContactWays.Where(c => !c.IsLink))
 						{
 						<span class="text-sm text-center">
-							<i class="@item.Icon"></i>
+							<i class="@item.Icon"></i>:
 							@item.EnglishLink
 						</span> <br />
 						}
 					}
-
 				</div>
 			</div>
 		}

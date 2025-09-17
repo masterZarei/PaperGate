@@ -162,4 +162,8 @@
   <data name="ShowAll" xml:space="preserve">
     <value>مشاهده همه</value>
   </data>
+  <data name="ContactWays" xml:space="preserve">
+    <value>راه های ارتباطی</value>
+    <comment>Contact Information</comment>
+  </data>
 </root>

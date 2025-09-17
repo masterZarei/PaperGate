@@ -162,4 +162,7 @@
   <data name="ShowAll" xml:space="preserve">
     <value>Show All</value>
   </data>
+  <data name="ContactWays" xml:space="preserve">
+    <value>Contact Information</value>
+  </data>
 </root>
