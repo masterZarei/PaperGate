@@ -17,12 +17,34 @@ body , * {
   text-align: right;
 }
 
-h1 , h2 , h3 , h4 , h5 , h6, span, form, div , p , input , textarea ,select, button, li, ul , img, input, label, div{
-    overflow: visible;
+
+h1 , h2 , h3 , h4 , h5 , h6,ol, span, form, div , p , input , textarea ,select, button, li, ul , img, input, label, div{
+    overflow: hidden;
 }
 
+
+table, tbody, tr, td, th, thead {
+    text-align: center !important;
+}
+
+.PanelCard-header, .panelList,  .subBtn {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label {
+    text-align: right !important;
+}
+.text-gray-600 {
+    text-align: right !important;
+}
+
+
+
+
 body {
-  font-family: 'Vazirmatn', sans-serif;
+    font-family: 'Vazirmatn', sans-serif;
 }
 .myBlogTitle {
   font-size: 20px   ;
@@ -31,9 +53,26 @@ body {
     margin-top: 2px;
   margin-right: 10px;
 }
+
+
+/*Lang*/
+.lang-persian {
+    border-left: 2px solid blue;
+    padding-left: 10px
+}
+
+
+/*light slider = english*/
+
+.lSPager.lSpg {
+    display: flex;
+    justify-content: center !important;
+}
+
+
 .slider {
-  height: 80vh;
-  border: 2px solid #666;
+    height: 80vh;
+    border: 2px solid #666;
 }
 .slider .slider-items .item {
   display: none;

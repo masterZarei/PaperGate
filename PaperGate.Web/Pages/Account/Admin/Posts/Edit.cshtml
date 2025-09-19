@@ -52,9 +52,9 @@
                                         <label for="keywords" class="customLabel">کلمات کلیدی</label>
                                         <div class="flex items-center">
                                             <select id="CategoriesList" asp-for="PostDto.SelectedKeyword" asp-items="@Model.PostDto.KeywordList"
-                                                    class="customInput">
+                                                    class="customInput text-center">
                                             </select>
-                                            <button asp-page-handler="AddKeyword" type="submit" id="addKeyword" class="increaseBtn"> افزودن </button>
+                                            <button asp-page-handler="AddKeyword" type="submit" id="addKeyword" class="increaseBtn text-center"> افزودن </button>
 
                                         </div>
                                         <!--                                    کلید واژه ها های انتخاب شده-->

@@ -89,13 +89,18 @@
                     <!--         خلاصه کوتاه-->
                     <div class="w-full flex flex-col px-2 mt-3">
                         <label for="demo" class="customLabel">خلاصه </label>
-                        <textarea id="demo" asp-for="PostDto.Summary" cols="30" rows="10" class="customInput disabled:bg-gray-100" disabled></textarea>
+                        @* <textarea id="demo" asp-for="PostDto.Summary" cols="30" rows="10" class="customInput disabled:bg-gray-100" disabled>
+
+                        </textarea> *@
+                            @Html.Raw(Model.PostDto.Summary)
                     </div>
                         <!--       متن مقاله-->
                         <div class="w-full flex flex-col px-2 mt-3">
                             <label for="Paper" class="customLabel">مقاله : </label>
-                            <textarea asp-for="PostDto.Content" id="Paper" cols="30" rows="30" class="customInput disabled:bg-gray-100" disabled></textarea>
-                        </div>
+@*                             <textarea asp-for="" id="Paper" cols="30" rows="30" class="customInput disabled:bg-gray-100" disabled></textarea>
+ *@                        
+                            @Html.Raw(Model.PostDto.Content)
+</div>
                     </div>
                 </div>
                 <!--       متن انگلیسی مقاله-->
@@ -120,7 +125,7 @@
     </div>
 </div>
 @section Scripts{
-    <script src="https://cdn.tiny.cloud/1/cee6xecr4p6rcl06y0bfi2a24k8yedskjlphi9wiflw2pw1g/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+@*     <script src="https://cdn.tiny.cloud/1/cee6xecr4p6rcl06y0bfi2a24k8yedskjlphi9wiflw2pw1g/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
                 const example_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
@@ -181,5 +186,5 @@
         });
         tinymce.activeEditor.getBody().setAttribute('contenteditable', false);
 
-    </script>
+    </script> *@
 }
