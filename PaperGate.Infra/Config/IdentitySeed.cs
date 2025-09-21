@@ -12,13 +12,13 @@ public static class IdentitySeed
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = serviceProvider.GetRequiredService<UserManager<UserInfo>>();
 
-        // 1. ایجاد نقش Admin اگر وجود ندارد
+        // 1.If Admin role doesn't exist, Create it
         if (!await roleManager.RoleExistsAsync(Roles.AdminEndUser))
         {
             await roleManager.CreateAsync(new IdentityRole(Roles.AdminEndUser));
         }
 
-        // 2. ایجاد کاربر Admin اگر وجود ندارد
+        // 2. If Admin user doesn't exist, Create it
         var adminNationalCode = "0123456789";
         var adminUser = await userManager.FindByNameAsync(adminNationalCode);
 
@@ -37,7 +37,7 @@ public static class IdentitySeed
             }
         }
 
-        // 3. اختصاص نقش Admin به کاربر
+        // 3. Assign Admin role to Admin user
         if (!await userManager.IsInRoleAsync(adminUser, Roles.AdminEndUser))
         {
             await userManager.AddToRoleAsync(adminUser, Roles.AdminEndUser);
