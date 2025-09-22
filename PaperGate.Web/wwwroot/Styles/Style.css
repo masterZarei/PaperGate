@@ -13,10 +13,9 @@ body , * {
     overflow-x: hidden;
 }
 .rtl {
-  direction: rtl;
-  text-align: right;
+    direction: rtl;
+    text-align: right;
 }
-
 
 h1 , h2 , h3 , h4 , h5 , h6,ol, span, form, div , p , input , textarea ,select, button, li, ul , img, input, label, div{
     overflow: hidden;
