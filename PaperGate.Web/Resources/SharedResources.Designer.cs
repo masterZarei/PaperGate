@@ -61,6 +61,15 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بازگشت به خانه.
+        /// </summary>
+        public static string BackToHome {
+            get {
+                return ResourceManager.GetString("BackToHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ایمیل.
         /// </summary>
         public static string contactUs_Email {
@@ -192,6 +201,42 @@ namespace PaperGate.Web.Resources {
         public static string Layout {
             get {
                 return ResourceManager.GetString("Layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ورود به پنل کاربری.
+        /// </summary>
+        public static string Login_header {
+            get {
+                return ResourceManager.GetString("Login_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to می‌خواهید خارج شوید؟.
+        /// </summary>
+        public static string Logout_Message {
+            get {
+                return ResourceManager.GetString("Logout_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد ملی.
+        /// </summary>
+        public static string NationalCode {
+            get {
+                return ResourceManager.GetString("NationalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رمز عبور.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         

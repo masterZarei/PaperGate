@@ -164,6 +164,20 @@
   </data>
   <data name="ContactWays" xml:space="preserve">
     <value>راه های ارتباطی</value>
-    <comment>Contact Information</comment>
+  </data>
+  <data name="Login_header" xml:space="preserve">
+    <value>ورود به پنل کاربری</value>
+  </data>
+  <data name="NationalCode" xml:space="preserve">
+    <value>کد ملی</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>رمز عبور</value>
+  </data>
+  <data name="Logout_Message" xml:space="preserve">
+    <value>می‌خواهید خارج شوید؟</value>
+  </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>بازگشت به خانه</value>
   </data>
 </root>
