@@ -5,10 +5,22 @@
 }
 
 <div class="container mt-4">
-<form method="post" class="flex justify-center items-center gap-2 float-left" style="width:130px !important">
-	<button asp-page-handler="ChangeLanguage" asp-route-culture="fa" class="lang-persian">فارسی</button>
-	<button asp-page-handler="ChangeLanguage" asp-route-culture="en" class="border-b-2 border-indigo-400">English</button>
-</form>
+	<form method="post" class="flex justify-center items-center gap-2 float-left" style="width:130px !important">
+		<button asp-page-handler="ChangeLanguage" asp-route-culture="fa"
+				class="lang-persian @(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "fa"
+					? "border-b-2 border-indigo-400"
+					: "")">
+			فارسی
+		</button>
+
+		<button asp-page-handler="ChangeLanguage" asp-route-culture="en"
+				class="@(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en"
+					? "border-b-2 border-indigo-400"
+					: "")">
+			English
+		</button>
+	</form>
+
 </div>		
 
 @if (Model.IndexDto.Sliders is not null && Model.IndexDto.Sliders.Count > 0)

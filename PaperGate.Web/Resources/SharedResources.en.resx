@@ -175,7 +175,7 @@
     <value>Password</value>
   </data>
   <data name="Logout_Message" xml:space="preserve">
-    <value>?Are you sure</value>
+    <value>You're about to be logged out</value>
   </data>
   <data name="BackToHome" xml:space="preserve">
     <value>Home</value>
