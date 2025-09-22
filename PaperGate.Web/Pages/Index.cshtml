@@ -101,7 +101,12 @@
 												</a>
 											</h1>
 											<div class="pt-3 mt-3 border-t border-t-gray-400">
-												<p class="text-sm font-semibold text-gray-800">@post.CreatedOn.ToShamsi()</p>
+												<p class="text-sm font-semibold text-gray-800">
+													@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
+																						? @post.CreatedOn.ToShamsi()
+																						: @post.CreatedOn.ToShortDateString())
+													
+													</p>
 											</div>
 										</div>
 									</div>

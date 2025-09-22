@@ -1,8 +1,7 @@
-﻿using Ardalis.GuardClauses;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PaperGate.Web.Utilities.Libraries;
-using System.Security.Claims;
+using System.Globalization;
 
 namespace PaperGate.Web.Utilities.Helpers;
 
@@ -26,15 +25,32 @@ public class MyPageModel : PageModel
     }
     public void ShowError(ErrorMessages errorMessage = ErrorMessages.ERRORHAPPEDNED, string? customMessage = "")
     {
-        string message = errorMessage switch
+        string message = "Msg";
+        if(CultureInfo.CurrentUICulture.Name.StartsWith("fa")){
+            message = errorMessage switch
+            {
+
+                ErrorMessages.NOTFOUND => "موردی یافت نشد!",
+                ErrorMessages.ERRORHAPPEDNED => "خطایی رخ داد!!",
+                ErrorMessages.IDINVALID => "شناسه وارد شده نامعتبر است!",
+                ErrorMessages.FILLREQUESTEDDATA => "لطفا فیلدهای ضروری را با مقادیر صحیح پر کنید!",
+                ErrorMessages.CUSTOM => customMessage,
+                _ => customMessage is null ? "خطایی رخ داد!!" : customMessage,
+            };
+        }
+        if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
         {
-            ErrorMessages.NOTFOUND => "موردی یافت نشد!",
-            ErrorMessages.ERRORHAPPEDNED => "خطایی رخ داد!!",
-            ErrorMessages.IDINVALID => "شناسه وارد شده نامعتبر است!",
-            ErrorMessages.FILLREQUESTEDDATA => "لطفا فیلدهای ضروری را با مقادیر صحیح پر کنید!",
-            ErrorMessages.CUSTOM => customMessage,
-            _ => customMessage is null ? "خطایی رخ داد!!" : customMessage,
-        };
+            message = errorMessage switch
+            {
+
+                ErrorMessages.NOTFOUND => "No Item Found!",
+                ErrorMessages.ERRORHAPPEDNED => "Something went wrong!",
+                ErrorMessages.IDINVALID => "Invalid Id!",
+                ErrorMessages.FILLREQUESTEDDATA => "Fill requested data!",
+                ErrorMessages.CUSTOM => customMessage,
+                _ => customMessage is null ? "Something went wrong!" : customMessage,
+            };
+        }
         TempData["Msg"] = message;
         TempData["State"] = _error;
     }
@@ -48,24 +64,14 @@ public class MyPageModel : PageModel
         TempData["State"] = _warning;
         TempData["Msg"] = message;
     }
-    public void ShowSuccess(string message = "با موفقیت انجام شد!")
+    public void ShowSuccess(string message)
     {
+        message = (CultureInfo.CurrentUICulture.Name.StartsWith("fa")) ? "با موفقیت انجام شد" : "Operation Successfully Completed!";
         TempData["State"] = _success;
         TempData["Msg"] = message;
     }
     #endregion
-    #region Security
-    public string? GetClaim(string key)
-    {
-        Guard.Against.NullOrEmpty(key);
 
-        if (User?.Identity?.Name is null || User?.Identity?.IsAuthenticated is false)
-        {
-            return null;
-        }
-        return (User?.Identity as ClaimsIdentity)?.Claims?.Where(c => c.Type == key)?.FirstOrDefault()?.Value;
-    }
-    #endregion
     #region Redirection
     public IActionResult Page(object routeValue)
     {
@@ -73,13 +79,6 @@ public class MyPageModel : PageModel
     }
     public IActionResult RedirectToSpecialPage(StaticPages pages, string ReturnUrl = "")
     {
-        /*return pages switch
-        {
-            StaticPages.Login => RedirectToPage($"{Url.Content("~")}{StaticValues.LoginPath}{ReturnUrl}"),
-            StaticPages.Register => RedirectToPage($"{Url.Content("~")}{StaticValues.RegisterPath}{ReturnUrl}"),
-            StaticPages.Index => Redirect(Url.Content("~/")),
-            _ => RedirectToPage(Url.Content("~/")),
-        };*/
         return pages switch
         {
             StaticPages.Login => Redirect($"{Url.Content("~")}{StaticValues.LoginPath}?returnUrl={ReturnUrl}"),
