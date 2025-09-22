@@ -180,4 +180,16 @@
   <data name="BackToHome" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Access Denied!</value>
+  </data>
+  <data name="LoggedInSuccessfully" xml:space="preserve">
+    <value>Logged in Successfully!</value>
+  </data>
+  <data name="AccountHasBeenDeleted" xml:space="preserve">
+    <value>Your account has been Deleted!</value>
+  </data>
+  <data name="NoPermission" xml:space="preserve">
+    <value>You Don't have access to this Resource</value>
+  </data>
 </root>

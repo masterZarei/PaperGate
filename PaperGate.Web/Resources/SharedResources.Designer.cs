@@ -61,6 +61,24 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ورود نامعتبر است!.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حساب کاربری شما حذف شده است.
+        /// </summary>
+        public static string AccountHasBeenDeleted {
+            get {
+                return ResourceManager.GetString("AccountHasBeenDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to بازگشت به خانه.
         /// </summary>
         public static string BackToHome {
@@ -205,6 +223,15 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to با موفقیت وارد شدید..
+        /// </summary>
+        public static string LoggedInSuccessfully {
+            get {
+                return ResourceManager.GetString("LoggedInSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ورود به پنل کاربری.
         /// </summary>
         public static string Login_header {
@@ -228,6 +255,15 @@ namespace PaperGate.Web.Resources {
         public static string NationalCode {
             get {
                 return ResourceManager.GetString("NationalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شما به این صفحه دسترسی ندارید.
+        /// </summary>
+        public static string NoPermission {
+            get {
+                return ResourceManager.GetString("NoPermission", resourceCulture);
             }
         }
         

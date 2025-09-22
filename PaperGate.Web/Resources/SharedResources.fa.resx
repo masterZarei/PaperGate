@@ -180,4 +180,16 @@
   <data name="BackToHome" xml:space="preserve">
     <value>بازگشت به خانه</value>
   </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>ورود نامعتبر است!</value>
+  </data>
+  <data name="LoggedInSuccessfully" xml:space="preserve">
+    <value>با موفقیت وارد شدید.</value>
+  </data>
+  <data name="AccountHasBeenDeleted" xml:space="preserve">
+    <value>حساب کاربری شما حذف شده است</value>
+  </data>
+  <data name="NoPermission" xml:space="preserve">
+    <value>شما به این صفحه دسترسی ندارید</value>
+  </data>
 </root>

@@ -11,7 +11,7 @@ using PaperGate.Core.Entities;
 using PaperGate.Infra.Data;
 using PaperGate.Web.Utilities.Helpers;
 using ILogger = Serilog.ILogger;
-
+using Microsoft.Extensions.Localization;
 
 namespace PaperGate.Web.Areas.Identity.Pages.Account
 {
@@ -20,12 +20,14 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
         private readonly SignInManager<UserInfo> _signInManager;
         private readonly ILogger _logger;
         private readonly AppDbContext _context;
+        private readonly IStringLocalizer<SharedResources> _localizer;
 
-        public LoginModel(SignInManager<UserInfo> signInManager, ILogger logger, AppDbContext context)
+        public LoginModel(SignInManager<UserInfo> signInManager, ILogger logger, AppDbContext context, IStringLocalizer<SharedResources> localizer)
         {
             _signInManager = signInManager;
             _logger = logger;
             _context = context;
+            _localizer = localizer;
         }
         [BindProperty]
         public LoginDto LoginDto { get; set; }
@@ -55,13 +57,13 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
                     var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == LoginDto.NationalCode);
                     if (user.IsDeleted)
                     {
-                        ShowError(ErrorMessages.CUSTOM, "حساب کاربری شما حذف شده است!");
+                        ShowError(ErrorMessages.CUSTOM, _localizer["AccountHasBeenDeleted"]);
                         HttpContext.Session.Clear(); // پاک‌سازی سشن
                         await _signInManager.SignOutAsync();
                         return RedirectToIndex();
                     }
                     _logger.Information($"User {LoginDto.NationalCode} logged in.");
-                    ShowSuccess("با موفقیت وارد شدید");
+                    ShowSuccess(_localizer["LoggedInSuccessfully"]);
 
                     return LocalRedirect(returnUrl);
                     //return Redirect(returnUrl);
@@ -73,8 +75,8 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "ورود نامعتبر است!");
-                    ShowError(ErrorMessages.CUSTOM, "ورود نامعتبر است!");
+                    ModelState.AddModelError(string.Empty, _localizer["AccessDenied"]);
+                    ShowError(ErrorMessages.CUSTOM, _localizer["AccessDenied"]);
                     return Page();
                 }
             }

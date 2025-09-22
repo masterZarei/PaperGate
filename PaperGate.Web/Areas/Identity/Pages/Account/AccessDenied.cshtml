@@ -2,7 +2,7 @@
 @model AccessDeniedModel
 @{
     Layout = "";
-    ViewData["Title"] = "دسترسی نامعتبر";
+    ViewData["Title"] = @Localizer["NoPermission"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -25,18 +25,18 @@
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
 
-    <title>دسترسی نامعتبر</title>
+    <title> @Localizer["NoPermission"]</title>
 </head>
 
 <body>
     <div class="w-[100vw] h-[100vh] text-white flex items-center justify-center bg-black">
         <div class="content w-full flex-col text-center h-full flex items-center justify-center" dir="rtl">
             <h2 class="text-8xl text-center text-white"> 403 </h2>
-            <h4 class="text-3xl xs600:text-5xl font-bold text-center text-white mt-8"> دسترسی نامعتبر </h4>
-            <p class="text-base mt-8 text-white mb-14 text-center"> شما به این صفحه دسترسی ندارید. </p>
+            <h4 class="text-3xl xs600:text-5xl font-bold text-center text-white mt-8"> @Localizer["AccessDenied"] </h4>
+            <p class="text-base mt-8 text-white mb-14 text-center"> @Localizer["NoPermission"] </p>
             <a href="~/"
                class="text-white border-0 rounded-lg py-4 px-8 text-center transition ease-in-out duration-500 outline-0 shadow-md shadow-[#8500ff] bg-[#8500ff]">
-                برگشت به خانه
+                @Localizer["BackToHome"]
             </a>
         </div>
     </div>
