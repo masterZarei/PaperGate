@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using PaperGate.Core.Entities;
 using PaperGate.Web.Utilities.Helpers;
 using ILogger = Serilog.ILogger;
@@ -13,11 +14,13 @@ public class LogoutModel : MyPageModel
 {
     private readonly SignInManager<UserInfo> _signInManager;
     private readonly ILogger _logger;
+    private readonly IStringLocalizer<SharedResources> _localizer;
 
-    public LogoutModel(SignInManager<UserInfo> signInManager, ILogger logger)
+    public LogoutModel(SignInManager<UserInfo> signInManager, ILogger logger, IStringLocalizer<SharedResources> localizer)
     {
         _signInManager = signInManager;
         _logger = logger;
+        _localizer = localizer;
     }
 
     public async Task<IActionResult> OnPost()
@@ -25,7 +28,7 @@ public class LogoutModel : MyPageModel
         try
         {
             await _signInManager.SignOutAsync();
-            ShowInfo("با موفقیت خارج شدید");
+            ShowInfo(_localizer["LoggedOutSuccessfully"]);
             return RedirectToIndex();
         }
         catch (Exception ex)

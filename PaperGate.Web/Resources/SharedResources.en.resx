@@ -184,7 +184,10 @@
     <value>Access Denied!</value>
   </data>
   <data name="LoggedInSuccessfully" xml:space="preserve">
-    <value>Logged in Successfully!</value>
+    <value>Logged in Successfully</value>
+  </data>
+  <data name="LoggedOutSuccessfully" xml:space="preserve">
+    <value>Logged out Successfully</value>
   </data>
   <data name="AccountHasBeenDeleted" xml:space="preserve">
     <value>Your account has been Deleted!</value>

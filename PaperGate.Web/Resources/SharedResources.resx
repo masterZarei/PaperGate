@@ -186,6 +186,9 @@
   <data name="LoggedInSuccessfully" xml:space="preserve">
     <value>با موفقیت وارد شدید.</value>
   </data>
+  <data name="LoggedOutSuccessfully" xml:space="preserve">
+    <value>با موفقیت  خارج شدید</value>
+  </data>
   <data name="AccountHasBeenDeleted" xml:space="preserve">
     <value>حساب کاربری شما حذف شده است</value>
   </data>

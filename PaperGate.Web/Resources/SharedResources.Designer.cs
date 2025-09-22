@@ -232,6 +232,15 @@ namespace PaperGate.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to با موفقیت  خارج شدید.
+        /// </summary>
+        public static string LoggedOutSuccessfully {
+            get {
+                return ResourceManager.GetString("LoggedOutSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ورود به پنل کاربری.
         /// </summary>
         public static string Login_header {

@@ -43,12 +43,12 @@ public class MyPageModel : PageModel
             message = errorMessage switch
             {
 
-                ErrorMessages.NOTFOUND => "No Item Found!",
-                ErrorMessages.ERRORHAPPEDNED => "Something went wrong!",
-                ErrorMessages.IDINVALID => "Invalid Id!",
-                ErrorMessages.FILLREQUESTEDDATA => "Fill requested data!",
+                ErrorMessages.NOTFOUND => "No Item Found",
+                ErrorMessages.ERRORHAPPEDNED => "Something went wrong",
+                ErrorMessages.IDINVALID => "Invalid Id",
+                ErrorMessages.FILLREQUESTEDDATA => "Fill requested data",
                 ErrorMessages.CUSTOM => customMessage,
-                _ => customMessage is null ? "Something went wrong!" : customMessage,
+                _ => customMessage is null ? "Something went wrong" : customMessage,
             };
         }
         TempData["Msg"] = message;
@@ -64,7 +64,7 @@ public class MyPageModel : PageModel
         TempData["State"] = _warning;
         TempData["Msg"] = message;
     }
-    public void ShowSuccess(string message)
+    public void ShowSuccess(string message = "")
     {
         message = (CultureInfo.CurrentUICulture.Name.StartsWith("fa")) ? "با موفقیت انجام شد" : "Operation Successfully Completed!";
         TempData["State"] = _success;
