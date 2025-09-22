@@ -9,28 +9,12 @@ namespace PaperGate.Core.DTOs;
 
 public class PostCreateDto
 {
-    /*
-     [Required(ErrorMessage ="لطفا موضوع بلاگ را وارد کنید")]
-    [MaxLength(150,ErrorMessage ="موضوع بلاگ نمی تواند از 150 کاراکتر بیشتر باشد")]
-    public string Title { get; set; }
-    public string? Slug { get; set; }
-    [Required(ErrorMessage = "لطفا محتوای بلاگ را وارد کنید")]
-    public string Content { get; set; }
-    public string? Picture { get; set; }
-    [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
-    public string Summary { get; set; }
-    public bool IsDeleted { get; set; }
-
-    #region Relations
-
-    public string? AuthorId { get; set; }
-    [ForeignKey(nameof(AuthorId))]
-    public UserInfo? Author { get; set; }
-    #endregion
-     */
     [Required(ErrorMessage = "لطفا موضوع بلاگ را وارد کنید")]
     [MaxLength(150, ErrorMessage = "موضوع بلاگ نمی تواند از 150 کاراکتر بیشتر باشد")]
     public string Title { get; set; }
+    [Required(ErrorMessage = "لطفا موضوع لاتین پست را وارد کنید")]
+    [MaxLength(150, ErrorMessage = "موضوع لاتین پست نمی تواند از 150 کاراکتر بیشتر باشد")]
+    public string EnglishTitle { get; set; }
     [Required(ErrorMessage = "لطفا محتوای بلاگ را وارد کنید")]
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
@@ -48,7 +32,7 @@ public class PostEditDto
     [Required(ErrorMessage = "لطفا موضوع بلاگ را وارد کنید")]
     [MaxLength(150, ErrorMessage = "موضوع بلاگ نمی تواند از 150 کاراکتر بیشتر باشد")]
     public string Title { get; set; }
-
+    public string EnglishTitle { get; set; }
     [Required(ErrorMessage = "لطفا محتوای بلاگ را وارد کنید")]
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
@@ -101,6 +85,7 @@ public class PostDetailsDto
 {
     public int Id { get; set; }
     public string Title { get; set; }
+    public string EnglishTitle { get; set; }
     public string Summary { get; set; }
     public string Content { get; set; }
     public string? EnglishContent { get; set; } = default!;
