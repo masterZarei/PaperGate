@@ -19,14 +19,28 @@
                     <h2 class="text-lg">جزئیات راه ارتباطی</h2>
                 </div>
                 <div class="PanelCard-body pt-5">
-                    <div class="block tablet:flex justify-between">
-                        <div class="w-full tablet:w-1/2 px-2">
-                            <!--                                نام-->
+                    <div class="block md:flex justify-between">
+                        <div class="w-full md:w-1/2 px-2">
                             <div class="flex flex-col mt-3">
                                 <label for="name" class="customLabel">نام </label>
                                 <input asp-for="ContactWayInfo.Title" id="name" class="customInput disabled:bg-gray-100" disabled>
                             </div>
-                            <!--    نمایه-->
+                           
+                        </div>
+                        <div class="w-full md:w-1/2 px-2">
+                            <div class="flex flex-col mt-3">
+                                <label class="customLabel">آدرس </label>
+                                <input asp-for="ContactWayInfo.Link" class="customInput disabled:bg-gray-100" disabled>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 px-2">
+                            <div class="flex flex-col mt-3">
+                                <label class="customLabel">آدرس لاتین </label>
+                                <input asp-for="ContactWayInfo.EnglishLink" class="customInput disabled:bg-gray-100" disabled>
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-1/2 px-2">
                             <div class="flex flex-col mt-3">
                                 <label for="icon" class="customLabel">نمایه</label>
                                 <div>
@@ -34,20 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full tablet:w-1/2 px-2">
-                            <!-- آدرس -->
-                            <div class="flex flex-col mt-3">
-                                <label class="customLabel">آدرس </label>
-                                <input asp-for="ContactWayInfo.Link" class="customInput disabled:bg-gray-100" disabled>
-                            </div>
-                        </div>
-                        <div class="w-full tablet:w-1/2 px-2">
-                            <!-- آدرس لاتین -->
-                            <div class="flex flex-col mt-3">
-                                <label class="customLabel">آدرس لاتین </label>
-                                <input asp-for="ContactWayInfo.EnglishLink" class="customInput disabled:bg-gray-100" disabled>
-                            </div>
-                        </div>
+                        
                     </div>
 
                     <div class="w-full flex px-2">
