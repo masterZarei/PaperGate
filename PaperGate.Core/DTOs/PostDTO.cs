@@ -76,6 +76,7 @@ public class PostListDto
 public class PostDeleteDto
 {
     public int Id { get; set; }
+    public int CategoryId { get; set; }
     public string Title { get; set; }
     public string? Picture { get; set; }
     public DateTime CreatedOn { get; set; }
