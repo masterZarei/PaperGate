@@ -4,153 +4,168 @@
 <!DOCTYPE html>
 <html lang="@Localizer["Language"]" dir="@Localizer["Layout"]">
 <head>
-    <meta charset="UTF-8">
-    <meta name="googlebot" content="index,follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="keywords" content="پروژه های صنعتی, دانشجویان کارشناسی, دانشجویان ارشد, پایان نامه ها" />
-    <meta name="description" content="درگاه مقالات">
-    <meta name="author" content="درگاه مقالات">
-    @if(CultureInfo.CurrentUICulture.Name.StartsWith("fa")){
-        <style>
-        body, *{
-    direction: rtl !important;
-    text-align:right !important;
-        }
-        </style>
-    }
-    else{
-    <style>
-        body, * {
-            text-align: left !important;
-        }
-    </style>
-    }
-    
-    <title>@ViewData["Title"] - @Localizer["header_PaperGate"]</title>
-    <partial name="_Styles" />
-    @await RenderSectionAsync("Styles", required: false)
+	<meta charset="UTF-8">
+	<meta name="googlebot" content="index,follow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="index" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="keywords" content="پروژه های صنعتی, دانشجویان کارشناسی, دانشجویان ارشد, پایان نامه ها" />
+	<meta name="description" content="درگاه مقالات">
+	<meta name="author" content="درگاه مقالات">
+	@if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
+	{
+		<style>
+			body, * {
+				direction: rtl !important;
+				text-align: right !important;
+			}
+		</style>
+	}
+	else
+	{
+		<style>
+			body, * {
+				text-align: left !important;
+			}
+		</style>
+	}
+
+	<title>@ViewData["Title"] - @Localizer["header_PaperGate"]</title>
+	<partial name="_Styles" />
+	@await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Header -->
-    <header class="bg-white shadow">
-        <div class="w-full mx-auto px-4 py-4 container flex justify-between items-center">
-    <nav class="overflow-hidden flex gap-4">
-        <a href="~/" class="text-gray-700 hover:text-indigo-600"><h1 class="font-bold text-blue myBlogTitle">@Localizer["header_PaperGate"]</h1></a>
-        <div class="space-x-4 space-x-reverse links gap-4 @(CultureInfo.CurrentUICulture.Name.StartsWith("en")
-                                                         ? $"flex"
-                                                                 : ""
-    )">
-                    <a href="~/" class="text-gray-700 hover:text-indigo-600">@Localizer["header_Home"]</a>
-                    <a href="~/AboutUs" class="text-gray-700 hover:text-indigo-600">@Localizer["header_AboutUs"]</a>
-                    <a href="~/ContactUs" class="text-gray-700 hover:text-indigo-600">@Localizer["header_ContactUs"]</a>
-                </div>
-            </nav>
+	<!-- Header -->
+	<header class="bg-white shadow">
+		<div class="w-full mx-auto px-4 py-4 container flex justify-between">
+			<div class=" flex justify-between items-center">
 
-           
+				<a href="~/" class="text-gray-700 hover:text-indigo-600"><h1 class="font-bold text-blue myBlogTitle">@Localizer["header_PaperGate"]</h1></a>
+
+				<nav class="flex gap-4 justify-between px-4 items-center" id="nav">
+					<div class="space-x-4 space-x-reverse links gap-4 @(CultureInfo.CurrentUICulture.Name.StartsWith("en")
+																																		  		  ? $"flex"
+																																				  		  : ""
+                                                                                                                                )">
+						<a href="~/" class="text-gray-700 hover:text-indigo-600">@Localizer["header_Home"]</a>
+						<a href="~/AboutUs" class="text-gray-700 hover:text-indigo-600">@Localizer["header_AboutUs"]</a>
+						<a href="~/ContactUs" class="text-gray-700 hover:text-indigo-600">@Localizer["header_ContactUs"]</a>
+					</div>
+
+					<div id="fa-x"><i class="fa-solid fa-x text-sm"></i></div>
+				</nav>
+			</div>
+			<div class="flex items-center gap-4">
+				<div id="mother-bars">
+				<i class="fas fa-solid fa-bars" id="fa-bars"></i>
+
+				</div>
+
+				<div class="flex space-x-4 space-x-reverse overflow-hidden">
+					@if (User.Identity.IsAuthenticated)
+					{
+						<a href="~/Identity/Account/Logout" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Logout"]</a>
+						<a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Panel"]</a>
+					}
+					else
+					{
+						<a href="~/Identity/Account/Login" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Login"]</a>
+					}
+				</div>
+			</div>
+
+		</div>
+
+	</header>
 
 
-            <div class="flex space-x-4 space-x-reverse overflow-hidden">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <a href="~/Identity/Account/Logout" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Logout"]</a>
-                    <a href="~/Account/Admin/Categories" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Panel"]</a>
-                }
-                else
-                {
-                    <a href="~/Identity/Account/Login" class="overflow-hidden text-gray-700 hover:text-indigo-600 mt-1">@Localizer["header_Login"]</a>
-                }
-            </div>
-        </div>
-    </header>
+	@RenderBody()
 
-    @RenderBody()
+	@await Component.InvokeAsync("FooterComponent")
 
-    @await Component.InvokeAsync("FooterComponent")
+	<script>
+		$(document).ready(function () {
+		  $(".lightSlider").lightSlider({
+			rtl: true,
+			item: 5,
+			slideMargin: 10,
+			loop: true,
+			pager: true,
+			auto: true,
+			pause: 3000,
+			enableTouch: true,
+			enableDrag: true,
+			responsive: [
+			  {
+				breakpoint: 1280,
+				settings: {
+				  item: 4,
+				  slideMargin: 7
+				}
+			  },
+			  {
+				breakpoint: 1190,
+				settings: {
+				  item: 3,
+				  slideMargin: 7
+				}
+			  },
 
-<script>
-    $(document).ready(function () {
-      $(".lightSlider").lightSlider({
-        rtl: true,
-        item: 5,
-        slideMargin: 10,
-        loop: true,
-        pager: true,
-        auto: true,
-        pause: 3000,
-        enableTouch: true,
-        enableDrag: true,
-        responsive: [
-          {
-            breakpoint: 1280,
-            settings: {
-              item: 4,
-              slideMargin: 7
-            }
-          },
-          {
-            breakpoint: 1190,
-            settings: {
-              item: 3,
-              slideMargin: 7
-            }
-          },
+			  {
+				breakpoint: 850,
+				settings: {
+				  item: 2,
+				  slideMargin: 7
+				}
+			  },
 
-          {
-            breakpoint: 850,
-            settings: {
-              item: 2,
-              slideMargin: 7
-            }
-          },
+			  {
+				breakpoint: 560,
+				settings: {
+				  item: 1,
+				  slideMargin: 7
+				}
+			  },
+			]
+		  });
+		});
 
-          {
-            breakpoint: 560,
-            settings: {
-              item: 1,
-              slideMargin: 7
-            }
-          },
-        ]
-      });
-    });
-</script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <partial name="_Scripts" />
-    @await RenderSectionAsync("Scripts", required: false)
+	</script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<partial name="_Scripts" />
+	@await RenderSectionAsync("Scripts", required: false)
 
-    @if (TempData["Msg"] != null && TempData["State"] != null)
-    {
-        string msg = TempData["Msg"].ToString();
-        string state = TempData["State"].ToString();
-        <script>
-            function showAlert(state, msg) {
-                switch (state) {
-                    case '@Notifs.Success':
-                        toastr.success(msg);
-                        break;
-                    case '@Notifs.Error':
-                        toastr.error(msg);
-                        break;
-                    case '@Notifs.Info':
-                        toastr.info(msg);
-                        break;
-                    case '@Notifs.Warning':
-                        toastr.warning(msg);
-                        break;
-                    default:
-                        toastr.warning('Error Happend');
-                        break;
-                }
-            }
-            showAlert('@TempData["State"].ToString()', '@Html.Raw(TempData["Msg"].ToString())')
-        </script>
+	@if (TempData["Msg"] != null && TempData["State"] != null)
+	{
+		string msg = TempData["Msg"].ToString();
+		string state = TempData["State"].ToString();
+		<script>
+			function showAlert(state, msg) {
+				switch (state) {
+					case '@Notifs.Success':
+						toastr.success(msg);
+						break;
+					case '@Notifs.Error':
+						toastr.error(msg);
+						break;
+					case '@Notifs.Info':
+						toastr.info(msg);
+						break;
+					case '@Notifs.Warning':
+						toastr.warning(msg);
+						break;
+					default:
+						toastr.warning('Error Happend');
+						break;
+				}
+			}
+			showAlert('@TempData["State"].ToString()', '@Html.Raw(TempData["Msg"].ToString())')
+		</script>
 
-        TempData["State"] = null;
-        TempData["Msg"] = null;
-    }
+		TempData["State"] = null;
+		TempData["Msg"] = null;
+	}
 </body>
 </html>

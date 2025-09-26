@@ -7,10 +7,8 @@
   font-weight: normal;
   font-style: normal;
 }
-body , * {
-    
-    font-family: Vazir !important;
-    overflow-x: hidden;
+body, * {
+    overflow-x: hidden !important;
 }
 .rtl {
     direction: rtl;
@@ -53,7 +51,56 @@ body {
   margin-right: 10px;
 }
 
+/*header */
 
+
+.fa-bars {
+    visibility: hidden
+}
+
+.visi-hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible
+}
+#fa-x {
+    display: none;
+}
+
+    #fa-x.show {
+        display: block;
+    }
+@media screen and (max-width: 470px) {
+  
+    .fa-bars {
+        visibility: visible;
+    }
+
+    nav {
+        visibility: hidden;
+    }
+
+    header {
+        position: relative;
+    }
+
+    nav {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #eee;
+        color: black;
+        width: 100%;
+        overflow: auto !important;
+    }
+}
 /*Lang*/
 .lang-persian {
     border-left: 2px solid blue;

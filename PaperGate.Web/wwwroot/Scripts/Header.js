@@ -1,10 +1,13 @@
-function toggleMenu() {
-  const menu = document.getElementById('mobileMenu');
-  if (menu.classList.contains('translate-x-full')) {
-    menu.classList.remove('translate-x-full');
-    menu.classList.add('translate-x-0');
-  } else {
-    menu.classList.add('translate-x-full');
-    menu.classList.remove('translate-x-0');
-  }
-}
+﻿const haumburgerMenu = document.querySelector("#mother-bars"); // آیکون bars
+const navbar = document.querySelector("#nav");
+const closeBtn = document.getElementById("fa-x");
+
+haumburgerMenu.addEventListener("click", () => {
+    navbar.classList.add("visible");   // نمایش نوبار
+    closeBtn.classList.add("show");    // نمایش ایکس
+});
+
+closeBtn.addEventListener("click", () => {
+    navbar.classList.remove("visible");
+    closeBtn.classList.remove("show"); // مخفی‌کردن ایکس
+});
