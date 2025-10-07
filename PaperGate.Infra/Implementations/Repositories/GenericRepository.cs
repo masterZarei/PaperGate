@@ -19,23 +19,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _dbSet = _db.Set<T>();
     }
 
-    /*public async Task<IList<T>> GetAllAsync(
-        Expression<Func<T, bool>>? filter = null,
-        params Expression<Func<T, object>>[] includes)
-    {
-        IQueryable<T> query = _dbSet;
-
-        if (includes != null && includes.Length != 0)
-        {
-            foreach (var include in includes)
-                query = query.Include(include);
-        }
-
-        if (filter != null)
-            query = query.Where(filter);
-
-        return await query.ToListAsync();
-    }*/
     public async Task<IList<T>> GetAllAsync(
     Expression<Func<T, bool>>? filter = null,
     Func<IQueryable<T>, IQueryable<T>>? queryCustomizer = null)
@@ -169,3 +152,24 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         }
     }
 }
+
+#region Commented Code
+
+/*public async Task<IList<T>> GetAllAsync(
+    Expression<Func<T, bool>>? filter = null,
+    params Expression<Func<T, object>>[] includes)
+{
+    IQueryable<T> query = _dbSet;
+
+    if (includes != null && includes.Length != 0)
+    {
+        foreach (var include in includes)
+            query = query.Include(include);
+    }
+
+    if (filter != null)
+        query = query.Where(filter);
+
+    return await query.ToListAsync();
+}*/
+#endregion

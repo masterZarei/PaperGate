@@ -195,4 +195,7 @@
   <data name="NoPermission" xml:space="preserve">
     <value>شما به این صفحه دسترسی ندارید</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>خانه</value>
+  </data>
 </root>

@@ -195,4 +195,7 @@
   <data name="NoPermission" xml:space="preserve">
     <value>You Don't have access to this Resource</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
 </root>

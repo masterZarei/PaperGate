@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-	ViewData["Title"] = "خانه";
+	ViewData["Title"] = @Localizer["Home"];
 }
 
 <div class="container mt-4">
@@ -34,8 +34,8 @@
 					<a href="~/Post/@item.Slug" class="item active w-full h-full items-center">
 						<div class="img w-full h-full absolute top-0 right-0 bg-center bg-cover" style="background-image: url('/Assets/Pictures/Papers/@item.Picture');"></div>
 						<div class="caption relative text-right">
-							<div class="text">
-								<h2>
+							<div class="text px-4">
+								<h2 class="">
 									@(CultureInfo.CurrentUICulture.Name.StartsWith("fa")
 																? $"{item.Title}"
 																: $"{item.EnglishTitle}")

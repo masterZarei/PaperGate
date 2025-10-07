@@ -164,6 +164,7 @@ body {
   font-size: 35px;
   animation: text 1s ease forwards;
   -webkit-animation: text 1s ease forwards;
+  padding: 0 40px !important;
 /*  text-shadow: 4px 7px 14px #e5e7eb;
 */
  background-color: #eee;
