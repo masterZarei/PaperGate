@@ -58,6 +58,7 @@ public class UnitOfWork : IUnitOfWork
     }
 }
 
+#region Commented Code
 /*public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _db;
@@ -103,3 +104,4 @@ public class UnitOfWork : IUnitOfWork
     }
 }
 */
+#endregion
