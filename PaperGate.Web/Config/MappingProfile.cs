@@ -16,7 +16,6 @@ namespace PaperGate.Web.Config
             CreateMap<UserInfo, UserListDto>().ReverseMap();
             CreateMap<UserInfo, UserDeleteDto>().ReverseMap();
             CreateMap<UserInfo, User_ED_Dto>().ReverseMap();
-            CreateMap<UserInfo, PersonalInfoDto>().ReverseMap();
             #endregion
 
             #region Paper_DTOs

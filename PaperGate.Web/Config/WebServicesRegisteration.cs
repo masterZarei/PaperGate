@@ -9,6 +9,5 @@ public static class WebServicesRegisteration
     {
         service.AddScoped<IFileManagementService, FileManagementService>();
         service.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
-
     }
 }

@@ -38,24 +38,6 @@ public class RegisterDto : UserBaseDto
     public string? ReturnUrl { get; set; }
 
 }
-public class PersonalInfoDto : UserBaseDto
-{
-    public DateTime DateCreated { get; set; }
-}
-public class ForgottonChangePasswordDto
-{
-    public string? Id { get; set; }
-
-    [Required(ErrorMessage = "لطفا رمز عبور را وارد کنید")]
-    public string? Password { get; set; }
-
-    [Required(ErrorMessage = "لطفا رمز عبور جدید را وارد کنید")]
-    public string? NewPassword { get; set; }
-
-    [Required(ErrorMessage = "لطفا تکرار رمز عبور خود را وارد کنید")]
-    [Compare(nameof(NewPassword), ErrorMessage = "رمز عبور با تکرار آن همخوانی ندارد")]
-    public string? ConfirmNewPassword { get; set; }
-}
 public class UserChangePasswordDto
 {
     public string? Id { get; set; }

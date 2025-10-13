@@ -9,12 +9,10 @@ namespace PaperGate.Web.Controllers;
 [ApiController]
 public class ApiController : Controller
 {
-    private readonly AppDbContext _db;
     private readonly IFileManagementService _fileManagementService;
 
-    public ApiController(AppDbContext db, IFileManagementService fileManagementService)
+    public ApiController( IFileManagementService fileManagementService)
     {
-        _db = db;
         _fileManagementService = fileManagementService;
     }
 

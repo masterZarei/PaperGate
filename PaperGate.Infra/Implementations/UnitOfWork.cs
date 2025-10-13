@@ -52,7 +52,7 @@ public class UnitOfWork : IUnitOfWork
         catch (Exception ex)
         {
             _taskResult.AddError(ex.ToString());
-            _myLogger.Fatal(ex, "UnitOfWork-SaveChanges", LoggingLevel.Fatal);
+            _myLogger.Fatal(ex, "UnitOfWork-SaveChanges");
             return _taskResult;
         }
     }
