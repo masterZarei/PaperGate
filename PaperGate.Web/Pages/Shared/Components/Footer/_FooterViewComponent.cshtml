@@ -14,7 +14,7 @@
 				<div class="footer-about">
 				<h2 class="footer-title">درباره ما</h2>
 				<p class="footer-text">
-					@Model.AboutUs.Description.GetSummary(255) <a href="~/AboutUs" class="border-b pb-2">بیشتر</a>
+					@Model.AboutUs.Description.GetSummary(255) <a href="~/AboutUs" target="_blank" class="border-b pb-2">بیشتر</a>
 				</p>
 				</div>
 			}
@@ -23,7 +23,7 @@
 				<div class="footer-about">
 				<h2 class="footer-title">About Us</h2>
 				<p class="footer-text">
-					@Model.AboutUs.EnglishDescription.GetSummary(255) <a href="~/AboutUs" class="border-b pb-2">More</a>
+					@Model.AboutUs.EnglishDescription.GetSummary(255) <a href="~/AboutUs" target="_blank" class="border-b pb-2">More</a>
 				</p>
 			</div>
 			}
@@ -38,7 +38,7 @@
 				<div class="footer-social-icons">
 					@foreach (var item in Model.AboutUs.ContactWays.Where(c => c.IsLink))
 					{
-						<a href="@item.Link"><i class="@item.Icon"></i></a>
+						<a href="@item.Link" target="_blank"><i class="@item.Icon"></i></a>
 					}
 
 				</div>
@@ -75,7 +75,7 @@
 				<ul>
 					@foreach (var item in Model.UsefulLinks)
 					{
-						<li><a href="@item.Link">@item.Title</a></li>
+						<li><a href="@item.Link" target="_blank">@item.Title</a></li>
 					}
 				</ul>
 			</div>
@@ -87,7 +87,7 @@
 				<ul>
 					@foreach (var item in Model.UsefulLinks)
 					{
-						<li><a href="@item.Link">@item.EnglishTitle</a></li>
+						<li><a href="@item.Link" target="_blank">@item.EnglishTitle</a></li>
 					}
 				</ul>
 			</div>
