@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.DTOs;
 using PaperGate.Core.Interfaces.Services;
@@ -10,13 +9,11 @@ namespace PaperGate.Web.Pages
     public class AboutUsModel : MyPageModel
     {
         private readonly IPublicInfoService _preferencesService;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public AboutUsModel(IPublicInfoService preferencesService, IMapper mapper, ILogger logger)
+        public AboutUsModel(IPublicInfoService preferencesService, ILogger logger)
         {
             _preferencesService = preferencesService;
-            _mapper = mapper;
             _logger = logger;
         }
         public AboutUsPageDto PageDto { get; set; }
