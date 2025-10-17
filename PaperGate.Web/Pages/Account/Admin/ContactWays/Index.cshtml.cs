@@ -1,7 +1,6 @@
-﻿using PaperGate.Core.Entities;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace PaperGate.Web.Pages.Account.Admin.ContactWays
 {
@@ -14,11 +13,11 @@ namespace PaperGate.Web.Pages.Account.Admin.ContactWays
             _unitOfWork = unitOfWork;
         }
 
-        public IReadOnlyList<ContactWayInfo> ContactWayInfo { get;set; } = default!;
+        public IReadOnlyList<ContactWayInfo> ContactWayInfo { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            ContactWayInfo = await _unitOfWork.ContactWay.GetAllReadOnlyAsync(queryCustomizer: q=>q.OrderByDescending(c=>c.CreatedOn));
+            ContactWayInfo = await _unitOfWork.ContactWay.GetAllReadOnlyAsync(queryCustomizer: q => q.OrderByDescending(c => c.CreatedOn));
         }
     }
 }
