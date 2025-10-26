@@ -104,7 +104,7 @@ dotnet run
 
 ## 🙏 Acknowledgments
 
-Special thanks to **Dr. Amir Baoufa Toosi** for his guidance.
+Special thanks to **Dr. Amir Bavafaa Toosi** for his guidance.
 
 ---
 
