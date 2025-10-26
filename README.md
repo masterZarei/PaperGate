@@ -45,10 +45,10 @@ This structure enhances maintainability, testability, and scalability of the app
 The database is normalized (3NF) and optimized for relational data.  
 Key tables include:
 
-- **Posts:** Stores articles and theses with attributes such as `Title`, `Abstract`, `Content`, `CreatedDate`, `IsActive`, and `ShowOnSlider`.  
+- **Posts:** Stores articles and theses with attributes such as `Title`, `Content`, `IsActive`, and `ShowOnSlider`.  
   Each post belongs to a category and may contain multiple keywords through a many-to-many relation.  
-- **Categories:** Manages hierarchical classification using `ParentId`, allowing multi-level categories.  
-- **Keywords / PostKeywordInfo:** Defines a many-to-many relationship for tagging and advanced search.  
+- **Categories:** Manages hierarchical classification.
+- **Keywords / PostKeywordInfo:** Defines a many-to-many relationship for tagging.  
 - **Messages:** Captures user messages from the “Contact Us” page.  
 - **AboutUs, UsefulLinks, ContactWays:** Manage static informational content of the site.
 
@@ -208,18 +208,14 @@ dotnet run
 
 ## 🙏 قدردانی
 
-از راهنمایی‌های استاد محترم **جناب آقای دکتر امیر باوفا طوسی**
-و از داوری ارزشمند **جناب آقای دکتر بهزاد بختیاری** صمیمانه سپاسگزارم.
+از راهنمایی‌های استاد محترم **جناب آقای دکتر امیر باوفا طوسی صمیمانه سپاسگزارم.
 
 ---
-</div>
-<div align="center">
+
 
 🧾 توسعه‌دهنده: **محمدمهدی زارعی**
 🎓 کارشناسی مهندسی نرم‌افزار – دانشگاه سجاد
 📅 سال تحصیلی: ۱۴۰۲–۱۴۰۳
-
 </div>
 ```
 
----
