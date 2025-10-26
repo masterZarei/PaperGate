@@ -11,7 +11,4 @@ public class IndexDto
 
     public IReadOnlyList<CategoryInfo>? Categories { get; set; }
 
-    public string? AddOnHeadHtml { get; set; }
-    public string? AddOnBodyHtml { get; set; }
-    public string? AddOnAfterBodyHtml { get; set; }
 }

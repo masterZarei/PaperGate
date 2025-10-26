@@ -24,23 +24,12 @@ public class IndexModel : MyPageModel
     {
         try
         {
-            string AddOnHeadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/", "Html/AddOnHead.html");
-            string AddOnBodyPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/", "Html/AddOnBody.html");
-            string AddOnAfterBodyPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/", "Html/AddOnAfterBody.html");
-
-
             IndexDto = new IndexDto
             {
                // Posts = await _unitOfWork.Post.GetAllReadOnlyAsync(b => b.IsActive, queryCustomizer: b => b.Include(b => b.Category).OrderByDescending(b => b.CreatedOn)),
                 Sliders = await _unitOfWork.Post.GetAllReadOnlyAsync(p => p.ShowOnSlider && p.IsActive),
                 Categories = await _unitOfWork.Category.GetAllReadOnlyAsync(c => c.Posts.Count > 0, queryCustomizer: q => q.Include(c => c.Posts))
             };
-            if (System.IO.File.Exists(AddOnHeadPath))
-                IndexDto.AddOnHeadHtml = System.IO.File.ReadAllText(AddOnHeadPath);
-            if (System.IO.File.Exists(AddOnBodyPath))
-                IndexDto.AddOnBodyHtml = System.IO.File.ReadAllText(AddOnBodyPath);
-            if (System.IO.File.Exists(AddOnAfterBodyPath))
-                IndexDto.AddOnAfterBodyHtml = System.IO.File.ReadAllText(AddOnAfterBodyPath);
             return Page();
 
         }

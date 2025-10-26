@@ -8,11 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Html\**" />
+    <Content Remove="wwwroot\Html\**" />
+    <EmbeddedResource Remove="wwwroot\Html\**" />
+    <None Remove="wwwroot\Html\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Areas\Identity\Pages\Account\Register.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Areas\Identity\Pages\Account\Register.cshtml" />
+    <Content Remove="wwwroot\Assets\Pictures\Preferences\NEWS-8584472911762382748.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +53,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Assets\Pictures\Preferences\" />
   </ItemGroup>
 
 </Project>
