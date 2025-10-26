@@ -104,15 +104,14 @@ dotnet run
 
 ## 🙏 Acknowledgments
 
-Special thanks to **Dr. Amir Baoufa Toosi** for his guidance and supervision,
-and to **Dr. Behzad Bakhtiari** for his valuable evaluation and support during the defense.
+Special thanks to **Dr. Amir Baoufa Toosi** for his guidance.
 
 ---
 
 
 🧾 Developed by **Mohammad Mahdi Zarei**
 🎓 B.Sc. Software Engineering – Sajjad University of Technology
-📅 Academic Year: 2023–2024
+📅 Academic Year: 2024–2025
 
 
 
@@ -215,7 +214,7 @@ dotnet run
 
 🧾 توسعه‌دهنده: **محمدمهدی زارعی**
 🎓 کارشناسی مهندسی نرم‌افزار – دانشگاه سجاد
-📅 سال تحصیلی: ۱۴۰۲–۱۴۰۳
+📅 سال تحصیلی: 1403–1404
 </div>
 ```
 
