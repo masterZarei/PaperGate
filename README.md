@@ -79,7 +79,7 @@ This design improves modularity, testability, and reduces code duplication acros
 ## 🚀 How to Run
 
 ```bash
-git clone https://github.com/YourUsername/PaperGate.git  
+git clone https://github.com/masterZarei/PaperGate.git  
 cd PaperGate  
 dotnet ef database update  
 dotnet run  
@@ -183,7 +183,7 @@ and to **Dr. Behzad Bakhtiari** for his valuable evaluation and support during t
 ## 🚀 نحوه اجرا
 
 ```bash
-git clone https://github.com/YourUsername/PaperGate.git  
+git clone https://github.com/masterZarei/PaperGate.git  
 cd PaperGate  
 dotnet ef database update  
 dotnet run  
