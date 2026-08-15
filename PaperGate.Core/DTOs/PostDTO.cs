@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Keywords;
 using System.ComponentModel.DataAnnotations;
 
 namespace PaperGate.Core.DTOs;
@@ -19,11 +19,11 @@ public class PostCreateDto
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
-    public string? EnglishContent { get; set; } = default!;
+    public string? EnglishContent { get; set; }
 
     #region Upload Props
     public string? Picture { get; set; }
-    public IFormFile? FileUpload { get; set; } = default!;
+    public IFormFile? FileUpload { get; set; }
     #endregion
 }
 public class PostEditDto
@@ -37,7 +37,7 @@ public class PostEditDto
     public string Content { get; set; }
     [Required(ErrorMessage = "لطفا خلاصه بلاگ را وارد کنید")]
     public string Summary { get; set; }
-    public string? EnglishContent { get; set; } = default!;
+    public string? EnglishContent { get; set; }
     public bool IsActive { get; set; }
     public bool ShowOnSlider { get; set; }
     public string? AuthorId { get; set; }
@@ -89,7 +89,7 @@ public class PostDetailsDto
     public string EnglishTitle { get; set; }
     public string Summary { get; set; }
     public string Content { get; set; }
-    public string? EnglishContent { get; set; } = default!;
+    public string? EnglishContent { get; set; }
     public string? Picture { get; set; }
     public int CategoryId { get; set; }
 
@@ -102,7 +102,7 @@ public class PublicPostDetailsDto
     public string Title { get; set; }
     public required string EnglishTitle { get; set; }
     public string Content { get; set; }
-    public string EnglishContent { get; set; } = default!;
+    public string EnglishContent { get; set; } = string.Empty;
     public string Summary { get; set; }
     public string? Picture { get; set; }
     public IReadOnlyList<PostKeywordInfo>? PostKeywords { get; set; }

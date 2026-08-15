@@ -2,7 +2,7 @@
 using PaperGate.Core.Interfaces;
 using PaperGate.Web.ViewModels;
 
-namespace PaperGate.Web.ViewComponenets;
+namespace PaperGate.Web.ViewComponents;
 
 public class SidePanelComponent : ViewComponent
 {

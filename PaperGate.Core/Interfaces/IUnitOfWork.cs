@@ -1,6 +1,6 @@
 ﻿using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Keywords;
 using PaperGate.Core.Entities.Template;
 using PaperGate.Core.Interfaces.Repositories;
 using PaperGate.Shared.ReturnTypes;

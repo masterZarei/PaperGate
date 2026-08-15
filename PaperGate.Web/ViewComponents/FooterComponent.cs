@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaperGate.Core.Interfaces.Services;
 
-namespace Emzacode.Web.ViewComponents;
+namespace PaperGate.Web.ViewComponents;
 
 public class FooterComponent : ViewComponent
 {

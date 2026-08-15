@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ECB.Web.Pages
+namespace PaperGate.Web.Pages
 {
     public class NotFoundModel : PageModel
     {
