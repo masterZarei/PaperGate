@@ -12,14 +12,13 @@ namespace PaperGate.Web.Utilities.Services;
 public class FileManagementService : IFileManagementService
 {
     private readonly ILogger _myLoggerRepository;
-    protected TaskResult _taskResult;
+
     public FileManagementService(ILogger myLoggerRepository)
     {
-        _taskResult = new();
         _myLoggerRepository = myLoggerRepository;
     }
 
-    public async Task<TaskResult> Upload(FMServiceUploadViewModel dto)
+    public Task<TaskResult> Upload(FMServiceUploadViewModel dto)
     {
         try
         {
@@ -28,19 +27,17 @@ public class FileManagementService : IFileManagementService
             if (!Directory.Exists(dto.FolderPath))
                 Directory.CreateDirectory(dto.FolderPath);
 
-            return dto.FileType switch
-            {
-                FileType.Image => UploadImage(dto),
-                _ => _taskResult,
-            };
+            return Task.FromResult(UploadImage(dto));
         }
         catch (Exception ex)
         {
             _myLoggerRepository.Fatal(ex, $"FileManagementService/UploadImages");
-            _taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
-            return _taskResult;
+            var taskResult = new TaskResult();
+            taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
+            return Task.FromResult(taskResult);
         }
     }
+
     public async Task<TaskResult> Alter(FMServiceAlterViewModel dto)
     {
         try
@@ -53,146 +50,152 @@ public class FileManagementService : IFileManagementService
             return dto.FileType switch
             {
                 FileType.Image => await AlterImages(dto),
-                _ => _taskResult,
+                _ => new TaskResult(),
             };
         }
         catch (Exception ex)
         {
             _myLoggerRepository.Fatal(ex, "FileManagementService/UploadImages");
-            _taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
-            return _taskResult;
+            var taskResult = new TaskResult();
+            taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
+            return taskResult;
         }
     }
 
     #region Image
     private async Task<TaskResult> AlterImages(FMServiceAlterViewModel dto)
     {
+        var taskResult = new TaskResult();
         try
         {
             Guard.Against.Null(dto);
             if (dto?.Files?.Count <= 0)
             {
-                _taskResult.AddError("لطفا حداقل یک عکس برای محصول انتخاب کنید");
-                return _taskResult;
+                taskResult.AddError("لطفا حداقل یک عکس برای محصول انتخاب کنید");
+                return taskResult;
             }
             if (dto?.Files?.Count > StaticValues.MaxImageUploadCount)
             {
-                _taskResult.AddError("لطفا حداکثر چهار عکس انتخاب کنید");
-                return _taskResult;
+                taskResult.AddError("لطفا حداکثر چهار عکس انتخاب کنید");
+                return taskResult;
             }
-            string ReturningFileNames = string.Empty;
-            //Deleting Files
-            var result = await Delete(dto.LastFilesNames, dto.FolderPath);
-            if (result.Succeeded is false)
-                _myLoggerRepository.Fatal(result.Errors.ToString(), "FileManagementService/AlterImages");
+            string returningFileNames = string.Empty;
+            var deleteResult = await Delete(dto.LastFilesNames, dto.FolderPath);
+            if (deleteResult.Succeeded is false)
+                _myLoggerRepository.Fatal(deleteResult.Errors.ToString(), "FileManagementService/AlterImages");
 
-            //Here after deleting the last video _taskresults succeed prop turns TRUE
-            //So we change it back to false
-            _taskResult.Succeeded = false;
-
-            foreach (var item in dto?.Files)
+            foreach (var item in dto.Files)
             {
                 string path = Path.Combine(Directory.GetCurrentDirectory(), dto.FolderPath);
 
                 #region Validation
-                //Check files Sizes
                 if (item.Length > StaticValues.MaxImageUploadSize)
                 {
-                    _taskResult.AddError("فایل انتخابی بیشتر از 20 مگابایت است");
-                    return _taskResult;
+                    taskResult.AddError("فایل انتخابی بیشتر از 20 مگابایت است");
+                    return taskResult;
                 }
-                //Check Files Types
                 string fileExtension = Path.GetExtension(item.FileName);
                 if (!string.IsNullOrEmpty(fileExtension) && FileFormats.CheckImageFormats(fileExtension) == false)
                 {
-                    _taskResult.AddError("فایل ورودی نامعتبر است");
-                    return _taskResult;
+                    taskResult.AddError("فایل ورودی نامعتبر است");
+                    return taskResult;
+                }
+                using (var sourceStream = item.OpenReadStream())
+                {
+                    if (FileFormats.CheckImageSignature(sourceStream) == false)
+                    {
+                        taskResult.AddError("فایل ورودی نامعتبر است");
+                        return taskResult;
+                    }
+
+                    string newName = NameGenerator.FilenameGenerate(Path.GetFileNameWithoutExtension(item.FileName), fileExtension);
+                    string fileNameWithPath = Path.Combine(path, newName);
+
+                    using var stream = new FileStream(fileNameWithPath, FileMode.Create);
+                    await sourceStream.CopyToAsync(stream);
+
+                    if (dto.FileCount is FileCount.Multiple)
+                        returningFileNames += $"{newName},";
+                    else
+                        returningFileNames += $"{newName}";
                 }
                 #endregion
-                string newName = NameGenerator.FilenameGenerate(Path.GetFileNameWithoutExtension(item.FileName), fileExtension);
-                string fileNameWithPath = Path.Combine(path, newName);
-
-                using var stream = new FileStream(fileNameWithPath, FileMode.Create);
-                item.CopyTo(stream);
-
-                //Add File Path to ImageAdderss Column
-                if (dto.FileCount is FileCount.Multiple)
-                    ReturningFileNames += $"{newName},";
-                else
-                    ReturningFileNames += $"{newName}";
             }
-            _taskResult.Succeeded = true;
-            _taskResult.Result = ReturningFileNames;
-            return _taskResult;
-
-
-
+            taskResult.Succeeded = true;
+            taskResult.Result = returningFileNames;
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLoggerRepository.Fatal(ex, "FileManagementService/AlterImages");
-            _taskResult.Succeeded = false;
-            _taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
-            return _taskResult;
+            taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
+            return taskResult;
         }
     }
+
     private TaskResult UploadImage(FMServiceUploadViewModel dto)
     {
+        var taskResult = new TaskResult();
         try
         {
             if (dto?.Files?.Count <= 0)
             {
-                _taskResult.AddError("لطفا حداقل یک عکس برای محصول انتخاب کنید");
-                return _taskResult;
+                taskResult.AddError("لطفا حداقل یک عکس برای محصول انتخاب کنید");
+                return taskResult;
             }
             if (dto?.Files?.Count > StaticValues.MaxImageUploadCount)
             {
-                _taskResult.AddError("لطفا حداکثر چهار عکس انتخاب کنید");
-                return _taskResult;
+                taskResult.AddError("لطفا حداکثر چهار عکس انتخاب کنید");
+                return taskResult;
             }
-            string ReturningFileNames = string.Empty;
-            foreach (var item in dto?.Files)
+            string returningFileNames = string.Empty;
+            foreach (var item in dto.Files)
             {
                 string path = Path.Combine(Directory.GetCurrentDirectory(), dto.FolderPath);
 
                 #region Validation
-                //Check Files Types
                 string fileExtension = Path.GetExtension(item.FileName);
                 if (!string.IsNullOrEmpty(fileExtension) && FileFormats.CheckImageFormats(fileExtension) == false)
                 {
-                    _taskResult.AddError("تصویر ورودی نامعتبر است");
-                    return _taskResult;
+                    taskResult.AddError("تصویر ورودی نامعتبر است");
+                    return taskResult;
                 }
-                //Check files Sizes
                 if (item.Length > StaticValues.MaxImageUploadSize)
                 {
-                    _taskResult.AddError("تصویر انتخابی بیشتر از 20 مگابایت است");
-                    return _taskResult;
+                    taskResult.AddError("تصویر انتخابی بیشتر از 20 مگابایت است");
+                    return taskResult;
                 }
                 #endregion
-                string newName = NameGenerator.FilenameGenerate(Path.GetFileNameWithoutExtension(item.FileName), fileExtension);
-                string fileNameWithPath = Path.Combine(path, newName);
 
-                using var stream = new FileStream(fileNameWithPath, FileMode.Create);
-                item.CopyTo(stream);
+                using (var sourceStream = item.OpenReadStream())
+                {
+                    if (FileFormats.CheckImageSignature(sourceStream) == false)
+                    {
+                        taskResult.AddError("تصویر ورودی نامعتبر است");
+                        return taskResult;
+                    }
 
-                //Add File Path to ImageAdderss Column
-                if (dto.FileCount is FileCount.Multiple)
-                    ReturningFileNames += $"{newName},";
-                else
-                    ReturningFileNames += $"{newName}";
+                    string newName = NameGenerator.FilenameGenerate(Path.GetFileNameWithoutExtension(item.FileName), fileExtension);
+                    string fileNameWithPath = Path.Combine(path, newName);
+
+                    using var stream = new FileStream(fileNameWithPath, FileMode.Create);
+                    sourceStream.CopyTo(stream);
+
+                    if (dto.FileCount is FileCount.Multiple)
+                        returningFileNames += $"{newName},";
+                    else
+                        returningFileNames += $"{newName}";
+                }
             }
-            _taskResult.Succeeded = true;
-            _taskResult.Result = ReturningFileNames;
-            return _taskResult;
-
-
+            taskResult.Succeeded = true;
+            taskResult.Result = returningFileNames;
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLoggerRepository.Fatal(ex, "FileManagementService/UploadImages", ex.ToString());
-            _taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
-            return _taskResult;
+            taskResult.AddError("در فرآیند آپلود عکس خطایی رخ داد");
+            return taskResult;
         }
     }
     #endregion
@@ -200,11 +203,12 @@ public class FileManagementService : IFileManagementService
     #region General
     public async Task<TaskResult> Delete(string files, string savePath)
     {
+        var taskResult = new TaskResult();
         try
         {
             Guard.Against.NullOrEmpty(savePath);
 
-            if (!string.IsNullOrEmpty(files) && files.Length >= 0)
+            if (!string.IsNullOrEmpty(files))
             {
                 foreach (var pics in files.Split(',', StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -213,18 +217,15 @@ public class FileManagementService : IFileManagementService
                         File.Delete(path);
                 }
             }
-            _taskResult.Succeeded = true;
-            return _taskResult;
+            taskResult.Succeeded = true;
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLoggerRepository.Fatal(ex, $"FileManagementService/Delete", ex.ToString());
-            _taskResult.AddError("در فرآیند حذف عکس خطایی رخ داد");
-            return _taskResult;
+            taskResult.AddError("در فرآیند حذف عکس خطایی رخ داد");
+            return taskResult;
         }
     }
     #endregion
-
-
-
 }

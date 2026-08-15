@@ -4,11 +4,15 @@ using System.Text.RegularExpressions;
 namespace PaperGate.Core.Libraries.Generators;
 public static class NameGenerator
 {
-    public static string FilenameGenerate(string fileName, string extention)
+    public static string FilenameGenerate(string fileName, string extension)
     {
-        return $"{Regex.Replace(fileName, @"[^a-zA-Z0-9\u0600-\u06FF]", "-").ToUpper()[..Math.Min(50, fileName.Length)]}{GenerateUniqueName}{extention}";
+        string cleanedName = Regex.Replace(fileName, @"[^a-zA-Z0-9\u0600-\u06FF]", "-").ToUpperInvariant();
+        if (cleanedName.Length > 50)
+            cleanedName = cleanedName[..50];
+
+        return $"{cleanedName}{GenerateUniqueName}{extension}";
     }
-    public static string GenerateUniqueName => $"{DateTime.Now.ToBinary()}";
+    public static string GenerateUniqueName => $"{Guid.NewGuid():N}";
 }
 public static class SlugGenerator
 {
@@ -17,17 +21,11 @@ public static class SlugGenerator
         if (string.IsNullOrWhiteSpace(input))
             return string.Empty;
 
-        // 1. حذف کاراکترهای غیرمجاز
         string slug = Regex.Replace(input, @"[^ء-یa-zA-Z0-9\s-]", "");
-
-        // 2. جایگزینی فاصله‌ها با خط تیره
         slug = Regex.Replace(slug, @"\s+", "-");
-
-        // 3. حذف خط تیره‌های اضافه از ابتدا و انتهای متن
         slug = slug.Trim('-');
 
-        // 4. unique کردن slug
-        if (papers.Any(b => b.Slug == slug))
+        if (papers is not null && papers.Any(b => b.Slug == slug))
         {
             int count = 2;
             while (papers.Select(bp => bp.Slug).Contains($"{slug}-{count}"))

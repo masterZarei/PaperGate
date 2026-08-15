@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PaperGate.Core.Libraries.Validations;
 using PaperGate.Infra.Data;
 using PaperGate.Web.Interfaces.Services;
 using PaperGate.Web.Utilities.Libraries;
@@ -35,6 +36,15 @@ public class ApiController : Controller
         if (!allowedExtensions.Contains(extension))
         {
             return BadRequest(new { error = "فرمت فایل معتبر نیست.", location = "" });
+        }
+
+        // بررسی امضای فایل (magic bytes)
+        using (var stream = file.OpenReadStream())
+        {
+            if (!FileFormats.CheckImageSignature(stream))
+            {
+                return BadRequest(new { error = "محتوای فایل معتبر نیست.", location = "" });
+            }
         }
 
         // ارسال به سرویس مدیریت فایل
