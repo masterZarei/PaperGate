@@ -46,10 +46,11 @@ namespace PaperGate.Web.Pages
             }*/
 
             PostDto.PostKeywords = post?.Keywords?.ToList();
-            PostDto.LatestPosts = [.. (await _unitOfWork.Post.GetAllAsync(p => p.IsActive && p.Id != post.Id))
-                             .OrderByDescending(b => b.CreatedOn)
-                             .Take(5)];
-            PostDto.UsefulLinks = [.. (await _unitOfWork.UsefulLink.GetAllReadOnlyAsync()).OrderByDescending(u=>u.CreatedOn)];
+            PostDto.LatestPosts = await _unitOfWork.Post.GetAllReadOnlyAsync(
+                filter: p => p.IsActive && p.Id != post.Id,
+                queryCustomizer: q => q.OrderByDescending(b => b.CreatedOn).Take(5));
+            PostDto.UsefulLinks = await _unitOfWork.UsefulLink.GetAllReadOnlyAsync(
+                queryCustomizer: q => q.OrderByDescending(u => u.CreatedOn));
             PostDto.Author = await _userService.GetUserById(post.AuthorId);
 
             return Page();

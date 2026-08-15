@@ -38,12 +38,7 @@ namespace PaperGate.Web.Pages
                     return RedirectToLocalIndex();
                 }
                 SubTitle = category.Title;
-                PostsDto = await _publicInfoService.GetAllPostsInfoAsync(sub);
-                if (!string.IsNullOrEmpty(PostTitle) && PostsDto?.Posts?.Count > 0)
-                {
-                    PostsDto.Posts = PostsDto.Posts.Where(p => p.Title.Contains(PostTitle) && p.IsActive).ToList();
-                    PostsDto.PostTitle = PostTitle;
-                }
+                PostsDto = await _publicInfoService.GetAllPostsInfoAsync(sub, PostTitle) ?? new AllPostsDto();
                 return Page();
             }
             catch (Exception ex)

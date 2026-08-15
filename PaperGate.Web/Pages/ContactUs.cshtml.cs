@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces;
 using PaperGate.Web.Utilities.Helpers;
-using System.Text.Json;
 using ILogger = Serilog.ILogger;
 
 namespace PaperGate.Web.Pages
@@ -18,13 +18,13 @@ namespace PaperGate.Web.Pages
             _logger = logger;
         }
         [BindProperty]
-        public MessageInfo MessageDto { get; set; }
+        public MessageCreateDto MessageDto { get; set; }
 
         [BindProperty]
         public IReadOnlyCollection<PostInfo> LastestPosts { get; set; }
         public async Task<IActionResult> OnGet()
         {
-            LastestPosts = await _unitOfWork.Post.GetAllReadOnlyAsync(queryCustomizer: q => q.Take(6));
+            LastestPosts = await _unitOfWork.Post.GetAllReadOnlyAsync(queryCustomizer: q => q.Where(p => p.IsActive).Take(6));
             return Page();
         }
         public async Task<IActionResult> OnPost()
@@ -36,19 +36,24 @@ namespace PaperGate.Web.Pages
                     ShowError(ErrorMessages.FILLREQUESTEDDATA);
                     return RedirectToIndex();
                 }
-                else
-                {
-                    await _unitOfWork.Message.AddAsync(MessageDto);
-                    await _unitOfWork.SaveChangesAsync();
 
-                    string message = $"New Message has been received {JsonSerializer.Serialize(MessageDto)}";
-                    ShowSuccess("پیام شما با موفقیت ارسال شد");
-                }
+                var message = new MessageInfo
+                {
+                    SendersName = MessageDto.SendersName ?? string.Empty,
+                    SendersEmail = MessageDto.SendersEmail ?? string.Empty,
+                    Content = MessageDto.Content ?? string.Empty,
+                    Read = false,
+                };
+
+                await _unitOfWork.Message.AddAsync(message);
+                await _unitOfWork.SaveChangesAsync();
+
+                ShowSuccess("پیام شما با موفقیت ارسال شد");
                 return RedirectToIndex();
             }
             catch (Exception ex)
             {
-                _logger.Fatal(ex, "DANGER DANGER DANGER ContactUs FAILED ON OnGet", MessageDto);
+                _logger.Fatal(ex, "ContactUs OnPost Failed");
                 ShowWarning("فرآیند ارسال پیام انجام نشد.");
                 return RedirectToIndex();
             }

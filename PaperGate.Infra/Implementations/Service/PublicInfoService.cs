@@ -20,7 +20,8 @@ public class PublicInfoService : IPublicInfoService
         _logger = logger;
         _mapper = mapper;
     }
-    public async Task<AboutUsPageDto> GetAboutUsInfoAsync()
+
+    public async Task<AboutUsPageDto?> GetAboutUsInfoAsync()
     {
         try
         {
@@ -28,18 +29,8 @@ public class PublicInfoService : IPublicInfoService
                 .OrderByDescending(a => a.CreatedOn)
                 .FirstOrDefaultAsync();
             if (info is null)
-            {
-                await _context.AboutUs.AddAsync(new AboutUsInfo
-                {
-                    Image = string.Empty,
-                    EnglishDescription = string.Empty,
-                    Description = string.Empty
-                });
-                await _context.SaveChangesAsync();
-                info = await _context.AboutUs
-                    .OrderByDescending(a => a.CreatedOn)
-                    .FirstOrDefaultAsync();
-            }
+                return null;
+
             AboutUsPageDto dto = _mapper.Map<AboutUsPageDto>(info);
             dto.ContactWays = await _context.ContactWays.OrderByDescending(a => a.CreatedOn).ToListAsync();
 
@@ -47,18 +38,22 @@ public class PublicInfoService : IPublicInfoService
         }
         catch (Exception ex)
         {
-
             _logger.Fatal(ex, $"AboutUs {nameof(GetAboutUsInfoAsync)} has been failed");
             return null;
         }
     }
 
-    public async Task<AllPostsDto> GetAllPostsInfoAsync(int sub)
+    public async Task<AllPostsDto?> GetAllPostsInfoAsync(int sub, string? searchTitle = null)
     {
         try
         {
-            var Posts = await _context.Posts
-                .Where(b => b.IsActive && b.CategoryId == sub)
+            var query = _context.Posts
+                .Where(b => b.IsActive && b.CategoryId == sub);
+
+            if (!string.IsNullOrEmpty(searchTitle))
+                query = query.Where(b => b.Title.Contains(searchTitle));
+
+            var Posts = await query
                 .Include(b => b.Author)
                 .OrderByDescending(b => b.CreatedOn)
                 .ToListAsync();
@@ -66,29 +61,28 @@ public class PublicInfoService : IPublicInfoService
             return new AllPostsDto
             {
                 Posts = Posts,
+                PostTitle = searchTitle,
             };
         }
         catch (Exception ex)
         {
-
             _logger.Fatal(ex, $"AllPosts {nameof(GetAllPostsInfoAsync)} has been failed");
             return null;
         }
     }
 
-    public async Task<FooterDto> GetFooterInfoAsync()
+    public async Task<FooterDto?> GetFooterInfoAsync()
     {
         try
         {
             return new FooterDto
             {
                 AboutUs = await GetAboutUsInfoAsync(),
-                UsefulLinks = await _context.UsefulLinks.OrderByDescending(a=>a.CreatedOn).ToListAsync(),
+                UsefulLinks = await _context.UsefulLinks.OrderByDescending(a => a.CreatedOn).ToListAsync(),
             };
         }
         catch (Exception ex)
         {
-
             _logger.Fatal(ex, $"Footer {nameof(GetFooterInfoAsync)} has been failed");
             return null;
         }

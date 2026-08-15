@@ -16,7 +16,7 @@ namespace PaperGate.Web.Pages
             _preferencesService = preferencesService;
             _logger = logger;
         }
-        public AboutUsPageDto PageDto { get; set; }
+        public AboutUsPageDto? PageDto { get; set; }
         public async Task<IActionResult> OnGet()
         {
             try

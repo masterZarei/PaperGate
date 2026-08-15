@@ -100,6 +100,11 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 }
                 #endregion
 
+                PostDto.Content = _hTMLToolsService.SanitizeContent(PostDto.Content);
+                PostDto.Summary = _hTMLToolsService.SanitizeContent(PostDto.Summary);
+                if (!string.IsNullOrEmpty(PostDto.EnglishContent))
+                    PostDto.EnglishContent = _hTMLToolsService.SanitizeContent(PostDto.EnglishContent);
+
                 //Upload paper photo
                 #region Uploading Files
                 #region Pictures
@@ -121,7 +126,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                     {
                         ShowError(ErrorMessages.CUSTOM, customMessage: error);
                     }
-                    return RedirectToPage("Create", new { PostDto });
+                    return Page();
                 }
                 PostDto.Picture = uploadResult.Result as string;
 

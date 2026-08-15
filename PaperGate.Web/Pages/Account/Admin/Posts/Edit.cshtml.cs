@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PaperGate.Core.DTOs;
 using PaperGate.Core.Entities;
-using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Keywords;
 using PaperGate.Core.Interfaces.Services;
 using PaperGate.Infra.Data;
 using PaperGate.Web.Interfaces.Services;
@@ -59,7 +59,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 }
                 PostDto = _mapper.Map<PostEditDto>(Paper);
 
-                InitLists();
+                await InitLists();
                 return Page();
             }
             catch (Exception ex)
@@ -71,39 +71,22 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
             }
 
         }
-        private void InitLists()
+        private async Task InitLists()
         {
-
-            #region Category
-
-            /*  PaperDto.PaperCategories = (from categories in _context.Categories.ToList()
-                                          join categoryToPapers in _context.PaperCategories.ToList()
-                                          on categories.Id equals categoryToPapers.CategoryId
-                                          where categoryToPapers.PaperId == PaperDto.Id
-                                          select categories).ToList();*/
-
-            /*            PaperDto.AvailableCategories = (from categories in _context.Categories.ToList()
-                                                        where !PaperDto.PaperCategories.Contains(categories)
-                                                        select categories).ToList();
-                        if (PaperDto.AvailableCategories is not null)
-                            PaperDto.CategoryList = new SelectList(PaperDto.AvailableCategories, nameof(CategoryInfo.Id), nameof(CategoryInfo.Title));*/
-            #endregion
-
             #region Keyword
 
-            PostDto.PostKeywords = (from keywords in _context.Keywords.ToList()
-                                      join keywordToPapers in _context.PaperKeywords.ToList()
-                                      on keywords.Id equals keywordToPapers.KeywordId
-                                      where keywordToPapers.PostId == PostDto.Id
-                                      select keywords).OrderByDescending(c=>c.CreatedOn).ToList();
+            PostDto.PostKeywords = await (from keywords in _context.Keywords
+                                          join keywordToPapers in _context.PaperKeywords
+                                          on keywords.Id equals keywordToPapers.KeywordId
+                                          where keywordToPapers.PostId == PostDto.Id
+                                          select keywords).OrderByDescending(c => c.CreatedOn).ToListAsync();
 
-            PostDto.AvailableKeywords = (from keyword in _context.Keywords.ToList()
-                                          where !PostDto.PostKeywords.Contains(keyword)
-                                          select keyword).OrderByDescending(c => c.CreatedOn).ToList();
-            if (PostDto.AvailableKeywords is not null)
-                PostDto.KeywordList = new SelectList(PostDto.AvailableKeywords, nameof(KeywordInfo.Id), nameof(KeywordInfo.Title));
+            PostDto.AvailableKeywords = await (from keyword in _context.Keywords
+                                               where !PostDto.PostKeywords.Contains(keyword)
+                                               select keyword).OrderByDescending(c => c.CreatedOn).ToListAsync();
+
+            PostDto.KeywordList = new SelectList(PostDto.AvailableKeywords, nameof(KeywordInfo.Id), nameof(KeywordInfo.Title));
             #endregion
-
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -116,8 +99,8 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 if (!ModelState.IsValid)
                 {
                     ShowError(ErrorMessages.CUSTOM, "لطفا فیلد های ضروری را پر کنید");
-                    InitLists();
-                    return RedirectToPage("Edit", new { PostDto.Id });
+                    await InitLists();
+                    return Page();
                 }
                 #endregion
                 //Uploading Files
@@ -153,6 +136,8 @@ namespace PaperGate.Web.Pages.Account.Admin.Posts
                 PostInfo post = _mapper.Map<PostInfo>(PostDto);
                 post.Summary = _hTMLToolsService.SanitizeContent(post.Summary);
                 post.Content = _hTMLToolsService.SanitizeContent(post.Content);
+                if (!string.IsNullOrEmpty(post.EnglishContent))
+                    post.EnglishContent = _hTMLToolsService.SanitizeContent(post.EnglishContent);
                 _context.Posts.Update(post);
                 await _context.SaveChangesAsync();
                 ShowSuccess();
