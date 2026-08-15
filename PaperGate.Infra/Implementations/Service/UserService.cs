@@ -22,7 +22,7 @@ public class UserService : GenericRepository<UserInfo>, IUserService
     private readonly SignInManager<UserInfo> _signInManager;
     private readonly ILogger _myLogger;
     private readonly IMapper _mapper;
-    protected TaskResult _taskResult;
+
     public UserService(AppDbContext bookDb,
         RoleManager<IdentityRole> roleManager,
         IUserStore<UserInfo> userStore,
@@ -38,38 +38,17 @@ public class UserService : GenericRepository<UserInfo>, IUserService
         _signInManager = signInManager;
         _myLogger = myLogger;
         _mapper = mapper;
-        _taskResult = new();
     }
 
-
-
-    public async Task<IQueryable?> GetRoles()
-    {
-        try
-        {
-            return _roleManager.Roles;
-        }
-        catch (Exception ex)
-        {
-            _myLogger.Fatal(ex, "UserService/GetRoles");
-            return null;
-        }
-    }
     public async Task<UserInfo?> GetUserById(string userId)
     {
         try
         {
-            //Validation logic
-            #region Validation
             Guard.Against.NullOrEmpty(userId);
             if (string.IsNullOrWhiteSpace(userId))
                 return null;
 
-            #endregion
             UserInfo user = await GetAsync(a => a.Id == userId && !a.IsDeleted);
-            if (user is null)
-                return null;
-
             return user;
         }
         catch (Exception ex)
@@ -78,24 +57,16 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             return null;
         }
     }
+
     public async Task<UserInfo?> GetUserByUsername(string userName)
     {
         try
         {
-            //Validation logic
-            #region Validation
             Guard.Against.NullOrEmpty(userName);
-
             if (string.IsNullOrWhiteSpace(userName))
                 return null;
 
-            #endregion
-            UserInfo user = await GetAsync(a => a.UserName == userName && !a.IsDeleted);
-            if (user is null)
-                return null;
-
-            return user;
-
+            return await GetAsync(a => a.UserName == userName && !a.IsDeleted);
         }
         catch (Exception ex)
         {
@@ -103,13 +74,11 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             return null;
         }
     }
+
     public async Task<string?> GetUsersRole(string userId)
     {
         try
         {
-
-            //Validation logic
-            #region Validation
             Guard.Against.NullOrEmpty(userId);
             if (string.IsNullOrWhiteSpace(userId))
                 return null;
@@ -117,11 +86,8 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             UserInfo user = await GetAsync(a => a.Id == userId && !a.IsDeleted);
             if (user is null)
                 return null;
-            #endregion
 
-
-            return string.Join(",", await _userManager.GetRolesAsync(new UserInfo() { Id = user.Id })); ;
-
+            return string.Join(",", await _userManager.GetRolesAsync(user));
         }
         catch (Exception ex)
         {
@@ -129,11 +95,12 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             return null;
         }
     }
+
     public async Task<TaskResult> LoginUser(LoginDto login)
     {
+        var taskResult = new TaskResult();
         try
         {
-            #region Validation
             Guard.Against.Null(login);
 
             LoginDtoValidation validator = new();
@@ -141,49 +108,47 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             if (validation.IsValid is false)
             {
                 foreach (var failure in validation.Errors)
-                {
-                    _taskResult.AddError(failure.ErrorMessage);
-                }
-                return _taskResult;
+                    taskResult.AddError(failure.ErrorMessage);
+                return taskResult;
             }
-            #endregion
 
-            //Check if user exists in the Datebase
             UserInfo User = await GetAsync(a => a.NationalCode == login.NationalCode);
             if (User is null || User.IsDeleted)
             {
-                _taskResult.AddError("کاربری با این مشخصات موجود نیست");
-                return _taskResult;
+                taskResult.AddError("کاربری با این مشخصات موجود نیست");
+                return taskResult;
             }
-            //Check if Signing user is valid or not
-            var result = await _signInManager.PasswordSignInAsync(login.NationalCode, login.Password, true, false);
+
+            var result = await _signInManager.PasswordSignInAsync(login.NationalCode, login.Password, login.RememberMe, lockoutOnFailure: true);
             if (result.Succeeded)
             {
-                _taskResult.Result = User;
-                _taskResult.Succeeded = true;
-                return _taskResult;
+                taskResult.Result = User;
+                taskResult.Succeeded = true;
+                return taskResult;
             }
             else if (result.IsLockedOut)
             {
-                _taskResult.AddError($"کاربر {User.NationalCode} قفل شده است!");
-                return _taskResult;
+                taskResult.AddError($"کاربر {User.NationalCode} قفل شده است!");
+                return taskResult;
             }
-            _taskResult.AddError("شماره همراه یا رمز عبور نامعتبر است");
-            return _taskResult;
+
+            taskResult.AddError("شماره همراه یا رمز عبور نامعتبر است");
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLogger.Fatal(ex, "UserService/LoginUser");
-            _taskResult.AddError("خطایی رخ داد!");
-            _taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
-            return _taskResult;
+            taskResult.AddError("خطایی رخ داد!");
+            taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
+            return taskResult;
         }
     }
+
     public async Task<TaskResult> RegisterUser(RegisterDto register)
     {
+        var taskResult = new TaskResult();
         try
         {
-            #region Validation
             Guard.Against.Null(register);
 
             RegisterDtoValidation validator = new();
@@ -191,13 +156,10 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             if (validation.IsValid is false)
             {
                 foreach (var failure in validation.Errors)
-                {
-                    _taskResult.AddError(failure.ErrorMessage);
-                }
-                return _taskResult;
+                    taskResult.AddError(failure.ErrorMessage);
+                return taskResult;
             }
-            #endregion
-            //Registering the User
+
             var user = Activator.CreateInstance<UserInfo>();
 
             user.Name = register.Name;
@@ -206,87 +168,77 @@ public class UserService : GenericRepository<UserInfo>, IUserService
 
             await _userStore.SetUserNameAsync(user, register.NationalCode, CancellationToken.None);
 
-            /*            user.ActivationCode = CodeGenerator.GenerateUserActivationCode;
-            */
             var result = await _userManager.CreateAsync(user, register.Password);
 
             if (result.Succeeded)
             {
-                await AssignRole(user);
+                await EnsureRolesExist();
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                _taskResult.Succeeded = true;
-                return _taskResult;
+                taskResult.Succeeded = true;
+                return taskResult;
             }
+
             foreach (var error in result.Errors)
-            {
-                _taskResult.AddError(error.Description);
-            }
-            // If we got this far, something failed
-            return _taskResult;
+                taskResult.AddError(error.Description);
+
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLogger.Fatal(ex, "UserService/RegisterUser");
-            _taskResult.AddError("خطایی رخ داد!");
-            _taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
-            return _taskResult;
+            taskResult.AddError("خطایی رخ داد!");
+            taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
+            return taskResult;
         }
     }
-    private async Task AssignRole(UserInfo user)
+
+    private async Task EnsureRolesExist()
     {
-        Guard.Against.Null(user);
         if (!await _roleManager.RoleExistsAsync(Roles.AdminEndUser))
             await _roleManager.CreateAsync(new IdentityRole(Roles.AdminEndUser));
-
-       /* if (!await _roleManager.RoleExistsAsync(Roles.StudentEndUser))
-            await _roleManager.CreateAsync(new IdentityRole(Roles.StudentEndUser));*/
-
-        if (_db.Users.ToList().Count == 1)
-            await _userManager.AddToRoleAsync(user, Roles.AdminEndUser);
-
-       /* else
-            await _userManager.AddToRoleAsync(user, Roles.StudentEndUser);*/
     }
+
     public async Task<TaskResult> SoftRemoveUser(UserDeleteDto deleteDto)
     {
+        var taskResult = new TaskResult();
         try
         {
-            #region Validation
             Guard.Against.Null(deleteDto);
             if (string.IsNullOrWhiteSpace(deleteDto.Id))
             {
-                _taskResult.AddError("شناسه کاربر نمی تواند خالی باشد.");
-                return _taskResult;
+                taskResult.AddError("شناسه کاربر نمی تواند خالی باشد.");
+                return taskResult;
             }
+
             UserInfo? user = await GetUserById(deleteDto.Id);
             if (user is null)
             {
-                _taskResult.AddError("کاربری با این مشخصات موجود نیست");
-                return _taskResult;
+                taskResult.AddError("کاربری با این مشخصات موجود نیست");
+                return taskResult;
             }
-            #endregion
 
             user.IsDeleted = true;
 
             await UpdateAsync(user);
             await _db.SaveChangesAsync();
-            _taskResult.Succeeded = true;
-            return _taskResult;
+            taskResult.Succeeded = true;
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLogger.Fatal(ex, "UserService/SoftRemoveUser");
-            _taskResult.AddError("خطایی رخ داد!");
-            _taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
-            return _taskResult;
+            taskResult.AddError("خطایی رخ داد!");
+            taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
+            return taskResult;
         }
     }
+
     public async Task<TaskResult> CreateUser(UserCreateDto createDto)
     {
+        var taskResult = new TaskResult();
         try
-        {//NationalCode doesnt get saved
-            #region Validation
+        {
             Guard.Against.Null(createDto);
 
             UserCreateDtoValidation validator = new();
@@ -294,48 +246,49 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             if (validation.IsValid is false)
             {
                 foreach (var failure in validation.Errors)
-                {
-                    _taskResult.AddError(failure.ErrorMessage);
-                }
-                return _taskResult;
+                    taskResult.AddError(failure.ErrorMessage);
+                return taskResult;
             }
-            #endregion
+
             var user = Activator.CreateInstance<UserInfo>();
             user = _mapper.Map<UserInfo>(createDto);
             await _userStore.SetUserNameAsync(user, createDto.NationalCode, CancellationToken.None);
             var result = await _userManager.CreateAsync(user, createDto.Password);
+
             if (result.Succeeded)
             {
-                if (!await _roleManager.RoleExistsAsync(createDto.Role))
+                if (!string.IsNullOrWhiteSpace(createDto.Role) && !await _roleManager.RoleExistsAsync(createDto.Role))
                 {
                     await _roleManager.CreateAsync(new IdentityRole(createDto.Role));
                 }
-                await _userManager.AddToRoleAsync(user, createDto.Role);
+                if (!string.IsNullOrWhiteSpace(createDto.Role))
+                    await _userManager.AddToRoleAsync(user, createDto.Role);
 
-                _taskResult.Succeeded = true;
-                return _taskResult;
+                taskResult.Succeeded = true;
+                return taskResult;
             }
+
             foreach (var error in result.Errors)
             {
                 _myLogger.Fatal("UserService/CreateUser", $"Entity:{JsonSerializer.Serialize(createDto)} Identity Error:{error}");
-                _taskResult.AddError(error.Description);
+                taskResult.AddError(error.Description);
             }
-            return _taskResult;
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLogger.Fatal(ex, "UserService/CreateUser");
-            _taskResult.AddError("خطایی رخ داد!");
-            _taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
-            return _taskResult;
+            taskResult.AddError("خطایی رخ داد!");
+            taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
+            return taskResult;
         }
-
     }
-    public async Task<TaskResult> UpdateUser(User_ED_Dto editDto)
+
+    public async Task<TaskResult> UpdateUser(UserEditDto editDto)
     {
+        var taskResult = new TaskResult();
         try
         {
-            #region Validation
             Guard.Against.Null(editDto);
 
             UserEditDtoValidation validator = new();
@@ -343,83 +296,77 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             if (validation.IsValid is false)
             {
                 foreach (var failure in validation.Errors)
-                {
-                    _taskResult.AddError(failure.ErrorMessage);
-                }
-                return _taskResult;
+                    taskResult.AddError(failure.ErrorMessage);
+                return taskResult;
             }
-            #endregion
+
             var user = await GetUserById(editDto.Id);
             if (user is null)
             {
-                _taskResult.AddError("کاربری با این مشخصات موجود نیست");
-                return _taskResult;
+                taskResult.AddError("کاربری با این مشخصات موجود نیست");
+                return taskResult;
             }
-            if (user is null)
+
+            if (string.IsNullOrWhiteSpace(editDto.NationalCode))
             {
-                _taskResult.AddError("کاربری با این مشخصات موجود نیست");
-                return _taskResult;
+                taskResult.AddError("کد ملی نمی تواند خالی باشد");
+                return taskResult;
             }
+
             var checkIfRedunduntUsername = await GetUserByUsername(editDto.NationalCode);
-            if (checkIfRedunduntUsername is not null && checkIfRedunduntUsername != user)
+            if (checkIfRedunduntUsername is not null && checkIfRedunduntUsername.Id != user.Id)
             {
-                _taskResult.AddError("این نام کاربری در حال حاضر به کاربر دیگری اختصاص یافته است");
-                return _taskResult;
+                taskResult.AddError("این نام کاربری در حال حاضر به کاربر دیگری اختصاص یافته است");
+                return taskResult;
             }
-            //We cant use AutoMapper because Id gets changed too
-            // user = _mapper.Map<UserInfo>(editDto);
+
             var result = await _userManager.SetUserNameAsync(user, editDto.NationalCode);
             if (result.Succeeded == false)
             {
-                _taskResult.AddError("در فرآیند تغییر نام کاربری کاربر خطایی رخ داد");
-                return _taskResult;
+                taskResult.AddError("در فرآیند تغییر نام کاربری کاربر خطایی رخ داد");
+                return taskResult;
             }
+
             user.IsActive = editDto.IsActive;
             user.Name = editDto.Name;
             user.LastName = editDto.LastName;
             user.NationalCode = editDto.NationalCode;
-            user.NormalizedUserName = editDto.NationalCode;
-            /*user.CartNumber = editDto.CartNumber;
-            user.ActivationCode = CodeGenerator.GenerateUserActivationCode;
-            user.Email = editDto.Email;*/
 
-
-            user.NationalCode = editDto.NationalCode;
-            //نقش کاربرو بگیر
-            var userRoles = await _userManager.GetRolesAsync(new UserInfo() { Id = user.Id });
-
-            //اگه عوض شده بود
+            var userRoles = await _userManager.GetRolesAsync(user);
             if (editDto.Role != userRoles.FirstOrDefault())
             {
-                //نقش قبلیش رو پاک کن
                 if (userRoles is not null && userRoles.Count > 0)
-                    await _userManager.RemoveFromRoleAsync(new UserInfo() { Id = user.Id }, userRoles.First());
-                //نقش انتخاب شده رو بهش بده
-                //اول مطمئن شو نقش وجود داره و معتبره
-                if (!await _roleManager.RoleExistsAsync(editDto.Role))
+                    await _userManager.RemoveFromRoleAsync(user, userRoles.First());
+
+                if (!string.IsNullOrWhiteSpace(editDto.Role) && !await _roleManager.RoleExistsAsync(editDto.Role))
                 {
                     await _roleManager.CreateAsync(new IdentityRole(editDto.Role));
                 }
-                await _userManager.AddToRoleAsync(new UserInfo() { Id = user.Id }, editDto.Role);
+                if (!string.IsNullOrWhiteSpace(editDto.Role))
+                    await _userManager.AddToRoleAsync(user, editDto.Role);
             }
+
             await _userManager.UpdateAsync(user);
-            _taskResult.Succeeded = true;
-            return _taskResult;
+            taskResult.Succeeded = true;
+            return taskResult;
         }
         catch (Exception ex)
         {
             _myLogger.Fatal(ex, "UserService/UpdateUser");
-            _taskResult.AddError("خطایی رخ داد!");
-            _taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
-            return _taskResult;
+            taskResult.AddError("خطایی رخ داد!");
+            taskResult.AddError("لطفا بعدا دوباره امتحان کنید!");
+            return taskResult;
         }
-
     }
-    public async Task<IReadOnlyList<UserInfo>?> GetAllUsers()
+
+    public async Task<IReadOnlyList<UserInfo>?> GetAllUsers(string? searchName = null, string? searchNumber = null)
     {
         try
         {
-            return await GetAllReadOnlyAsync(a => !a.IsDeleted);
+            return await GetAllReadOnlyAsync(a =>
+                !a.IsDeleted &&
+                (string.IsNullOrEmpty(searchName) || a.Name.Contains(searchName) || a.LastName.Contains(searchName)) &&
+                (string.IsNullOrEmpty(searchNumber) || a.UserName.Contains(searchNumber) || a.PhoneNumber.Contains(searchNumber)));
         }
         catch (Exception ex)
         {
@@ -427,125 +374,84 @@ public class UserService : GenericRepository<UserInfo>, IUserService
             return null;
         }
     }
+
     public async Task<TaskResult> ChangeUsersPassword(AdminChangePasswordDto changePasswordDto)
     {
-        #region Validation
+        var taskResult = new TaskResult();
         Guard.Against.Null(changePasswordDto);
+
         if (string.IsNullOrEmpty(changePasswordDto.ConfirmNewPassword) || string.IsNullOrEmpty(changePasswordDto.NewPassword))
         {
-            _taskResult.AddError("لطفا اطلاعات خواسته شده را وارد کنید");
-            return _taskResult;
+            taskResult.AddError("لطفا اطلاعات خواسته شده را وارد کنید");
+            return taskResult;
         }
-
 
         changePasswordDto.NewPassword = changePasswordDto.NewPassword.Trim();
         changePasswordDto.ConfirmNewPassword = changePasswordDto.ConfirmNewPassword.Trim();
-        #endregion
+
         var user = await GetUserById(changePasswordDto.Id);
         if (user is null)
         {
-            _taskResult.AddError("شناسه نامعتبر");
-            _taskResult.AddError("کاربر یافت نشد");
-            return _taskResult;
+            taskResult.AddError("شناسه نامعتبر");
+            taskResult.AddError("کاربر یافت نشد");
+            return taskResult;
         }
+
         string token = await _userManager.GeneratePasswordResetTokenAsync(user);
         var result = await _userManager.ResetPasswordAsync(user, token, changePasswordDto.NewPassword);
         if (result.Succeeded is false)
         {
-            _taskResult.AddError("عوض کردن رمز عبور با شکست مواجه شد");
+            taskResult.AddError("عوض کردن رمز عبور با شکست مواجه شد");
             foreach (var error in result.Errors)
-            {
-                _taskResult.AddError(error.Description);
-            }
-            return _taskResult;
+                taskResult.AddError(error.Description);
+            return taskResult;
         }
 
-        _taskResult.Succeeded = true;
-        return _taskResult;
+        taskResult.Succeeded = true;
+        return taskResult;
     }
+
     public async Task<TaskResult> ChangeUsersPassword(UserChangePasswordDto changePasswordDto)
     {
-        #region Validation
+        var taskResult = new TaskResult();
         Guard.Against.Null(changePasswordDto);
 
         if (string.IsNullOrEmpty(changePasswordDto.ConfirmNewPassword) || string.IsNullOrEmpty(changePasswordDto.NewPassword) || string.IsNullOrEmpty(changePasswordDto.Password))
         {
-            _taskResult.AddError("لطفا اطلاعات خواسته شده را وارد کنید");
-            return _taskResult;
+            taskResult.AddError("لطفا اطلاعات خواسته شده را وارد کنید");
+            return taskResult;
         }
 
         changePasswordDto.NewPassword = changePasswordDto.NewPassword.Trim();
         changePasswordDto.ConfirmNewPassword = changePasswordDto.ConfirmNewPassword.Trim();
         changePasswordDto.Password = changePasswordDto.Password.Trim();
 
-        #endregion
         var user = await GetUserById(changePasswordDto.Id);
         if (user is null)
         {
-            _taskResult.AddError("شناسه نامعتبر");
-            _taskResult.AddError("کاربر یافت نشد");
-            return _taskResult;
+            taskResult.AddError("شناسه نامعتبر");
+            taskResult.AddError("کاربر یافت نشد");
+            return taskResult;
         }
 
-
-        if (string.IsNullOrEmpty(changePasswordDto.Password))
-        {
-            _taskResult.AddError("پسورد قبلی نمی تواند خالی وارد شود");
-            return _taskResult;
-        }
         bool validUserPassword = await _userManager.CheckPasswordAsync(user, changePasswordDto.Password);
         if (validUserPassword is false)
         {
-            _taskResult.AddError("پسورد قبلی وارد شده معتبر نمی باشد");
-            return _taskResult;
+            taskResult.AddError("پسورد قبلی وارد شده معتبر نمی باشد");
+            return taskResult;
         }
 
         string token = await _userManager.GeneratePasswordResetTokenAsync(user);
         var result = await _userManager.ResetPasswordAsync(user, token, changePasswordDto.NewPassword);
         if (result.Succeeded is false)
         {
-            _taskResult.AddError("عوض کردن رمز عبور با شکست مواجه شد");
+            taskResult.AddError("عوض کردن رمز عبور با شکست مواجه شد");
             foreach (var error in result.Errors)
-            {
-                _taskResult.AddError(error.Description);
-            }
-            return _taskResult;
+                taskResult.AddError(error.Description);
+            return taskResult;
         }
 
-        _taskResult.Succeeded = true;
-        return _taskResult;
+        taskResult.Succeeded = true;
+        return taskResult;
     }
-
-    /*    public async Task<HeaderComponentDto?> GetHeaderComponentData(string userName)
-        {
-            try
-            {
-                #region Validation
-                Guard.Against.NullOrEmpty(userName);
-
-                //Chack is user is valid
-                var user = await GetUserByUsername(userName);
-                if (user is null)
-                {
-                    await _myLogger.Fatal("UserService/GetHeaderComponentData", "Username is not Valid. User wasn't found");
-                    return null;
-                }
-                #endregion
-
-                var userFactor = await _unitOfWork.Factor.GetAsync(f => f.UserId == user.Id, includeProperties: "FactorDetails");
-                HeaderComponentDto componentDto = new()
-                {
-                    Name = $"{user.Name} {user.LastName}",
-                    ProductsInShoppingcartCount = userFactor is null ? 0 : userFactor.FactorDetails.Count
-                };
-                return componentDto;
-
-            }
-            catch (Exception ex)
-            {
-                _myLogger.Fatal(ex, "UserService/GetHeaderComponentData");
-                return null;
-            }
-
-        }*/
 }

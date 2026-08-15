@@ -1,6 +1,6 @@
 ﻿using PaperGate.Core.Entities;
 using PaperGate.Core.Entities.Categories;
-using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Keywords;
 using PaperGate.Core.Entities.Template;
 using PaperGate.Core.Interfaces;
 using PaperGate.Core.Interfaces.Repositories;
@@ -14,7 +14,6 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _db;
     private readonly ILogger _myLogger;
-    protected TaskResult _taskResult;
 
     private IPostRepository _post;
     private IGenericRepository<CategoryInfo> _category;
@@ -29,7 +28,6 @@ public class UnitOfWork : IUnitOfWork
     {
         _db = db;
         _myLogger = myLogger;
-        _taskResult = new();
     }
 
     public IPostRepository Post => _post ??= new PostRepository(_db, _myLogger);
@@ -46,62 +44,18 @@ public class UnitOfWork : IUnitOfWork
         try
         {
             await _db.SaveChangesAsync();
-            _taskResult.Succeeded = true;
-            return _taskResult;
+            return new TaskResult
+            {
+                Succeeded = true,
+            };
         }
         catch (Exception ex)
         {
-            _taskResult.AddError(ex.ToString());
             _myLogger.Fatal(ex, "UnitOfWork-SaveChanges");
-            return _taskResult;
+            return new TaskResult
+            {
+                Errors = [ex.Message]
+            };
         }
     }
 }
-
-#region Commented Code
-/*public class UnitOfWork : IUnitOfWork
-{
-    private readonly AppDbContext _db;
-    private readonly ILogger _myLogger;
-    protected TaskResult _taskResult;
-
-    public UnitOfWork(AppDbContext db, ILogger myLogger)
-    {
-        _db = db;
-        _myLogger = myLogger;
-        _taskResult = new();
-
-        Post = new PostRepository(_db, myLogger);
-        Category = new GenericRepository<CategoryInfo>(_db, myLogger);
-        Keyword = new GenericRepository<KeywordInfo>(_db, myLogger);
-        PaperKeyword = new GenericRepository<PostKeywordInfo>(_db, myLogger);
-        Message = new GenericRepository<MessageInfo>(_db, myLogger);
-        AboutUs = new GenericRepository<AboutUsInfo>(_db, myLogger);
-        ContactWay = new GenericRepository<ContactWayInfo>(_db, myLogger);
-    }
-    public IGenericRepository<CategoryInfo> Category { get; set; }
-    public IGenericRepository<KeywordInfo> Keyword { get; set; }
-    public IGenericRepository<PostKeywordInfo> PaperKeyword { get; set; }
-    public IGenericRepository<MessageInfo> Message { get; set; }
-    public IGenericRepository<AboutUsInfo> AboutUs { get; set; }
-    public IGenericRepository<ContactWayInfo> ContactWay { get; set; }
-    public IPostRepository Post { get; set; }
-
-    public async Task<TaskResult> SaveChangesAsync()
-    {
-        try
-        {
-            await _db.SaveChangesAsync();
-            _taskResult.Succeeded = true;
-            return _taskResult;
-        }
-        catch (Exception ex)
-        {
-            _taskResult.AddError(ex.ToString());
-            _myLogger.Fatal(ex, "UnitOfWork-SaveChanges", LoggingLevel.Fatal);
-            return _taskResult;
-        }
-    }
-}
-*/
-#endregion

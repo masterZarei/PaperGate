@@ -2,7 +2,7 @@
 using PaperGate.Core.DTOs;
 
 namespace PaperGate.Core.Validations.UserDtosValidator;
-public class UserEditDtoValidation : AbstractValidator<User_ED_Dto>
+public class UserEditDtoValidation : AbstractValidator<UserEditDto>
 {
     public UserEditDtoValidation()
     {

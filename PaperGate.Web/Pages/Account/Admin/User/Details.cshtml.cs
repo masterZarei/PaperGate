@@ -17,7 +17,7 @@ public class DetailsModel : MyPageModel
         _mapper = mapper;
         _logger = logger;
     }
-    public User_ED_Dto DetailsDto { get; set; }
+    public UserEditDto DetailsDto { get; set; }
     public async Task<IActionResult> OnGet(string? Id)
     {
         try
@@ -38,7 +38,7 @@ public class DetailsModel : MyPageModel
                 ShowError(ErrorMessages.NOTFOUND);
                 return RedirectToIndex();
             }
-            DetailsDto = _mapper.Map<User_ED_Dto>(user);
+            DetailsDto = _mapper.Map<UserEditDto>(user);
             DetailsDto.Role = await _userService.GetUsersRole(Id);
             return Page();
         }

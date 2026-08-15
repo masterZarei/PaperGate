@@ -51,7 +51,7 @@ namespace PaperGate.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(LoginDto.NationalCode, LoginDto.Password, LoginDto.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(LoginDto.NationalCode, LoginDto.Password, LoginDto.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == LoginDto.NationalCode);

@@ -28,32 +28,8 @@ public class IndexModel : MyPageModel
             {
                 return RedirectToSpecialPage(StaticPages.Login);
             }
-            if (!string.IsNullOrEmpty(searchName) || !string.IsNullOrEmpty(searchNumber))
-            {
-                if (!string.IsNullOrEmpty(searchName) && string.IsNullOrEmpty(searchNumber))
-                {
-                    var Users = await _userService.GetAllAsync(a => a.Name.Contains(searchName) || a.LastName.Contains(searchName));
 
-                    UserListDto = _mapper.Map<IReadOnlyList<UserListDto>>(Users);
-                    return Page();
-                }
-                else if (string.IsNullOrEmpty(searchName) && !string.IsNullOrEmpty(searchNumber))
-                {
-                    var Users = await _userService.GetAllAsync(a => a.UserName.Contains(searchNumber));
-
-                    UserListDto = _mapper.Map<IReadOnlyList<UserListDto>>(Users);
-                    return Page();
-                }
-                else
-                {
-
-                    var Users = await _userService.GetAllAsync(a => a.PhoneNumber.Contains(searchNumber) && (a.Name.Contains(searchName) || a.LastName.Contains(searchName)));
-
-                    UserListDto = _mapper.Map<IReadOnlyList<UserListDto>>(Users);
-                    return Page();
-                }
-            }
-            var UsersList = await _userService.GetAllUsers();
+            var UsersList = await _userService.GetAllUsers(searchName, searchNumber);
 
             UserListDto = _mapper.Map<IReadOnlyList<UserListDto>>(UsersList);
             return Page();

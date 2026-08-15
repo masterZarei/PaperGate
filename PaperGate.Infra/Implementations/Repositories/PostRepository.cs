@@ -2,18 +2,15 @@
 using PaperGate.Core.Entities;
 using PaperGate.Core.Interfaces.Repositories;
 using PaperGate.Infra.Data;
-using PaperGate.Shared.ReturnTypes;
 using Serilog;
 
 namespace PaperGate.Infra.Implementations.Repositories;
 public class PostRepository : GenericRepository<PostInfo>, IPostRepository
 {
     private readonly AppDbContext _context;
-    protected TaskResult _taskResult;
     public PostRepository(AppDbContext context, ILogger logger) : base(context, logger)
     {
         _context = context;
-        _taskResult = new();
     }
 
 

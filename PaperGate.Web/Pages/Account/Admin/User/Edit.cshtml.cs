@@ -26,7 +26,7 @@ public class EditModel : MyPageModel
         _logger = logger;
     }
     [BindProperty]
-    public User_ED_Dto EditDto { get; set; }
+    public UserEditDto EditDto { get; set; }
     public async Task<IActionResult> OnGet(string? Id)
     {
         try
@@ -49,7 +49,7 @@ public class EditModel : MyPageModel
                 ShowError(customMessage: "کاربر یافت نشد!");
                 return RedirectToIndex();
             }
-            EditDto = _mapper.Map<User_ED_Dto>(userResult);
+            EditDto = _mapper.Map<UserEditDto>(userResult);
             await InitList(EditDto.Id);
             return Page();
         }

@@ -76,14 +76,11 @@ public class UserListDto : UserBaseDto
     public string? Id { get; set; }
     public string? Role { get; set; }
     public string? Username { get; set; }
-    public string NationalCode { get; set; }
-
 }
-public class User_ED_Dto : UserBaseDto
+public class UserEditDto : UserBaseDto
 {
     public string? Id { get; set; }
     public bool IsActive { get; set; } = true;
-    public string NationalCode { get; set; }
 
     #region Role List
     public SelectList? RolesList { get; set; }
@@ -94,7 +91,6 @@ public class User_ED_Dto : UserBaseDto
 public class UserCreateDto : UserBaseDto
 {
     public string? Password { get; set; }
-    public string NationalCode { get; set; }
 
     #region Role List
     public SelectList? RolesList { get; set; }
