@@ -42,7 +42,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Messages
                 if (Message.Id <= 0)
                 {
                     ShowError(ErrorMessages.IDINVALID);
-                    return Page(Message);
+                    return Page();
                 }
                 await _unitOfWork.Message.RemoveAsync(Message);
                 await _unitOfWork.SaveChangesAsync();

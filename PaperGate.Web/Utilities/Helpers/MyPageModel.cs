@@ -9,11 +9,11 @@ public class MyPageModel : PageModel
 {
     public const string AdminPanelPath = "/Account/Admin";
 
-
     private const string _error = "danger";
     private const string _info = "info";
     private const string _warning = "warning";
     private const string _success = "success";
+
     #region Notifications
     public enum ErrorMessages
     {
@@ -23,60 +23,48 @@ public class MyPageModel : PageModel
         FILLREQUESTEDDATA,
         CUSTOM
     }
+
     public void ShowError(ErrorMessages errorMessage = ErrorMessages.ERRORHAPPEDNED, string? customMessage = "")
     {
-        string message = "Msg";
-        if(CultureInfo.CurrentUICulture.Name.StartsWith("fa")){
-            message = errorMessage switch
-            {
+        bool isPersian = CultureInfo.CurrentUICulture.Name.StartsWith("fa");
 
-                ErrorMessages.NOTFOUND => "موردی یافت نشد!",
-                ErrorMessages.ERRORHAPPEDNED => "خطایی رخ داد!!",
-                ErrorMessages.IDINVALID => "شناسه وارد شده نامعتبر است!",
-                ErrorMessages.FILLREQUESTEDDATA => "لطفا فیلدهای ضروری را با مقادیر صحیح پر کنید!",
-                ErrorMessages.CUSTOM => customMessage,
-                _ => customMessage is null ? "خطایی رخ داد!!" : customMessage,
-            };
-        }
-        if (CultureInfo.CurrentUICulture.Name.StartsWith("fa"))
+        string message = errorMessage switch
         {
-            message = errorMessage switch
-            {
+            ErrorMessages.NOTFOUND => isPersian ? "موردی یافت نشد!" : "No Item Found",
+            ErrorMessages.ERRORHAPPEDNED => isPersian ? "خطایی رخ داد!!" : "Something went wrong",
+            ErrorMessages.IDINVALID => isPersian ? "شناسه وارد شده نامعتبر است!" : "Invalid Id",
+            ErrorMessages.FILLREQUESTEDDATA => isPersian ? "لطفا فیلدهای ضروری را با مقادیر صحیح پر کنید!" : "Fill requested data",
+            ErrorMessages.CUSTOM => string.IsNullOrEmpty(customMessage) ? (isPersian ? "خطایی رخ داد!!" : "Something went wrong") : customMessage,
+            _ => string.IsNullOrEmpty(customMessage) ? (isPersian ? "خطایی رخ داد!!" : "Something went wrong") : customMessage,
+        };
 
-                ErrorMessages.NOTFOUND => "No Item Found",
-                ErrorMessages.ERRORHAPPEDNED => "Something went wrong",
-                ErrorMessages.IDINVALID => "Invalid Id",
-                ErrorMessages.FILLREQUESTEDDATA => "Fill requested data",
-                ErrorMessages.CUSTOM => customMessage,
-                _ => customMessage is null ? "Something went wrong" : customMessage,
-            };
-        }
         TempData["Msg"] = message;
         TempData["State"] = _error;
     }
+
     public void ShowInfo(string message)
     {
         TempData["State"] = _info;
         TempData["Msg"] = message;
     }
+
     public void ShowWarning(string message)
     {
         TempData["State"] = _warning;
         TempData["Msg"] = message;
     }
+
     public void ShowSuccess(string message = "")
     {
-        message = (CultureInfo.CurrentUICulture.Name.StartsWith("fa")) ? "با موفقیت انجام شد" : "Operation Successfully Completed!";
+        if (string.IsNullOrEmpty(message))
+            message = CultureInfo.CurrentUICulture.Name.StartsWith("fa") ? "با موفقیت انجام شد" : "Operation Successfully Completed!";
+
         TempData["State"] = _success;
         TempData["Msg"] = message;
     }
     #endregion
 
     #region Redirection
-    public IActionResult Page(object routeValue)
-    {
-        return RedirectToPage(routeValues: routeValue);
-    }
     public IActionResult RedirectToSpecialPage(StaticPages pages, string ReturnUrl = "")
     {
         return pages switch
@@ -96,6 +84,7 @@ public class MyPageModel : PageModel
         return RedirectToPage("./Index");
     }
     #endregion
+
     public enum StaticPages
     {
         Login,

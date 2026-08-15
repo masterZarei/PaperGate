@@ -107,7 +107,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Preferences
                 /*else
                 {
                     ShowError(customMessage: "لطفا یک عکس انتخاب کنید");
-                    return Page(new { SliderDto.Id });
+                    return Page();
                 }*/
                 #endregion
                 var AboutUs = _mapper.Map<AboutUsInfo>(AboutUsDto);

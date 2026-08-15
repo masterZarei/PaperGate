@@ -42,7 +42,7 @@ namespace PaperGate.Web.Pages.Account.Admin.Categories
             if (!ModelState.IsValid)
             {
                 ShowError(ErrorMessages.FILLREQUESTEDDATA);
-                return Page(CategoryDTO);
+                return Page();
             }
 
             try

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Keywords;
 using PaperGate.Core.Interfaces;
 using PaperGate.Web.Utilities.Helpers;
 

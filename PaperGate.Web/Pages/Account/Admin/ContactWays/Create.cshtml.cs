@@ -45,7 +45,7 @@ namespace PaperGate.Web.Pages.Account.Admin.ContactWays
                 {
                     Init();
                     ShowError(ErrorMessages.FILLREQUESTEDDATA);
-                    return Page(ContactWayInfo);
+                    return Page();
                 }
                 ContactWayInfo.Icon = SelectedIcon;
                 await _unitOfWork.ContactWay.AddAsync(ContactWayInfo);

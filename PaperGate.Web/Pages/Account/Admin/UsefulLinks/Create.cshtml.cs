@@ -29,7 +29,7 @@ namespace PaperGate.Web.Pages.Account.Admin.UsefulLinks
             if (!ModelState.IsValid)
             {
                 ShowError(ErrorMessages.FILLREQUESTEDDATA);
-                return Page(UsefulLinkDto);
+                return Page();
             }
             try
             {
