@@ -1,12 +1,12 @@
 ﻿using PaperGate.Core.Entities.Categories;
-using PaperGate.Core.Entities.Ketwords;
+using PaperGate.Core.Entities.Keywords;
 using PaperGate.Core.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PaperGate.Core.Entities;
 
-public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabaseModel
+public class PostInfo : BaseEntity, ISoftDeleteDatabaseModel
 {
     [Required(ErrorMessage = "لطفا موضوع پست را وارد کنید")]
     [MaxLength(150, ErrorMessage = "موضوع پست نمی تواند از 150 کاراکتر بیشتر باشد")]
@@ -24,18 +24,18 @@ public class PostInfo : BaseEntity, IDatabaseModel<PostInfo>, ISoftDeleteDatabas
 
     public string? Picture { get; set; }
     [Required(ErrorMessage = "لطفا معرفی کوتاه پست را وارد کنید")]
-    public string Summary { get; set; }
+    public required string Summary { get; set; }
 
     public int CategoryId { get; set; }
 
     public bool ShowOnSlider { get; set; }
 
     #region Relations
-    public string AuthorId { get; set; }
+    public string AuthorId { get; set; } = string.Empty;
     public bool IsDeleted { get; set; }
 
     [ForeignKey(nameof(AuthorId))]
-    public UserInfo Author { get; set; }
+    public UserInfo Author { get; set; } = default!;
 
     [ForeignKey(nameof(CategoryId))]
     public virtual CategoryInfo Category { get; set; } = default!;

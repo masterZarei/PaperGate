@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace PaperGate.Core.Entities.Categories;
-public class CategoryInfo : BaseEntity, IDatabaseModel<CategoryInfo>
+public class CategoryInfo : BaseEntity
 {
     [Required(ErrorMessage = "لطفا نام دسته بندی را وارد کنید")]
     [MaxLength(200, ErrorMessage = "نام دسته بندی نمی تواند از 200 کاراکتر بیشتر باشد")]

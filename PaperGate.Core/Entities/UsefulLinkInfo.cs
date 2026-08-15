@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace PaperGate.Core.Entities;
-public class UsefulLinkInfo : BaseEntity, IDatabaseModel<UsefulLinkInfo>
+public class UsefulLinkInfo : BaseEntity
 {
     [Required(ErrorMessage = "لطفا نام را وارد کنید")]
     [MaxLength(200, ErrorMessage = "نام نمی تواند از 200 کاراکتر بیشتر باشد")]

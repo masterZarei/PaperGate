@@ -1,8 +1,7 @@
-﻿using PaperGate.Core.Interfaces;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PaperGate.Core.Entities.Ketwords;
-public class PostKeywordInfo : BaseEntity, IDatabaseModel<PostKeywordInfo>
+namespace PaperGate.Core.Entities.Keywords;
+public class PostKeywordInfo : BaseEntity
 {
     [ForeignKey(nameof(KeywordId))]
     public KeywordInfo Keyword { get; set; }

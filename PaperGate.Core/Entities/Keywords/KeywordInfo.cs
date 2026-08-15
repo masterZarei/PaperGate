@@ -1,16 +1,15 @@
-﻿using PaperGate.Core.Interfaces;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace PaperGate.Core.Entities.Ketwords;
-public class KeywordInfo : BaseEntity, IDatabaseModel<KeywordInfo>
+namespace PaperGate.Core.Entities.Keywords;
+public class KeywordInfo : BaseEntity
 {
     [Required(ErrorMessage = "لطفا نام را وارد کنید")]
     [MaxLength(200, ErrorMessage = "نام نمی تواند از 200 کاراکتر بیشتر باشد")]
     public required string Title { get; set; }
 
     [MaxLength(200, ErrorMessage = "نام لاتین نمی تواند از 200 کاراکتر بیشتر باشد")]
-    public required string? EnglishTitle { get; set; }
+    public string? EnglishTitle { get; set; }
 
-    [MaxLength(2000, ErrorMessage = "توضضیحات نمی تواند از 2000 کاراکتر بیشتر باشد")]
+    [MaxLength(2000, ErrorMessage = "توضیحات نمی تواند از 2000 کاراکتر بیشتر باشد")]
     public string? Description { get; set; }
 }

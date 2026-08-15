@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PaperGate.Core.Entities;
 
-public class UserInfo : IdentityUser, IDatabaseModel<UserInfo>, ISoftDeleteDatabaseModel
+public class UserInfo : IdentityUser, ISoftDeleteDatabaseModel
 {
 
     [MaxLength(255, ErrorMessage = "نام کاربر نمی تواند از 255 کاراکتر بیشتر باشد")]

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace PaperGate.Core.Entities.Template;
-public class AboutUsInfo : BaseEntity, IDatabaseModel<AboutUsInfo>
+public class AboutUsInfo : BaseEntity
 {
     [Required(ErrorMessage = "لطفا اطلاعات صفحه درباره ما را وارد کنید")]
     public string Description { get; set; }
